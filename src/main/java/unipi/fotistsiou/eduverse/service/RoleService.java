@@ -1,9 +1,9 @@
-package unipi.fotistsiou.eduguide.service;
+package unipi.fotistsiou.eduverse.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unipi.fotistsiou.eduguide.repository.RoleRepository;
-import unipi.fotistsiou.eduguide.entity.Role;
+import unipi.fotistsiou.eduverse.repository.RoleRepository;
+import unipi.fotistsiou.eduverse.entity.Role;
 import java.util.Optional;
 
 @Service

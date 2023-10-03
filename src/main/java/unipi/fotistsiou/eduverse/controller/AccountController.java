@@ -1,4 +1,4 @@
-package unipi.fotistsiou.eduguide.controller;
+package unipi.fotistsiou.eduverse.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import unipi.fotistsiou.eduguide.entity.User;
-import unipi.fotistsiou.eduguide.service.UserService;
+import unipi.fotistsiou.eduverse.entity.User;
+import unipi.fotistsiou.eduverse.service.UserService;
 import java.security.Principal;
 import java.util.Optional;
 

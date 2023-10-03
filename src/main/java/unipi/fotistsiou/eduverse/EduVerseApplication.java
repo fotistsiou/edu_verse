@@ -1,13 +1,11 @@
-package unipi.fotistsiou.eduguide;
+package unipi.fotistsiou.eduverse;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EduGuideApplication {
-
+public class EduVerseApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EduGuideApplication.class, args);
+        SpringApplication.run(EduVerseApplication.class, args);
     }
-
 }

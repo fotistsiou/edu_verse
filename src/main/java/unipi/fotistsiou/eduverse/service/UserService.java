@@ -1,11 +1,11 @@
-package unipi.fotistsiou.eduguide.service;
+package unipi.fotistsiou.eduverse.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import unipi.fotistsiou.eduguide.entity.Role;
-import unipi.fotistsiou.eduguide.entity.User;
-import unipi.fotistsiou.eduguide.repository.UserRepository;
+import unipi.fotistsiou.eduverse.entity.Role;
+import unipi.fotistsiou.eduverse.entity.User;
+import unipi.fotistsiou.eduverse.repository.UserRepository;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;

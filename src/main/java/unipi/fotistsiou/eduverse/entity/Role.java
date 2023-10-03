@@ -1,4 +1,4 @@
-package unipi.fotistsiou.eduguide.entity;
+package unipi.fotistsiou.eduverse.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

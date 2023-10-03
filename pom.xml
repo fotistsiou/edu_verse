@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>unipi.fotistsiou</groupId>
-    <artifactId>EduGuide</artifactId>
+    <artifactId>EduVerse</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>EduGuide</name>
     <description>EduGuide</description>

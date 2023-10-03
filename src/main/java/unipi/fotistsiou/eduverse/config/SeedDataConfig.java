@@ -1,12 +1,12 @@
-package unipi.fotistsiou.eduguide.config;
+package unipi.fotistsiou.eduverse.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import unipi.fotistsiou.eduguide.entity.Role;
-import unipi.fotistsiou.eduguide.entity.User;
-import unipi.fotistsiou.eduguide.service.RoleService;
-import unipi.fotistsiou.eduguide.service.UserService;
+import unipi.fotistsiou.eduverse.entity.Role;
+import unipi.fotistsiou.eduverse.entity.User;
+import unipi.fotistsiou.eduverse.service.RoleService;
+import unipi.fotistsiou.eduverse.service.UserService;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;

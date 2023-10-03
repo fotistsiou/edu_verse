@@ -1,4 +1,4 @@
-package unipi.fotistsiou.eduguide.service;
+package unipi.fotistsiou.eduverse.service;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import unipi.fotistsiou.eduguide.entity.User;
+import unipi.fotistsiou.eduverse.entity.User;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

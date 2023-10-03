@@ -1,4 +1,4 @@
-package unipi.fotistsiou.eduguide;
+package unipi.fotistsiou.eduverse;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

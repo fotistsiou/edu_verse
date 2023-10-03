@@ -1,4 +1,4 @@
-package unipi.fotistsiou.eduguide.config;
+package unipi.fotistsiou.eduverse.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
