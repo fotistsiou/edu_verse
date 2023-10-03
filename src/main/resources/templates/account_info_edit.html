@@ -23,8 +23,9 @@
 
     <div class="container">
         <div class="row">
-            <div class="col col-md-12">
+            <div class="col col-md-10">
                 <div class="custom_img_card">
+                    <img th:src="@{/images/img3.png}"/>
                     <div class="card">
                         <div class="card-header">
                             <h2 class="text-center" th:text="'Επεξεργασία Πληροφοριών Λογαριασμού'"></h2>
@@ -86,10 +87,14 @@
                                 <div class="form-group mb-3">
                                     <button class="btn btn-primary" type="submit" th:text="'Αποθήκευση'"></button>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <button class="btn btn-danger" type="button">
+                                        <a class="a_button" th:href="@{'/account/info/' + ${user.id}}" th:text="'Ακύρωση'"></a>
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
-                    <img th:src="@{/images/img3.png}"/>
                 </div>
             </div>
         </div>
