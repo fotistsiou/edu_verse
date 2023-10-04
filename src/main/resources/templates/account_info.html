@@ -26,6 +26,9 @@
                 <div th:if="${param.success}">
                     <div class="alert alert-success" th:text="'Ενημέρωσες με επιτυχία τα στοιχεία του λογαριασμού σου!'"></div>
                 </div>
+                <div th:if="${param.success_update_pass}">
+                    <div class="alert alert-success" th:text="'Ενημέρωσες με επιτυχία τον κωδικό σου!'"></div>
+                </div>
                 <div class="custom_img_card">
                     <div class="card">
                         <div class="card-header">
@@ -33,6 +36,10 @@
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
+                                <tr>
+                                    <th th:text="'Αριθμός Μητρώου'"></th>
+                                    <td th:text="${user.am}"></td>
+                                </tr>
                                 <tr>
                                     <th th:text="'Email'"></th>
                                     <td th:text="${user.email}"></td>
@@ -45,10 +52,6 @@
                                     <th th:text="'Επίθετο'"></th>
                                     <td th:text="${user.lastName}"></td>
                                 </tr>
-                                <tr>
-                                    <th th:text="'Αριθμός Μητρώου'"></th>
-                                    <td th:text="${user.am}"></td>
-                                </tr>
                                 <tr th:if="${user.telephone != null}">
                                     <th th:text="'Τηλέφωνο'"></th>
                                     <td th:text="${user.telephone}"></td>
@@ -56,7 +59,12 @@
                             </table>
                             <div class="mb-3">
                                 <button class="btn btn-dark" type="button">
-                                    <a class="a_button" th:href="@{'/account/info/edit/' + ${user.id}}" th:text="'Επεξεργασία'"></a>
+                                    <a class="a_button" th:href="@{'/account/info/edit/' + ${user.id}}" th:text="'Επεξεργασία Πληροφοριών'"></a>
+                                </button>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary" type="button">
+                                    <a class="a_button" th:href="@{'/account/password/edit/' + ${user.id}}" th:text="'Αλλαγή Κωδικού Πρόσβασης'"></a>
                                 </button>
                             </div>
                         </div>

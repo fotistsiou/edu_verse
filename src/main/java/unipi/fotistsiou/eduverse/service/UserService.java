@@ -35,7 +35,7 @@ public class UserService {
         return userRepository.findOneByEmail(email);
     }
 
-    public User saveUser(User user, String role) {
+    public void saveUser(User user, String role) {
         if (user.getId() == null) {
             if (user.getRoles().isEmpty()) {
                 Set<Role> roles = new HashSet<>();
@@ -48,7 +48,7 @@ public class UserService {
             }
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public void addAm(User user, String role) {
@@ -70,6 +70,10 @@ public class UserService {
                 user.getLastName(),
                 user.getTelephone()
         );
+    }
+
+    public void updatePassword(User user) {
+        userRepository.save(user);
     }
 
     private String generateAm(Long userId, String role) {

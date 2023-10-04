@@ -43,6 +43,9 @@
 .custom_img_card_col img {
     width: 20rem;
 }
+.custom_img_card_col img {
+    margin: 2rem;
+}
 .card-body-img {
     text-align: center;
 }

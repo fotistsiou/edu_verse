@@ -18,6 +18,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="am", nullable=false)
+    private String am;
+
     @NotEmpty(message = "Το email δεν μπορεί να είναι κενό.")
     @Column(name="email", nullable=false, unique=true)
     private String email;
@@ -33,9 +36,6 @@ public class User {
     @NotEmpty(message = "Το επώνυμο δεν μπορεί να είναι κενό.")
     @Column(name="last_name", nullable=false)
     private String lastName;
-
-    @Column(name="am", nullable=false)
-    private String am;
 
     @Column(name="telephone")
     private String telephone;
