@@ -18,9 +18,7 @@ public class RegisterController {
     private final UserService userService;
 
     @Autowired
-    public RegisterController(
-            UserService userService
-    ){
+    public RegisterController(UserService userService) {
         this.userService = userService;
     }
 
@@ -45,10 +43,10 @@ public class RegisterController {
 
     @PostMapping("/register/{role}")
     public String registerNewUser(
-            @PathVariable String role,
-            @Valid @ModelAttribute("user") User user,
-            BindingResult result,
-            Model model
+        @PathVariable String role,
+        @Valid @ModelAttribute("user") User user,
+        BindingResult result,
+        Model model
     ){
         Optional<User> optionalUser = userService.findOneByEmail(user.getEmail());
         if (optionalUser.isPresent()) {

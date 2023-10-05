@@ -1,5 +1,6 @@
 package unipi.fotistsiou.eduverse.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,9 +16,8 @@ import java.util.stream.Collectors;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserService userService;
 
-    public UserDetailsServiceImpl(
-            UserService userService
-    ){
+    @Autowired
+    public UserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
     }
 

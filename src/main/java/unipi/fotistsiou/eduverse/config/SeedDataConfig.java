@@ -18,8 +18,8 @@ public class SeedDataConfig implements CommandLineRunner {
 
     @Autowired
     public SeedDataConfig (
-            UserService userService,
-            RoleService roleService
+        UserService userService,
+        RoleService roleService
     ){
         this.userService = userService;
         this.roleService = roleService;

@@ -21,8 +21,8 @@ public class AccountController {
 
     @Autowired
     public AccountController(
-            UserService userService,
-            PasswordEncoder passwordEncoder
+        UserService userService,
+        PasswordEncoder passwordEncoder
     ){
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -31,9 +31,9 @@ public class AccountController {
     @GetMapping("/account/info/{id}")
     @PreAuthorize("isAuthenticated()")
     public String getAccountInfo(
-            @PathVariable Long id,
-            Model model,
-            Principal principal
+        @PathVariable Long id,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -55,9 +55,9 @@ public class AccountController {
     @GetMapping("/account/info/edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public String editAccountInfo(
-            @PathVariable Long id,
-            Model model,
-            Principal principal
+        @PathVariable Long id,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -79,8 +79,8 @@ public class AccountController {
     @PostMapping("/account/info/edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public String updateAccountInfo (
-            @PathVariable Long id,
-            User user
+        @PathVariable Long id,
+        User user
     ){
         Optional<User> optionalUser = this.userService.getUserById(id);
         if (optionalUser.isPresent()) {
@@ -97,9 +97,9 @@ public class AccountController {
     @GetMapping("/account/password/edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public String editPassword(
-            @PathVariable Long id,
-            Model model,
-            Principal principal
+        @PathVariable Long id,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -121,30 +121,26 @@ public class AccountController {
     @PostMapping("/account/password/edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public String updatePassword (
-            @PathVariable Long id,
-            @RequestParam String oldPassword,
-            @RequestParam String newPassword,
-            @RequestParam String confirmPassword
+        @PathVariable Long id,
+        @RequestParam String oldPassword,
+        @RequestParam String newPassword,
+        @RequestParam String confirmPassword
     ){
         Optional<User> optionalUser = this.userService.getUserById(id);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
-
-            // Decode the stored (encoded) old password
             String storedEncodedPassword = existingUser.getPassword();
 
-            // Compare the user-provided old password after encoding with the stored encoded password
             if (!passwordEncoder.matches(oldPassword, storedEncodedPassword)) {
-                return  String.format("redirect:/account/password/edit/%d?error_oldPassword", id); // Redirect back to the profile page with an error message
+                return  String.format("redirect:/account/password/edit/%d?error_oldPassword", id);
             }
 
             if (!newPassword.equals(confirmPassword)) {
-                return  String.format("redirect:/account/password/edit/%d?error_confirmPassword", id); // Redirect back to the profile page with an error message
+                return  String.format("redirect:/account/password/edit/%d?error_confirmPassword", id);
             }
 
             String encodedPassword = passwordEncoder.encode(newPassword);
             existingUser.setPassword(encodedPassword);
-
             userService.updatePassword(existingUser);
         }
         return String.format("redirect:/account/info/%d?success_update_pass", id);

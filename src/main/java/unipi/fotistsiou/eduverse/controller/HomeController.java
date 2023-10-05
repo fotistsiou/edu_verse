@@ -14,9 +14,7 @@ public class HomeController {
     private final UserService userService;
 
     @Autowired
-    public HomeController(
-            UserService userService
-    ){
+    public HomeController(UserService userService) {
         this.userService = userService;
     }
 
