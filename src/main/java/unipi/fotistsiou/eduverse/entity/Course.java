@@ -21,7 +21,7 @@ public class Course {
     private Long id;
 
     @NotEmpty(message = "Ο κωδικός μαθήματος δεν μπορεί να είναι κενός.")
-    @Column(name="code", nullable=false)
+    @Column(name="code", nullable=false, unique=true)
     private String code;
 
     @NotEmpty(message = "O τίτλος δεν μπορεί να είναι κενός.")

@@ -59,6 +59,10 @@ public class CourseController {
         BindingResult result,
         Model model
     ){
+        Optional<Course> optionalCourse = courseService.findOneByCode(course.getCode());
+        if (optionalCourse.isPresent()) {
+            result.rejectValue("code", "error.code", "Υπάρχει ήδη μάθημα με τον συγκεκριμένο κωδικό.");
+        }
         if (result.hasErrors()) {
             model.addAttribute("course", course);
             return "course_new";

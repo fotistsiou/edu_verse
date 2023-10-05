@@ -50,7 +50,7 @@ public class RegisterController {
     ){
         Optional<User> optionalUser = userService.findOneByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
-            result.rejectValue("email", "error.email", "Υπάρχει ήδη ένας λογαριασμός εγγεγραμμένος με αυτό το email. Δοκιμάστε με άλλο λογαριασμό email.");
+            result.rejectValue("email", "error.email", "Υπάρχει ήδη χρήστης με το συγκεκριμένο email.");
         }
         if (result.hasErrors()) {
             model.addAttribute("user", user);

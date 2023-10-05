@@ -19,6 +19,10 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
+    public Optional<Course> findOneByCode(String code) {
+        return courseRepository.findOneByCode(code);
+    }
+
     public void saveCourse(Course course) {
         courseRepository.save(course);
     }
