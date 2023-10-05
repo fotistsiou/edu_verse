@@ -40,6 +40,9 @@
                                 </button>
                             </div>
                             <div class="d-grid gap-2 text-center" sec:authorize="isAuthenticated()">
+                                <button class="btn btn-dark" type="button" sec:authorize="hasRole('ROLE_PROFESSOR')">
+                                    <a class="a_button" th:href="@{/course/new}" th:text="'Δημιουργία Νεόυ Μαθήματος'"></a>
+                                </button>
                                 <button class="btn btn-dark" type="button">
                                     <a class="a_button" th:href="@{'/account/info/' + ${userId}}" th:text="'Ο Λογαριασμός Μου'"></a>
                                 </button>
