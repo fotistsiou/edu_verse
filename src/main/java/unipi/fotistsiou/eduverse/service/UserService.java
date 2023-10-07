@@ -27,12 +27,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> getUserById(Long id) {
+    public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public Optional<User> findOneByEmail(String email) {
-        return userRepository.findOneByEmail(email);
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     public void saveUser(User user, String role) {
@@ -59,11 +59,11 @@ public class UserService {
                 user.setAm(am);
             }
         }
-        userRepository.updateAm(user.getId(), am);
+        userRepository.updateUserDetailsAm(user.getId(), am);
     }
 
-    public void updateUser(User user) {
-        userRepository.updateUser(
+    public void updateUserDetails(User user) {
+        userRepository.updateUserDetails(
                 user.getId(),
                 user.getEmail(),
                 user.getFirstName(),

@@ -48,7 +48,7 @@ public class RegisterController {
         BindingResult result,
         Model model
     ){
-        Optional<User> optionalUser = userService.findOneByEmail(user.getEmail());
+        Optional<User> optionalUser = userService.findUserByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
             result.rejectValue("email", "error.email", "Υπάρχει ήδη χρήστης με το συγκεκριμένο email.");
         }

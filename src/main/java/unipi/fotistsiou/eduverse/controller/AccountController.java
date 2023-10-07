@@ -39,7 +39,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.getUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
@@ -63,7 +63,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.getUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
@@ -82,14 +82,14 @@ public class AccountController {
         @PathVariable Long id,
         User user
     ){
-        Optional<User> optionalUser = this.userService.getUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(id);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
             existingUser.setEmail(user.getEmail());
             existingUser.setFirstName(user.getFirstName());
             existingUser.setLastName(user.getLastName());
             existingUser.setTelephone(user.getTelephone());
-            userService.updateUser(existingUser);
+            userService.updateUserDetails(existingUser);
         }
         return String.format("redirect:/account/info/%d?success", user.getId());
     }
@@ -105,7 +105,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.getUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
@@ -126,7 +126,7 @@ public class AccountController {
         @RequestParam String newPassword,
         @RequestParam String confirmPassword
     ){
-        Optional<User> optionalUser = this.userService.getUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(id);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
             String storedEncodedPassword = existingUser.getPassword();

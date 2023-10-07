@@ -11,14 +11,14 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findOneByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
     @Modifying
     @Transactional
     @Query("UPDATE User u SET " +
             "u.am = :am " +
             "WHERE u.id = :id")
-    void updateAm(
+    void updateUserDetailsAm(
             @Param("id") Long id,
             @Param("am") String am
     );
@@ -31,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "u.lastName = :lastName, " +
             "u.telephone = :telephone " +
             "WHERE u.id = :id")
-    void updateUser(
+    void updateUserDetails(
             @Param("id") Long id,
             @Param("email") String email,
             @Param("firstName") String firstName,

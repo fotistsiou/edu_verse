@@ -27,7 +27,7 @@ public class HomeController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = userService.findOneByEmail(authUsername);
+        Optional<User> optionalUser = userService.findUserByEmail(authUsername);
         if (optionalUser.isPresent()) {
             String username = optionalUser.get().getFirstName();
             Long userId = optionalUser.get().getId();

@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userService.findOneByEmail(email);
+        Optional<User> optionalUser = userService.findUserByEmail(email);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             return new org.springframework.security.core.userdetails.User(
