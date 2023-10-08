@@ -3,8 +3,8 @@ package unipi.fotistsiou.eduverse.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unipi.fotistsiou.eduverse.entity.Course;
+import unipi.fotistsiou.eduverse.entity.User;
 import unipi.fotistsiou.eduverse.repository.CourseRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +38,17 @@ public class CourseService {
                 if (course.getProfessor().getId().equals(userId)) {
                     myCourses.add(course);
                 }
+            } else if (role.contains("ROLE_STUDENT")) {
+                boolean isUserEnrolled = false;
+                for (User student : course.getStudents()) {
+                    if (student.getId().equals(userId)) {
+                        isUserEnrolled = true;
+                        break;
+                    }
+                }
+                if (isUserEnrolled) {
+                    myCourses.add(course);
+                }
             }
         }
         return myCourses;
@@ -45,5 +56,23 @@ public class CourseService {
 
     public void deleteCourse(Course course) {
         courseRepository.delete(course);
+    }
+
+    public List<Course> findAvailableCourses(Long userId) {
+        List<Course> courses = courseRepository.findAll();
+        List<Course> availableCourses = new ArrayList<>();
+        for (Course course : courses) {
+            boolean isUserEnrolled = false;
+            for (User student : course.getStudents()) {
+                if (student.getId().equals(userId)) {
+                    isUserEnrolled = true;
+                    break;
+                }
+            }
+            if (!isUserEnrolled) {
+                availableCourses.add(course);
+            }
+        }
+        return availableCourses;
     }
 }

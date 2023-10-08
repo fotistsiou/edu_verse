@@ -14,7 +14,6 @@ import unipi.fotistsiou.eduverse.entity.Course;
 import unipi.fotistsiou.eduverse.entity.User;
 import unipi.fotistsiou.eduverse.service.CourseService;
 import unipi.fotistsiou.eduverse.service.UserService;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -104,7 +103,7 @@ public class CourseController {
 
     @GetMapping("/course/delete/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String deleteAppointment(
+    public String deleteCourse(
         @PathVariable Long courseId,
         @PathVariable Long userId,
         Principal principal
@@ -123,7 +122,84 @@ public class CourseController {
             if (optionalCourse.isPresent()) {
                 Course course = optionalCourse.get();
                 courseService.deleteCourse(course);
-                return String.format("redirect:/course/my/%d?success_delete", optionalUser.get().getId());
+                return String.format("redirect:/course/my/%d?success_delete", userId);
+            }
+        }
+        return "404";
+    }
+
+    @GetMapping("/course/register")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public String getAllCourses(
+        Model model,
+        Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserByEmail(authUsername);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            Long userId = user.getId();
+            List<Course> courses = courseService.findAvailableCourses(userId);
+            model.addAttribute("userId", userId);
+            model.addAttribute("courses", courses);
+        }
+        return "course_register";
+    }
+
+    @GetMapping("/course/register/{courseId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public String registerCourse(
+        @PathVariable Long courseId,
+        @PathVariable Long userId,
+        Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = this.userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (!user.getEmail().equals(authUsername)) {
+                return "404";
+            }
+            Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+            if (optionalCourse.isPresent()) {
+                Course course = optionalCourse.get();
+                course.getStudents().add(user);
+                courseService.saveCourse(course);
+                return String.format("redirect:/course/my/%d?success_register", userId);
+            }
+        }
+        return "404";
+    }
+
+    @GetMapping("/course/remove/{courseId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public String removeCourse(
+            @PathVariable Long courseId,
+            @PathVariable Long userId,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = this.userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (!user.getEmail().equals(authUsername)) {
+                return "404";
+            }
+            Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+            if (optionalCourse.isPresent()) {
+                Course course = optionalCourse.get();
+                course.getStudents().remove(user);
+                courseService.saveCourse(course);
+                return String.format("redirect:/course/my/%d?success_remove", userId);
             }
         }
         return "404";

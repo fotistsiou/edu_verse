@@ -43,6 +43,12 @@
                                 <button class="btn btn-dark" type="button" sec:authorize="hasRole('ROLE_PROFESSOR')">
                                     <a class="a_button" th:href="@{/course/new}" th:text="'Δημιουργία Νεόυ Μαθήματος'"></a>
                                 </button>
+                                <button class="btn btn-dark" type="button" sec:authorize="hasRole('ROLE_STUDENT')">
+                                    <a class="a_button" th:href="@{/course/register}" th:text="'Διαθέσιμα Μαθήματα'"></a>
+                                </button>
+                                <button class="btn btn-dark" type="button" sec:authorize="isAuthenticated()">
+                                    <a class="a_button" th:href="@{'/course/my/' + ${userId}}" th:text="'Τα Μαθήματά Μου'"></a>
+                                </button>
                                 <button class="btn btn-dark" type="button">
                                     <a class="a_button" th:href="@{'/account/info/' + ${userId}}" th:text="'Ο Λογαριασμός Μου'"></a>
                                 </button>
