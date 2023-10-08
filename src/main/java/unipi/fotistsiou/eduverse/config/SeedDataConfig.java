@@ -27,7 +27,7 @@ public class SeedDataConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Optional<User> optionalUser = userService.findUserByEmail("t.alepis@eduguide.gr");
+        Optional<User> optionalUser = userService.findUserByEmail("t.alepis@eduverse.gr");
         if (optionalUser.isEmpty()) {
             Role professor = new Role();
             professor.setName("ROLE_PROFESSOR");
@@ -40,7 +40,7 @@ public class SeedDataConfig implements CommandLineRunner {
             User user1 = new User();
             User user2 = new User();
 
-            user1.setEmail("t.alepis@eduguide.gr");
+            user1.setEmail("t.alepis@eduverse.gr");
             user1.setPassword("1234qwer");
             user1.setFirstName("Ευθύμιος");
             user1.setLastName("Αλέπης");
@@ -49,7 +49,7 @@ public class SeedDataConfig implements CommandLineRunner {
             roleService.findRoleByName("ROLE_PROFESSOR").ifPresent(roles1::add);
             user1.setRoles(roles1);
 
-            user2.setEmail("f.tsioumas@eduguide.gr");
+            user2.setEmail("f.tsioumas@eduverse.gr");
             user2.setPassword("1234qwer");
             user2.setFirstName("Φώτιος");
             user2.setLastName("Τσιούμας");

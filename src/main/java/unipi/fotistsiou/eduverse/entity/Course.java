@@ -2,7 +2,6 @@ package unipi.fotistsiou.eduverse.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,12 +30,11 @@ public class Course {
     @Column(name="description", nullable=false, columnDefinition = "TEXT")
     private String description;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "professor", referencedColumnName = "id", nullable = false)
     private User professor;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "course_students",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
