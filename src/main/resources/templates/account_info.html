@@ -2,7 +2,7 @@
 <html lang="el" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Πληροφορίες Λογαριασμού'"></title>
+    <title th:text="'EduVerse | Πληροφορίες Λογαριασμού'"></title>
     <link rel="stylesheet"
           th:href="@{/css/main.css}">
     <link rel="stylesheet"
@@ -37,28 +37,28 @@
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <tr>
-                                    <th th:text="'Αριθμός Μητρώου'"></th>
+                                    <th th:text="'Αριθμός Μητρώου:'"></th>
                                     <td th:text="${user.am}"></td>
                                 </tr>
                                 <tr>
-                                    <th th:text="'Email'"></th>
+                                    <th th:text="'Email:'"></th>
                                     <td th:text="${user.email}"></td>
                                 </tr>
                                 <tr>
-                                    <th th:text="'Όνομα'"></th>
+                                    <th th:text="'Όνομα:'"></th>
                                     <td th:text="${user.firstName}"></td>
                                 </tr>
                                 <tr>
-                                    <th th:text="'Επίθετο'"></th>
+                                    <th th:text="'Επίθετο:'"></th>
                                     <td th:text="${user.lastName}"></td>
                                 </tr>
                                 <tr th:if="${user.telephone != null}">
-                                    <th th:text="'Τηλέφωνο'"></th>
+                                    <th th:text="'Τηλέφωνο:'"></th>
                                     <td th:text="${user.telephone}"></td>
                                 </tr>
                             </table>
                             <div class="mb-3">
-                                <button class="btn btn-dark" type="button">
+                                <button class="btn btn-primary" type="button">
                                     <a class="a_button" th:href="@{'/account/info/edit/' + ${user.id}}" th:text="'Επεξεργασία Πληροφοριών'"></a>
                                 </button>
                             </div>
