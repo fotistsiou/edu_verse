@@ -43,12 +43,12 @@ public class AccountController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "404";
+                return "redirect:/access_denied";
             }
             model.addAttribute("user", user);
             return "account_info";
         } else {
-            return "404";
+            return "redirect:/access_denied";
         }
     }
 
@@ -67,12 +67,12 @@ public class AccountController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "404";
+                return "redirect:/access_denied";
             }
             model.addAttribute("user", user);
             return "account_info_edit";
         } else {
-            return "404";
+            return "redirect:/access_denied";
         }
     }
 
@@ -109,12 +109,12 @@ public class AccountController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "404";
+                return "redirect:/access_denied";
             }
             model.addAttribute("user", user);
             return "account_password_edit";
         } else {
-            return "404";
+            return "redirect:/access_denied";
         }
     }
 

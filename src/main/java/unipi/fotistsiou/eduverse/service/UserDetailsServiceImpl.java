@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                             .collect(Collectors.toList())
             );
         } else {
-            throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Μη έγκυρο όνομα ή κωδικός.");
         }
     }
 }
