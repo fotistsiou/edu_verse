@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="el" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'EduVerse | 401 Unauthorized'"></title>
+    <title th:text="'EduVerse | 500 Internal Server Error'"></title>
     <link rel="stylesheet"
           th:href="@{/css/main.css}">
     <link crossorigin="anonymous"
@@ -14,7 +14,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/}" th:text="'EduVerse |'"></a>
-            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
                     data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,15 +26,15 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="custom_img_card_col">
-                    <img th:src="@{/images/img14.png}"/>
+                    <img th:src="@{/images/img15.png}"/>
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'401 Unauthorized'"></h2>
+                            <h2 th:text="'500 Internal Server Error'"></h2>
                         </div>
                         <div class="card-body">
-                            <p th:text="'Λυπούμαστε, πρέπει να συνδεθείς με τον λογαριασμό σου για να αποκτήσεις πρόσβαση στη σελίδα...'"></p>
+                            <p th:text="'Λυπούμαστε, κάτι πήγε στραβά...'"></p>
                             <button class="btn btn-dark" type="button">
-                                <a class="a_button" th:href="@{/login}" th:text="'Σύνδεση στο λογαρισμό μου!'"></a>
+                                <a class="a_button" th:href="@{/}" th:text="'Επιστροφή στην αρχική!'"></a>
                             </button>
                         </div>
                     </div>
