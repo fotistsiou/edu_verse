@@ -180,9 +180,9 @@ public class CourseController {
     @GetMapping("/course/remove/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     public String removeCourse(
-            @PathVariable Long courseId,
-            @PathVariable Long userId,
-            Principal principal
+        @PathVariable Long courseId,
+        @PathVariable Long userId,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {

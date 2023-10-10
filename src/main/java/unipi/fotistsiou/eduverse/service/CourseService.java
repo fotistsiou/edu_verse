@@ -59,8 +59,8 @@ public class CourseService {
     }
 
     public List<Course> findAvailableCourses(Long userId) {
-        List<Course> courses = courseRepository.findAll();
         List<Course> availableCourses = new ArrayList<>();
+        List<Course> courses = courseRepository.findAll();
         for (Course course : courses) {
             boolean isUserEnrolled = false;
             for (User student : course.getStudents()) {

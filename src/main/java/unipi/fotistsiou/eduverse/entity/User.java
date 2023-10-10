@@ -48,6 +48,6 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "students")
     Set<Course> courses;
 }

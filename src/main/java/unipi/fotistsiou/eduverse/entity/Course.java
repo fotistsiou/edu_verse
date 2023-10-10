@@ -30,11 +30,11 @@ public class Course {
     @Column(name="description", nullable=false, columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "professor", referencedColumnName = "id", nullable = false)
     private User professor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "course_students",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
