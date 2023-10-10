@@ -24,21 +24,21 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String getRegisterMidForm() {
-        return "register";
+        return "register/register";
     }
 
     @GetMapping("/register/professor")
     public String getRegisterAsProfessorForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "register_professor";
+        return "register/register_professor";
     }
 
     @GetMapping("/register/student")
     public String getRegisterAsStudentForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "register_student";
+        return "register/register_student";
     }
 
     @PostMapping("/register/{role}")
@@ -55,11 +55,11 @@ public class RegisterController {
         if (result.hasErrors()) {
             model.addAttribute("user", user);
             if (role.equals("ROLE_PROFESSOR")) {
-                return "register_professor";
+                return "register/register_professor";
             } else if (role.equals("ROLE_STUDENT")) {
-                return "register_student";
+                return "register/register_student";
             }
-            return "register";
+            return "register/register";
         }
         userService.saveUser(user, role);
         userService.addAm(user, role);

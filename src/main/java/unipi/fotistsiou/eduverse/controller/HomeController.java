@@ -34,6 +34,6 @@ public class HomeController {
             model.addAttribute("username", username);
             model.addAttribute("userId", userId);
         }
-        return "home";
+        return "home/home";
     }
 }

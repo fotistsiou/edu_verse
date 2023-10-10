@@ -47,9 +47,9 @@ public class CourseController {
             Course course = new Course();
             course.setProfessor(optionalUser.get());
             model.addAttribute("course", course);
-            return "course_new";
+            return "course/course_new";
         } else {
-            return "redirect:/access_denied";
+            return "redirect:/exception/access_denied";
         }
     }
 
@@ -87,7 +87,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/access_denied";
+                return "redirect:/exception/access_denied";
             }
             String role = user.getRoles().toString();
             Long userId = user.getId();
@@ -95,9 +95,9 @@ public class CourseController {
             model.addAttribute("role", role);
             model.addAttribute("userId", userId);
             model.addAttribute("courses", courses);
-            return "course_my";
+            return "course/course_my";
         } else {
-            return "redirect:/access_denied";
+            return "redirect:/exception/access_denied";
         }
     }
 
@@ -116,7 +116,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/access_denied";
+                return "redirect:/exception/access_denied";
             }
             Optional<Course> optionalCourse = courseService.findCourseById(courseId);
             if (optionalCourse.isPresent()) {
@@ -125,7 +125,7 @@ public class CourseController {
                 return String.format("redirect:/course/my/%d?success_delete", userId);
             }
         }
-        return "redirect:/access_denied";
+        return "redirect:/exception/access_denied";
     }
 
     @GetMapping("/course/register")
@@ -146,7 +146,7 @@ public class CourseController {
             model.addAttribute("userId", userId);
             model.addAttribute("courses", courses);
         }
-        return "course_register";
+        return "course/course_register";
     }
 
     @GetMapping("/course/register/{courseId}/{userId}")
@@ -164,7 +164,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/access_denied";
+                return "redirect:/exception/access_denied";
             }
             Optional<Course> optionalCourse = courseService.findCourseById(courseId);
             if (optionalCourse.isPresent()) {
@@ -174,7 +174,7 @@ public class CourseController {
                 return String.format("redirect:/course/my/%d?success_register", userId);
             }
         }
-        return "redirect:/access_denied";
+        return "redirect:/exception/access_denied";
     }
 
     @GetMapping("/course/remove/{courseId}/{userId}")
@@ -192,7 +192,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/access_denied";
+                return "redirect:/exception/access_denied";
             }
             Optional<Course> optionalCourse = courseService.findCourseById(courseId);
             if (optionalCourse.isPresent()) {
@@ -202,6 +202,6 @@ public class CourseController {
                 return String.format("redirect:/course/my/%d?success_remove", userId);
             }
         }
-        return "redirect:/access_denied";
+        return "redirect:/exception/access_denied";
     }
 }
