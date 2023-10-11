@@ -13,11 +13,6 @@
 .row {
     justify-content: center;
 }
-.btn-danger a,
-.btn-danger a:hover {
-    color: #fff;
-    text-decoration: none;
-}
 
 .custom_img_card,
 .custom_img_card_col {
@@ -32,37 +27,30 @@
 .custom_img_card_col {
     flex-direction: column;
 }
+
+.custom_img_card img,
+.custom_img_card_col img {
+    width: 25rem;
+}
+
 .card-header {
     text-align: center;
 }
 .card-body {
     text-align: justify;
 }
-
-.custom_img_card img,
-.custom_img_card_col img {
-    width: 25rem;
-}
-.custom_img_card_col img {
-    margin: 2rem;
-}
-.card-body-img {
+.card-body p {
     text-align: center;
 }
-.custom_img_card img.big_img {
-    width: 50rem;
-}
 
-.form-group.button {
-    margin-bottom: 0.5rem;
-}
-
-h2,
-h3 {
+h2 {
     text-align: center;
 }
-h4 {
-    text-align: justify;
+
+.btn-danger a,
+.btn-danger a:hover {
+    color: #fff;
+    text-decoration: none;
 }
 
 .a_button,

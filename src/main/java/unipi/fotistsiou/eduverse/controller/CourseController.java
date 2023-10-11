@@ -49,7 +49,7 @@ public class CourseController {
             model.addAttribute("course", course);
             return "course/course_new";
         } else {
-            return "redirect:/exception/access_denied";
+            return "redirect:/exception_403";
         }
     }
 
@@ -66,7 +66,7 @@ public class CourseController {
         }
         if (result.hasErrors()) {
             model.addAttribute("course", course);
-            return "course_new";
+            return "course/course_new";
         }
         courseService.saveCourse(course);
         return String.format("redirect:/course/my/%d?success", course.getProfessor().getId());
@@ -87,7 +87,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception/access_denied";
+                return "redirect:/exception_403";
             }
             String role = user.getRoles().toString();
             Long userId = user.getId();
@@ -97,7 +97,7 @@ public class CourseController {
             model.addAttribute("courses", courses);
             return "course/course_my";
         } else {
-            return "redirect:/exception/access_denied";
+            return "redirect:/exception_403";
         }
     }
 
@@ -116,7 +116,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception/access_denied";
+                return "redirect:/exception_403";
             }
             Optional<Course> optionalCourse = courseService.findCourseById(courseId);
             if (optionalCourse.isPresent()) {
@@ -125,7 +125,7 @@ public class CourseController {
                 return String.format("redirect:/course/my/%d?success_delete", userId);
             }
         }
-        return "redirect:/exception/access_denied";
+        return "redirect:/exception_403";
     }
 
     @GetMapping("/course/register")
@@ -164,7 +164,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception/access_denied";
+                return "redirect:/exception_403";
             }
             Optional<Course> optionalCourse = courseService.findCourseById(courseId);
             if (optionalCourse.isPresent()) {
@@ -174,7 +174,7 @@ public class CourseController {
                 return String.format("redirect:/course/my/%d?success_register", userId);
             }
         }
-        return "redirect:/exception/access_denied";
+        return "redirect:/exception_403";
     }
 
     @GetMapping("/course/remove/{courseId}/{userId}")
@@ -192,7 +192,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception/access_denied";
+                return "redirect:/exception_403";
             }
             Optional<Course> optionalCourse = courseService.findCourseById(courseId);
             if (optionalCourse.isPresent()) {
@@ -202,6 +202,6 @@ public class CourseController {
                 return String.format("redirect:/course/my/%d?success_remove", userId);
             }
         }
-        return "redirect:/exception/access_denied";
+        return "redirect:/exception_403";
     }
 }

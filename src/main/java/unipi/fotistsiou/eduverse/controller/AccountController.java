@@ -43,12 +43,12 @@ public class AccountController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception/access_denied";
+                return "redirect:/exception_403";
             }
             model.addAttribute("user", user);
             return "account/account_info";
         } else {
-            return "redirect:/exception/access_denied";
+            return "redirect:/exception_403";
         }
     }
 
@@ -67,12 +67,12 @@ public class AccountController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception/access_denied";
+                return "redirect:/exception_403";
             }
             model.addAttribute("user", user);
             return "account/account_info_edit";
         } else {
-            return "redirect:/exception/access_denied";
+            return "redirect:/exception_403";
         }
     }
 
@@ -109,12 +109,12 @@ public class AccountController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception/access_denied";
+                return "redirect:/exception_403";
             }
             model.addAttribute("user", user);
             return "account/account_password_edit";
         } else {
-            return "redirect:/exception/access_denied";
+            return "redirect:/exception_403";
         }
     }
 

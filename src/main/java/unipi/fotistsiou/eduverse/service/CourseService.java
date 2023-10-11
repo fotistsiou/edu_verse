@@ -30,6 +30,10 @@ public class CourseService {
         courseRepository.save(course);
     }
 
+    public void deleteCourse(Course course) {
+        courseRepository.delete(course);
+    }
+
     public List<Course> getMyCourses(Long userId, String role) {
         List<Course> myCourses = new ArrayList<>();
         List<Course> courses = courseRepository.findAll();
@@ -40,7 +44,7 @@ public class CourseService {
                 }
             } else if (role.contains("ROLE_STUDENT")) {
                 boolean isUserEnrolled = false;
-                for (User student : course.getStudents()) {
+                for (User student:course.getStudents()) {
                     if (student.getId().equals(userId)) {
                         isUserEnrolled = true;
                         break;
@@ -54,16 +58,12 @@ public class CourseService {
         return myCourses;
     }
 
-    public void deleteCourse(Course course) {
-        courseRepository.delete(course);
-    }
-
     public List<Course> findAvailableCourses(Long userId) {
         List<Course> availableCourses = new ArrayList<>();
         List<Course> courses = courseRepository.findAll();
-        for (Course course : courses) {
+        for (Course course:courses) {
             boolean isUserEnrolled = false;
-            for (User student : course.getStudents()) {
+            for (User student:course.getStudents()) {
                 if (student.getId().equals(userId)) {
                     isUserEnrolled = true;
                     break;

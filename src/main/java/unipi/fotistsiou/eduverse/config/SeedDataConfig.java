@@ -60,8 +60,8 @@ public class SeedDataConfig implements CommandLineRunner {
             userService.saveUser(user1, user1.getRoles().toString());
             userService.saveUser(user2, user1.getRoles().toString());
 
-            userService.addAm(user1, user1.getRoles().toString());
-            userService.addAm(user2, user2.getRoles().toString());
+            userService.addAm(user1);
+            userService.addAm(user2);
         }
     }
 }

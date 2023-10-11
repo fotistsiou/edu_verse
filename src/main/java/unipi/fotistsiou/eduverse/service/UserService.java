@@ -35,6 +35,10 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
+    public void updatePassword(User user) {
+        userRepository.save(user);
+    }
+
     public void saveUser(User user, String role) {
         if (user.getId() == null) {
             if (user.getRoles().isEmpty()) {
@@ -42,24 +46,26 @@ public class UserService {
                 roleService.findRoleByName(role).ifPresent(roles::add);
                 user.setRoles(roles);
             }
-            String am = generateAm(user.getId(), role);
-            if (am != null) {
-                user.setAm(am);
-            }
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
-    public void addAm(User user, String role) {
+    public void addAm(User user) {
         String am = null;
         if (user.getId() != null) {
-            am = generateAm(user.getId(), role);
+            am = generateAm(user.getId(), user.getRoles().toString());
             if (am != null) {
                 user.setAm(am);
             }
         }
         userRepository.updateUserDetailsAm(user.getId(), am);
+    }
+
+    private String generateAm(Long userId, String role) {
+        String prefix = role.contains("ROLE_PROFESSOR") ? "eduprof" : "edustud";
+        String userIdStr = String.format("%05d", userId);
+        return prefix + userIdStr;
     }
 
     public void updateUserDetails(User user) {
@@ -70,15 +76,5 @@ public class UserService {
                 user.getLastName(),
                 user.getTelephone()
         );
-    }
-
-    public void updatePassword(User user) {
-        userRepository.save(user);
-    }
-
-    private String generateAm(Long userId, String role) {
-        String prefix = role.contains("ROLE_PROFESSOR") ? "eduprof" : "edustud";
-        String userIdStr = String.format("%05d", userId);
-        return prefix + userIdStr;
     }
 }
