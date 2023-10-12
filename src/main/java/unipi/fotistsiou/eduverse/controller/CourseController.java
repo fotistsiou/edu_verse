@@ -20,11 +20,11 @@ import java.util.Optional;
 
 @Controller
 public class CourseController {
-    final private CourseService courseService;
+    private final CourseService courseService;
     private final UserService userService;
 
     @Autowired
-    public CourseController (
+    public CourseController(
         CourseService courseService,
         UserService userService
     ){
