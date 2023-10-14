@@ -59,12 +59,12 @@
                             </table>
                             <div class="mb-3">
                                 <button class="btn btn-primary" type="button">
-                                    <a class="a_button" th:href="@{'/account/info/edit/' + ${user.id}}" th:text="'Επεξεργασία Πληροφοριών'"></a>
+                                    <a class="a_button" th:href="@{'/account/info/edit/{userId}' (userId=${userId})}" th:text="'Επεξεργασία Πληροφοριών'"></a>
                                 </button>
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary" type="button">
-                                    <a class="a_button" th:href="@{'/account/password/edit/' + ${user.id}}" th:text="'Αλλαγή Κωδικού Πρόσβασης'"></a>
+                                    <a class="a_button" th:href="@{'/account/password/edit/{userId}' (userId=${userId})}" th:text="'Αλλαγή Κωδικού Πρόσβασης'"></a>
                                 </button>
                             </div>
                         </div>

@@ -32,9 +32,10 @@ public class CourseController {
         this.userService = userService;
     }
 
-    @GetMapping("/course/new")
+    @GetMapping("/course/new/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String createNewCourseForm(
+        @PathVariable Long userId,
         Model model,
         Principal principal
     ){
@@ -42,63 +43,79 @@ public class CourseController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = userService.findUserByEmail(authUsername);
-        if (optionalUser.isPresent()) {
-            Course course = new Course();
-            course.setProfessor(optionalUser.get());
-            model.addAttribute("course", course);
-            return "course/course_new";
-        } else {
-            return "redirect:/exception_403";
-        }
-    }
-
-    @PostMapping("/course/new")
-    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewCourse(
-        @Valid @ModelAttribute("course") Course course,
-        BindingResult result,
-        Model model
-    ){
-        Optional<Course> optionalCourse = courseService.findCourseByCode(course.getCode());
-        if (optionalCourse.isPresent()) {
-            result.rejectValue("code", "error.code", "Υπάρχει ήδη μάθημα με τον συγκεκριμένο κωδικό.");
-        }
-        if (result.hasErrors()) {
-            model.addAttribute("course", course);
-            return "course/course_new";
-        }
-        courseService.saveCourse(course);
-        return String.format("redirect:/course/my/%d?success", course.getProfessor().getId());
-    }
-
-    @GetMapping("/course/my/{id}")
-    @PreAuthorize("isAuthenticated()")
-    public String myCourses(
-        @PathVariable Long id,
-        Model model,
-        Principal principal
-    ){
-        String authUsername = "anonymousUser";
-        if (principal != null) {
-            authUsername = principal.getName();
-        }
-        Optional<User> optionalUser = this.userService.findUserById(id);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception_403";
+            if (user.getEmail().equals(authUsername)) {
+                Course course = new Course();
+                course.setProfessor(user);
+                model.addAttribute("course", course);
+                model.addAttribute("userId", userId);
+                return "course/course_new";
             }
-            String role = user.getRoles().toString();
-            Long userId = user.getId();
-            List<Course> courses = courseService.getMyCourses(id, role);
-            model.addAttribute("role", role);
-            model.addAttribute("userId", userId);
-            model.addAttribute("courses", courses);
-            return "course/course_my";
-        } else {
             return "redirect:/exception_403";
         }
+        return "redirect:/exception_404";
+    }
+
+    @PostMapping("/course/new/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String createNewCourse(
+        @PathVariable Long userId,
+        @Valid @ModelAttribute("course") Course course,
+        BindingResult result,
+        Model model,
+        Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Course> optionalCourse = courseService.findCourseByCode(course.getCode());
+                if (optionalCourse.isPresent()) {
+                    result.rejectValue("code", "error.code", "Υπάρχει ήδη μάθημα με τον συγκεκριμένο κωδικό.");
+                }
+                if (result.hasErrors()) {
+                    model.addAttribute("course", course);
+                    return "course/course_new";
+                }
+                courseService.saveCourse(course);
+                return String.format("redirect:/course/my/%d?success", course.getProfessor().getId());
+            }
+            return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
+    }
+
+    @GetMapping("/course/my/{userId}")
+    @PreAuthorize("isAuthenticated()")
+    public String myCourses(
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = this.userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                String role = user.getRoles().toString();
+                List<Course> courses = courseService.getMyCourses(userId, role);
+                model.addAttribute("role", role);
+                model.addAttribute("userId", userId);
+                model.addAttribute("courses", courses);
+                return "course/course_my";
+            }
+            return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
     }
 
     @GetMapping("/course/delete/{courseId}/{userId}")
@@ -115,22 +132,23 @@ public class CourseController {
         Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception_403";
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+                if (optionalCourse.isPresent()) {
+                    Course course = optionalCourse.get();
+                    courseService.deleteCourse(course);
+                    return String.format("redirect:/course/my/%d?success_delete", userId);
+                }
             }
-            Optional<Course> optionalCourse = courseService.findCourseById(courseId);
-            if (optionalCourse.isPresent()) {
-                Course course = optionalCourse.get();
-                courseService.deleteCourse(course);
-                return String.format("redirect:/course/my/%d?success_delete", userId);
-            }
+            return "redirect:/exception_403";
         }
-        return "redirect:/exception_403";
+        return "redirect:/exception_404";
     }
 
-    @GetMapping("/course/register")
+    @GetMapping("/course/register/{userId}")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     public String getAllCourses(
+        @PathVariable Long userId,
         Model model,
         Principal principal
     ){
@@ -138,15 +156,18 @@ public class CourseController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = userService.findUserByEmail(authUsername);
+        Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            Long userId = user.getId();
-            List<Course> courses = courseService.findAvailableCourses(userId);
-            model.addAttribute("userId", userId);
-            model.addAttribute("courses", courses);
+            if (user.getEmail().equals(authUsername)) {
+                List<Course> courses = courseService.findAvailableCourses(userId);
+                model.addAttribute("userId", userId);
+                model.addAttribute("courses", courses);
+                return "course/course_register";
+            }
+            return "redirect:/exception_403";
         }
-        return "course/course_register";
+        return "redirect:/exception_404";
     }
 
     @GetMapping("/course/register/{courseId}/{userId}")
@@ -163,18 +184,18 @@ public class CourseController {
         Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception_403";
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+                if (optionalCourse.isPresent()) {
+                    Course course = optionalCourse.get();
+                    course.getStudents().add(user);
+                    courseService.saveCourse(course);
+                    return String.format("redirect:/course/my/%d?success_register", userId);
+                }
             }
-            Optional<Course> optionalCourse = courseService.findCourseById(courseId);
-            if (optionalCourse.isPresent()) {
-                Course course = optionalCourse.get();
-                course.getStudents().add(user);
-                courseService.saveCourse(course);
-                return String.format("redirect:/course/my/%d?success_register", userId);
-            }
+            return "redirect:/exception_403";
         }
-        return "redirect:/exception_403";
+        return "redirect:/exception_404";
     }
 
     @GetMapping("/course/remove/{courseId}/{userId}")
@@ -191,17 +212,17 @@ public class CourseController {
         Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception_403";
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+                if (optionalCourse.isPresent()) {
+                    Course course = optionalCourse.get();
+                    course.getStudents().remove(user);
+                    courseService.saveCourse(course);
+                    return String.format("redirect:/course/my/%d?success_remove", userId);
+                }
             }
-            Optional<Course> optionalCourse = courseService.findCourseById(courseId);
-            if (optionalCourse.isPresent()) {
-                Course course = optionalCourse.get();
-                course.getStudents().remove(user);
-                courseService.saveCourse(course);
-                return String.format("redirect:/course/my/%d?success_remove", userId);
-            }
+            return "redirect:/exception_403";
         }
-        return "redirect:/exception_403";
+        return "redirect:/exception_404";
     }
 }

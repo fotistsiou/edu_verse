@@ -31,7 +31,7 @@
                             <h2 class="text-center" th:text="'Επεξεργασία Πληροφοριών Λογαριασμού'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{'/account/info/edit/{id}' (id=${user.id})}" th:object="${user}" method="POST">
+                            <form action="#" role="form" th:action="@{'/account/info/edit/{userId}' (userId=${user.id})}" th:object="${user}" method="POST">
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="am" th:text="'Αριθμός Μητρώου'"></label>
                                     <input class="form-control"
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <button class="btn btn-danger" type="button">
-                                        <a class="a_button" th:href="@{'/account/info/' + ${user.id}}" th:text="'Ακύρωση'"></a>
+                                        <a class="a_button" th:href="@{'/account/info/{userId}' (userId=${userId})}" th:text="'Ακύρωση'"></a>
                                     </button>
                                 </div>
                             </form>

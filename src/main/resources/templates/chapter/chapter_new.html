@@ -29,7 +29,7 @@
                             <h2 class="text-center" th:text="'Δημιουργία Νέου Κεφαλαίου'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{'/chapter/new'}" th:object="${chapter}" method="POST">
+                            <form action="#" role="form" th:action="@{'/chapter/new/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:object="${chapter}" method="POST">
                                 <input type="hidden" th:field="*{course}" />
                                 <div class="form-group mb-3">
                                     <label for="title" class="form-label" th:text="'Τίτλος'"></label>

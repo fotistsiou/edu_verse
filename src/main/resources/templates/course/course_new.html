@@ -29,7 +29,7 @@
                             <h2 class="text-center" th:text="'Δημιουργία Νέου Μαθήματος'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{'/course/new'}" th:object="${course}" method="POST">
+                            <form action="#" role="form" th:action="@{'/course/new/{userId}'(userId=${userId})} " th:object="${course}" method="POST">
                                 <input type="hidden" th:field="*{professor}" />
                                 <div class="form-group mb-3">
                                     <label for="code" class="form-label" th:text="'Κωδικός'"></label>
@@ -61,12 +61,12 @@
                                 <div class="form-group mb-3">
                                     <label for="description" class="form-label" th:text="'Σύντομη Περιγραφή'"></label>
                                     <textarea
-                                            class="form-control"
-                                            id="description"
-                                            name="description"
-                                            rows="5"
-                                            cols="33"
-                                            th:field="*{description}">
+                                        class="form-control"
+                                        id="description"
+                                        name="description"
+                                        rows="5"
+                                        cols="33"
+                                        th:field="*{description}">
                                     </textarea>
                                     <p class="text-danger"
                                        th:errors="*{description}"

@@ -28,10 +28,10 @@ public class AccountController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/account/info/{id}")
+    @GetMapping("/account/info/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String getAccountInfo(
-        @PathVariable Long id,
+        @PathVariable Long userId,
         Model model,
         Principal principal
     ){
@@ -39,23 +39,22 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception_403";
+            if (user.getEmail().equals(authUsername)) {
+                model.addAttribute("user", user);
+                return "account/account_info";
             }
-            model.addAttribute("user", user);
-            return "account/account_info";
-        } else {
             return "redirect:/exception_403";
         }
+        return "redirect:/exception_404";
     }
 
-    @GetMapping("/account/info/edit/{id}")
+    @GetMapping("/account/info/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String editAccountInfo(
-        @PathVariable Long id,
+        @PathVariable Long userId,
         Model model,
         Principal principal
     ){
@@ -63,41 +62,49 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception_403";
+            if (user.getEmail().equals(authUsername)) {
+                model.addAttribute("user", user);
+                return "account/account_info_edit";
             }
-            model.addAttribute("user", user);
-            return "account/account_info_edit";
-        } else {
             return "redirect:/exception_403";
         }
+        return "redirect:/exception_404";
     }
 
-    @PostMapping("/account/info/edit/{id}")
+    @PostMapping("/account/info/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String updateAccountInfo (
-        @PathVariable Long id,
-        User user
+        @PathVariable Long userId,
+        User user,
+        Principal principal
     ){
-        Optional<User> optionalUser = this.userService.findUserById(id);
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
-            existingUser.setEmail(user.getEmail());
-            existingUser.setFirstName(user.getFirstName());
-            existingUser.setLastName(user.getLastName());
-            existingUser.setTelephone(user.getTelephone());
-            userService.updateUserDetails(existingUser);
+            if (existingUser.getEmail().equals(authUsername)) {
+                existingUser.setEmail(user.getEmail());
+                existingUser.setFirstName(user.getFirstName());
+                existingUser.setLastName(user.getLastName());
+                existingUser.setTelephone(user.getTelephone());
+                userService.updateUserDetails(existingUser);
+                return String.format("redirect:/account/info/%d?success", userId);
+            }
+            return "redirect:/exception_403";
         }
-        return String.format("redirect:/account/info/%d?success", user.getId());
+        return "redirect:/exception_404";
     }
 
-    @GetMapping("/account/password/edit/{id}")
+    @GetMapping("/account/password/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String editPassword(
-        @PathVariable Long id,
+        @PathVariable Long userId,
         Model model,
         Principal principal
     ){
@@ -105,44 +112,49 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(id);
+        Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getEmail().equals(authUsername)) {
-                return "redirect:/exception_403";
+            if (user.getEmail().equals(authUsername)) {
+                model.addAttribute("user", user);
+                return "account/account_password_edit";
             }
-            model.addAttribute("user", user);
-            return "account/account_password_edit";
-        } else {
             return "redirect:/exception_403";
         }
+        return "redirect:/exception_404";
     }
 
-    @PostMapping("/account/password/edit/{id}")
+    @PostMapping("/account/password/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String updatePassword (
-        @PathVariable Long id,
+        @PathVariable Long userId,
         @RequestParam String oldPassword,
         @RequestParam String newPassword,
-        @RequestParam String confirmPassword
+        @RequestParam String confirmPassword,
+        Principal principal
     ){
-        Optional<User> optionalUser = this.userService.findUserById(id);
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = this.userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
-            String storedEncodedPassword = existingUser.getPassword();
-
-            if (!passwordEncoder.matches(oldPassword, storedEncodedPassword)) {
-                return  String.format("redirect:/account/password/edit/%d?error_oldPassword", id);
+            if (existingUser.getEmail().equals(authUsername)) {
+                String storedEncodedPassword = existingUser.getPassword();
+                if (!passwordEncoder.matches(oldPassword, storedEncodedPassword)) {
+                    return  String.format("redirect:/account/password/edit/%d?error_oldPassword", userId);
+                }
+                if (!newPassword.equals(confirmPassword)) {
+                    return  String.format("redirect:/account/password/edit/%d?error_confirmPassword", userId);
+                }
+                String encodedPassword = passwordEncoder.encode(newPassword);
+                existingUser.setPassword(encodedPassword);
+                userService.updatePassword(existingUser);
+                return String.format("redirect:/account/info/%d?success_update_pass", userId);
             }
-
-            if (!newPassword.equals(confirmPassword)) {
-                return  String.format("redirect:/account/password/edit/%d?error_confirmPassword", id);
-            }
-
-            String encodedPassword = passwordEncoder.encode(newPassword);
-            existingUser.setPassword(encodedPassword);
-            userService.updatePassword(existingUser);
+            return "redirect:/exception_403";
         }
-        return String.format("redirect:/account/info/%d?success_update_pass", id);
+        return "redirect:/exception_404";
     }
 }

@@ -32,10 +32,8 @@ public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
-
             if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 return "redirect:/exception_403";
             } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
@@ -44,7 +42,6 @@ public class CustomErrorController implements ErrorController {
                 return "redirect:/exception_500";
             }
         }
-
         return "redirect:/exception";
     }
 }
