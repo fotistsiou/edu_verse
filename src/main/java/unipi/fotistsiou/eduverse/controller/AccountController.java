@@ -39,7 +39,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(userId);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
@@ -62,7 +62,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(userId);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
@@ -85,7 +85,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(userId);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
             if (existingUser.getEmail().equals(authUsername)) {
@@ -112,7 +112,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(userId);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
@@ -137,7 +137,7 @@ public class AccountController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(userId);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
             if (existingUser.getEmail().equals(authUsername)) {
