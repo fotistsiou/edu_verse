@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import unipi.fotistsiou.eduverse.entity.Chapter;
 import unipi.fotistsiou.eduverse.entity.Course;
 import unipi.fotistsiou.eduverse.entity.User;
+import unipi.fotistsiou.eduverse.service.ChapterService;
 import unipi.fotistsiou.eduverse.service.CourseService;
 import unipi.fotistsiou.eduverse.service.UserService;
 import java.security.Principal;
@@ -22,14 +24,17 @@ import java.util.Optional;
 public class CourseController {
     private final CourseService courseService;
     private final UserService userService;
+    private final ChapterService chapterService;
 
     @Autowired
     public CourseController(
         CourseService courseService,
-        UserService userService
+        UserService userService,
+        ChapterService chapterService
     ){
         this.courseService = courseService;
         this.userService = userService;
+        this.chapterService = chapterService;
     }
 
     @GetMapping("/course/new/{userId}")
@@ -222,6 +227,23 @@ public class CourseController {
                 }
             }
             return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
+    }
+
+    @GetMapping("/course/view/{courseId}")
+    @PreAuthorize("isAuthenticated()")
+    public String getCourse(
+            @PathVariable Long courseId,
+            Model model
+    ){
+        Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            List<Chapter> chapters = chapterService.findAllCourseChapters(courseId);
+            model.addAttribute("course", course);
+            model.addAttribute("chapters", chapters);
+            return "course/course_view";
         }
         return "redirect:/exception_404";
     }

@@ -25,16 +25,17 @@
     <div class="container">
         <div class="row">
             <div class="col col-md-12">
-                <div class="custom_img_card">
+                <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-center" th:text="${'Κεφάλαιο: ' + chapter.title}"></h2>
+                            <h2 th:text="${'Κεφάλαιο: ' + chapter.title}"></h2>
+                            <h4>
+                                <span th:text="'Μαθήματος: '"></span>
+                                <a th:href="@{'/course/view/{courseId}' (courseId=${courseId})}" th:text="${chapter.course.title}"></a>
+                            </h4>
                         </div>
                         <div class="card-body">
-                            <p th:text="${chapter.content}"></p>
-                            <button class="btn btn-dark" type="button">
-                                <a class="a_button" th:href="@{'/course/view/{courseId}' (courseId=${courseId})}" th:text="'Επιστροφή στο μάθημα'"></a>
-                            </button>
+                            <p class="big_text" th:text="${chapter.content}"></p>
                         </div>
                     </div>
                 </div>

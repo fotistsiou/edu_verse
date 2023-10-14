@@ -38,7 +38,7 @@
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-center" th:text="'Τα Μαθήματά Μου'"></h2>
+                            <h2 th:text="'Τα Μαθήματά Μου'"></h2>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered" th:if="${!courses.isEmpty()}">
@@ -59,8 +59,14 @@
                                         <td th:text="${course.description}"></td>
                                         <td th:text="${course.code}"></td>
                                         <td th:if="${role == '[ROLE_STUDENT]'}" th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
-                                        <td th:if="${role == '[ROLE_STUDENT]'}"><a th:href="@{'/course/remove/{corseId}/{userId}' (corseId=${course.id}, userId=${userId})}" th:text="'Απεγγραφή'"></a></td>
-                                        <td th:if="${role == '[ROLE_PROFESSOR]'}"><a th:href="@{'/course/delete/{corseId}/{userId}' (corseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a></td>
+                                        <td th:if="${role == '[ROLE_STUDENT]'}">
+                                            <a th:href="@{'/course/view/{courseId}' (courseId=${course.id})}" th:text="'Προβολή'"></a>
+                                            <a th:href="@{'/course/remove/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Απεγγραφή'"></a>
+                                        </td>
+                                        <td th:if="${role == '[ROLE_PROFESSOR]'}">
+                                            <a th:href="@{'/course/view/{courseId}' (courseId=${course.id})}" th:text="'Προβολή'"></a>
+                                            <a th:href="@{'/course/delete/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -70,7 +76,7 @@
                     <div class="custom_img_card">
                         <div class="card mt-3" th:if="${!courses.isEmpty() && role == '[ROLE_PROFESSOR]'}">
                             <div class="card-header">
-                                <h2 class="text-center" th:text="'Οι Μαθητές Μου'"></h2>
+                                <h2 th:text="'Οι Μαθητές Μου'"></h2>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered">

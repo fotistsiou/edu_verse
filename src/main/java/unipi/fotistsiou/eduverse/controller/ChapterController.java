@@ -98,8 +98,7 @@ public class ChapterController {
                             return "chapter/chapter_new";
                         }
                         chapterService.saveChapter(chapter);
-                        // TODO: Update redirect to course
-                        return "redirect:/?success_create_chapter";
+                        return String.format("redirect:/course/view/%d?success_create_chapter", courseId);
                     }
                 }
             }

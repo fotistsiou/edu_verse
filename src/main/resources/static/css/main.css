@@ -42,6 +42,9 @@
 .card-body p {
     text-align: center;
 }
+.card-body p.big_text {
+    text-align: justify;
+}
 
 h2 {
     text-align: center;
