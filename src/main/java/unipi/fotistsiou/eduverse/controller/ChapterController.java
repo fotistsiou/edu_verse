@@ -49,7 +49,7 @@ public class ChapterController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(userId);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
@@ -73,7 +73,7 @@ public class ChapterController {
 
     @PostMapping("/chapter/new/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewCourse(
+    public String createNewChapter(
             @PathVariable Long courseId,
             @PathVariable Long userId,
             @Valid @ModelAttribute("chapter") Chapter chapter,
@@ -85,7 +85,7 @@ public class ChapterController {
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<User> optionalUser = this.userService.findUserById(userId);
+        Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
@@ -104,6 +104,23 @@ public class ChapterController {
                 }
             }
             return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
+    }
+
+    @GetMapping("/chapter/view/{chapterId}")
+    @PreAuthorize("isAuthenticated()")
+    public String getChapter(
+            @PathVariable Long chapterId,
+            Model model
+    ){
+        Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
+        if (optionalChapter.isPresent()) {
+            Chapter chapter = optionalChapter.get();
+            Long courseId = chapter.getCourse().getId();
+            model.addAttribute("chapter", chapter);
+            model.addAttribute("courseId", courseId);
+            return "chapter/chapter_view";
         }
         return "redirect:/exception_404";
     }

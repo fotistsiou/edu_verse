@@ -11,31 +11,35 @@
           rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
-      <div class="container-fluid">
-          <a class="navbar-brand" th:href="@{/}" th:text="'EduVerse |'"></a>
-          <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-                  data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-      </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}" th:text="'EduVerse |'"></a>
+            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
 
-  <div class="container">
-      <div class="row">
-          <div class="col col-md-12">
-              <div class="custom_img_card">
-                  <div class="card">
-                      <div class="card-header">
-                          <h2 class="text-center" th:text="*{chapter.title}"></h2>
-                      </div>
-                      <div class="card-body">
-                        <p th:text="${chapter.content}"></p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="custom_img_card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center" th:text="${'Κεφάλαιο: ' + chapter.title}"></h2>
+                        </div>
+                        <div class="card-body">
+                            <p th:text="${chapter.content}"></p>
+                            <button class="btn btn-dark" type="button">
+                                <a class="a_button" th:href="@{'/course/view/{courseId}' (courseId=${courseId})}" th:text="'Επιστροφή στο μάθημα'"></a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
