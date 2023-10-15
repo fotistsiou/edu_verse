@@ -1,14 +1,14 @@
 package unipi.fotistsiou.eduverse.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import unipi.fotistsiou.eduverse.entity.User;
 import unipi.fotistsiou.eduverse.service.UserService;
 import java.security.Principal;
@@ -78,7 +78,9 @@ public class AccountController {
     @PreAuthorize("isAuthenticated()")
     public String updateAccountInfo (
         @PathVariable Long userId,
-        User user,
+        @Valid @ModelAttribute("user") User user,
+        BindingResult result,
+        Model model,
         Principal principal
     ){
         String authUsername = "anonymousUser";
@@ -89,11 +91,27 @@ public class AccountController {
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
             if (existingUser.getEmail().equals(authUsername)) {
+                if (!user.getEmail().equals(existingUser.getEmail())) {
+                    Optional<User> optUser = userService.findUserByEmail(user.getEmail());
+                    if (optUser.isPresent()) {
+                        result.rejectValue("email", "error.email", "Υπάρχει ήδη χρήστης με το συγκεκριμένο email.");
+                    }
+                }
+                if (result.hasErrors()) {
+                    for (FieldError error : result.getFieldErrors()) {
+                        if (!error.getField().equals("password")) {
+                            System.out.println(result);
+                            model.addAttribute("user", user);
+                            return "account/account_info_edit";
+                        }
+                    }
+                }
                 existingUser.setEmail(user.getEmail());
                 existingUser.setFirstName(user.getFirstName());
                 existingUser.setLastName(user.getLastName());
                 existingUser.setTelephone(user.getTelephone());
                 userService.updateUserDetails(existingUser);
+                // TODO : Handle the case when the customer changes their email.
                 return String.format("redirect:/account/info/%d?success", userId);
             }
             return "redirect:/exception_403";
