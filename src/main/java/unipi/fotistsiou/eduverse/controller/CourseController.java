@@ -304,8 +304,6 @@ public class CourseController {
                             }
                         }
                         if (result.hasErrors()) {
-                            model.addAttribute("courseId", courseId);
-                            model.addAttribute("userId", userId);
                             model.addAttribute("course", course);
                             return "course/course_edit";
                         }
