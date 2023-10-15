@@ -65,3 +65,13 @@ h2 {
 button {
     width: 100%;
 }
+
+.two-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.two-buttons button {
+    width: 35%;
+}

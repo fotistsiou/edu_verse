@@ -35,6 +35,9 @@
                 <div th:if="${param.success_remove}">
                     <div class="alert alert-success" th:text="'Έκανες απεγγραφή στο μάθημα με επιτυχία!'"></div>
                 </div>
+                <div th:if="${param.success_edit}">
+                    <div class="alert alert-success" th:text="'Έκανες επεξεργασία του μαθήματος με επιτυχία!'"></div>
+                </div>
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
@@ -45,9 +48,9 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" th:text="'#'"></th>
+                                        <th scope="col" th:text="'Κωδικός'"></th>
                                         <th scope="col" th:text="'Τίτλος'"></th>
                                         <th scope="col" th:text="'Περιγραφή'"></th>
-                                        <th scope="col" th:text="'Κωδικός'"></th>
                                         <th scope="col" th:text="'Καθηγητής'" th:if="${role == '[ROLE_STUDENT]'}"></th>
                                         <th scope="col" th:text="'Ενέργεια'"></th>
                                     </tr>
@@ -55,9 +58,9 @@
                                 <tbody>
                                     <tr th:each="course, loopStat : ${courses}">
                                         <th th:text="${loopStat.index + 1}"></th>
+                                        <td th:text="${course.code}"></td>
                                         <td th:text="${course.title}"></td>
                                         <td th:text="${course.description}"></td>
-                                        <td th:text="${course.code}"></td>
                                         <td th:if="${role == '[ROLE_STUDENT]'}" th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
                                         <td th:if="${role == '[ROLE_STUDENT]'}">
                                             <a th:href="@{'/course/view/{courseId}' (courseId=${course.id})}" th:text="'Προβολή'"></a>
@@ -65,6 +68,7 @@
                                         </td>
                                         <td th:if="${role == '[ROLE_PROFESSOR]'}">
                                             <a th:href="@{'/course/view/{courseId}' (courseId=${course.id})}" th:text="'Προβολή'"></a>
+                                            <a th:href="@{'/course/edit/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
                                             <a th:href="@{'/course/delete/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
                                         </td>
                                     </tr>
@@ -83,16 +87,16 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" th:text="'#'"></th>
-                                        <th scope="col" th:text="'Τίτλος'"></th>
                                         <th scope="col" th:text="'Κωδικός'"></th>
+                                        <th scope="col" th:text="'Τίτλος'"></th>
                                         <th scope="col" th:text="'Μαθητές'"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="course, loopStat : ${courses}">
                                         <th th:text="${loopStat.index + 1}"></th>
-                                        <td th:text="${course.title}"></td>
                                         <td th:text="${course.code}"></td>
+                                        <td th:text="${course.title}"></td>
                                         <td>
                                             <ul class="list-group">
                                                 <li class="list-group-item" th:each="student : ${course.students}">

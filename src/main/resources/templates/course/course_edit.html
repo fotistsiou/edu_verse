@@ -2,7 +2,7 @@
 <html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'EduVerse | Δημιουργία Μαθήματος'"></title>
+    <title th:text="'EduVerse | Επεξεργασία Μαθήματος'"></title>
     <link rel="stylesheet"
           th:href="@{/css/main.css}">
     <link rel="stylesheet"
@@ -26,18 +26,16 @@
                 <div class="custom_img_card">
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Δημιουργία Νέου Μαθήματος'"></h2>
+                            <h2 th:text="'Επεξεργασία Μαθήματος'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{'/course/new/{userId}'(userId=${userId})} " th:object="${course}" method="POST">
-                                <input type="hidden" th:field="*{professor}" />
+                            <form action="#" role="form" th:action="@{'/course/edit/{courseId}/{userId}'(courseId=${courseId}, userId=${userId})} " th:object="${course}" method="POST">
                                 <div class="form-group mb-3">
                                     <label for="code" class="form-label" th:text="'Κωδικός'"></label>
                                     <input class="form-control"
                                            id="code"
                                            name="code"
                                            th:field="*{code}"
-                                           placeholder="π.χ. TME105"
                                            type="text"
                                     />
                                     <p class="text-danger"
@@ -61,30 +59,30 @@
                                 <div class="form-group mb-3">
                                     <label for="description" class="form-label" th:text="'Σύντομη Περιγραφή'"></label>
                                     <textarea
-                                        class="form-control"
-                                        id="description"
-                                        name="description"
-                                        rows="10"
-                                        cols="70"
-                                        th:field="*{description}">
-                                    </textarea>
+                                            class="form-control"
+                                            id="description"
+                                            name="description"
+                                            rows="10"
+                                            cols="70"
+                                            th:field="*{description}">
+                                        </textarea>
                                     <p class="text-danger"
                                        th:errors="*{description}"
                                        th:if="${#fields.hasErrors('description')}">
                                     </p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <button class="btn btn-primary" type="submit" th:text="'Δημιουργία'"></button>
+                                    <button class="btn btn-primary" type="submit" th:text="'Αποθήκευση'"></button>
                                 </div>
                                 <div class="form-group mb-3">
                                     <button class="btn btn-danger" type="button">
-                                        <a class="a_button" th:href="@{/}" th:text="'Ακύρωση'"></a>
+                                        <a class="a_button" th:href="@{'/course/my/{userId}' (userId=${userId})}" th:text="'Ακύρωση'"></a>
                                     </button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <img th:src="@{/images/img10.png}"/>
+                    <img th:src="@{/images/img19.png}"/>
                 </div>
             </div>
         </div>

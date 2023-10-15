@@ -55,7 +55,6 @@ public class CourseController {
                 Course course = new Course();
                 course.setProfessor(user);
                 model.addAttribute("course", course);
-                model.addAttribute("userId", userId);
                 return "course/course_new";
             }
             return "redirect:/exception_403";
@@ -114,7 +113,6 @@ public class CourseController {
                 String role = user.getRoles().toString();
                 List<Course> courses = courseService.getMyCourses(userId, role);
                 model.addAttribute("role", role);
-                model.addAttribute("userId", userId);
                 model.addAttribute("courses", courses);
                 return "course/course_my";
             }
@@ -166,7 +164,6 @@ public class CourseController {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
                 List<Course> courses = courseService.findAvailableCourses(userId);
-                model.addAttribute("userId", userId);
                 model.addAttribute("courses", courses);
                 return "course/course_register";
             }
@@ -244,6 +241,83 @@ public class CourseController {
             model.addAttribute("course", course);
             model.addAttribute("chapters", chapters);
             return "course/course_view";
+        }
+        return "redirect:/exception_404";
+    }
+
+    @GetMapping("/course/edit/{courseId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String editCourseForm(
+            @PathVariable Long courseId,
+            @PathVariable Long userId,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+                if (optionalCourse.isPresent()) {
+                    Course course = optionalCourse.get();
+                    if (course.getProfessor().getId().equals(userId)) {
+                        model.addAttribute("course", course);
+                        return "course/course_edit";
+                    }
+                }
+            }
+            return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
+    }
+
+    @PostMapping("/course/edit/{courseId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String editCourse(
+            @PathVariable Long courseId,
+            @PathVariable Long userId,
+            @Valid @ModelAttribute("course") Course course,
+            BindingResult result,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+                if (optionalCourse.isPresent()) {
+                    Course existingCourse = optionalCourse.get();
+                    if (existingCourse.getProfessor().getId().equals(userId)) {
+                        if (!course.getCode().equals(existingCourse.getCode())) {
+                            Optional<Course> optCourse = courseService.findCourseByCode(course.getCode());
+                            if (optCourse.isPresent()) {
+                                result.rejectValue("code", "error.code", "Υπάρχει ήδη μάθημα με τον συγκεκριμένο κωδικό.");
+                            }
+                        }
+                        if (result.hasErrors()) {
+                            model.addAttribute("courseId", courseId);
+                            model.addAttribute("userId", userId);
+                            model.addAttribute("course", course);
+                            return "course/course_edit";
+                        }
+                        existingCourse.setCode(course.getCode());
+                        existingCourse.setTitle(course.getTitle());
+                        existingCourse.setDescription(course.getDescription());
+                        courseService.saveCourse(existingCourse);
+                        return String.format("redirect:/course/my/%d?success_edit", userId);
+                    }
+                }
+            }
+            return "redirect:/exception_403";
         }
         return "redirect:/exception_404";
     }
