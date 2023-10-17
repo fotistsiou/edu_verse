@@ -32,7 +32,10 @@
                             <h2 th:text="${'Μάθημα: ' + course.title}"></h2>
                         </div>
                         <div class="card-body">
-                            <p class="big_text" th:text="${'Περιγραφή: ' + course.description}"></p>
+                            <p class="big_text">
+                                <span class="text_u_strong" th:text="'Περιγραφή:'"></span>
+                                <span th:text="${course.description}"></span>
+                            </p>
                             <table class="table table-bordered" th:if="${!chapters.isEmpty()}">
                                 <thead>
                                 <tr>

@@ -90,8 +90,10 @@ public class AccountController {
         Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
+            boolean email_changed = false;
             if (existingUser.getEmail().equals(authUsername)) {
                 if (!user.getEmail().equals(existingUser.getEmail())) {
+                    email_changed = true;
                     Optional<User> optUser = userService.findUserByEmail(user.getEmail());
                     if (optUser.isPresent()) {
                         result.rejectValue("email", "error.email", "Υπάρχει ήδη χρήστης με το συγκεκριμένο email.");
@@ -111,7 +113,9 @@ public class AccountController {
                 existingUser.setLastName(user.getLastName());
                 existingUser.setTelephone(user.getTelephone());
                 userService.updateUserDetails(existingUser);
-                // TODO : Handle the case when the customer changes their email.
+                if (email_changed) {
+                    return "login/login_email_changed";
+                }
                 return String.format("redirect:/account/info/%d?success", userId);
             }
             return "redirect:/exception_403";

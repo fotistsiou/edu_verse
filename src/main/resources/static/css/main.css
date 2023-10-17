@@ -75,3 +75,8 @@ button {
 .two-buttons button {
     width: 35%;
 }
+
+.text_u_strong {
+    font-weight: bold;
+    text-decoration: underline;
+}
