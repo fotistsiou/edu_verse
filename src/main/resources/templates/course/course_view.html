@@ -26,6 +26,9 @@
                 <div th:if="${param.success_create_chapter}">
                     <div class="alert alert-success" th:text="'Δημιούργησες με επιτυχία ένα νέο κεφάλαιο!'"></div>
                 </div>
+                <div th:if="${param.success_delete_chapter}">
+                    <div class="alert alert-success" th:text="'Διέγραψες με επιτυχία ένα το κεφάλαιο!'"></div>
+                </div>
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
@@ -38,23 +41,33 @@
                             </p>
                             <table class="table table-bordered" th:if="${!chapters.isEmpty()}">
                                 <thead>
-                                <tr>
-                                    <th scope="col" th:text="'#'"></th>
-                                    <th scope="col" th:text="'Τίτλος'"></th>
-                                    <th scope="col" th:text="'Ενέργεια'"></th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col" th:text="'#'"></th>
+                                        <th scope="col" th:text="'Τίτλος'"></th>
+                                        <th scope="col" th:text="'Ενέργεια'"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="chapter, loopStat : ${chapters}">
-                                    <th th:text="${loopStat.index + 1}"></th>
-                                    <td th:text="${chapter.title}"></td>
-                                    <td>
-                                        <a th:href="@{'/chapter/view/{chapterId}' (chapterId=${chapter.id})}" th:text="'Προβολή'"></a>
-                                    </td>
-                                </tr>
+                                    <tr th:each="chapter, loopStat : ${chapters}">
+                                        <th th:text="${loopStat.index + 1}"></th>
+                                        <td th:text="${chapter.title}"></td>
+                                        <td th:if="${role == '[ROLE_STUDENT]'}">
+                                            <a th:href="@{'/chapter/view/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Προβολή'"></a>
+                                        </td>
+                                        <td th:if="${role == '[ROLE_PROFESSOR]'}">
+                                            <a th:href="@{'/chapter/view/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Προβολή'"></a>
+                                            <span th:text="' | '"></span>
+                                            <a th:href="@{'/chapter/edit/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
+                                            <span th:text="' | '"></span>
+                                            <a th:href="@{'/chapter/delete/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <p th:if="${chapters.isEmpty()}" class="text-center" th:text="'Δεν υπάρχουν ακόμα κεφάλαια...'"></p>
+                            <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
+                                <a class="a_button" th:href="@{'/chapter/new/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:text="'Δημιουργία Νέου Κεφαλαίου'"></a>
+                            </button>
                         </div>
                     </div>
                     <img class="m-3" th:src="@{/images/img17.png}"/>

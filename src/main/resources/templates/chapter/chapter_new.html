@@ -62,7 +62,7 @@
                                 <div class="form-group mb-3 two-buttons">
                                     <button class="btn btn-primary" type="submit" th:text="'Δημιουργία'"></button>
                                     <button class="btn btn-danger" type="button">
-                                        <a class="a_button" th:href="@{/}" th:text="'Ακύρωση'"></a>
+                                        <a class="a_button" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:text="'Ακύρωση'"></a>
                                     </button>
                                 </div>
                             </form>

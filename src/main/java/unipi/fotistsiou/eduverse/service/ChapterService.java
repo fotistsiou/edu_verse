@@ -3,9 +3,7 @@ package unipi.fotistsiou.eduverse.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unipi.fotistsiou.eduverse.entity.Chapter;
-import unipi.fotistsiou.eduverse.entity.Course;
 import unipi.fotistsiou.eduverse.repository.ChapterRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +21,14 @@ public class ChapterService {
         return chapterRepository.findById(id);
     }
 
+    public void saveChapter(Chapter chapter) {
+        chapterRepository.save(chapter);
+    }
+
+    public void deleteChapter(Chapter chapter) {
+        chapterRepository.delete(chapter);
+    }
+
     public List<Chapter> findAllCourseChapters(Long courseId) {
         List<Chapter> courseChapters = new ArrayList<>();
         List<Chapter> chapters = chapterRepository.findAll();
@@ -32,13 +38,5 @@ public class ChapterService {
             }
         }
         return courseChapters;
-    }
-
-    public void saveChapter(Chapter chapter) {
-        chapterRepository.save(chapter);
-    }
-
-    public void deleteChapter(Chapter chapter) {
-        chapterRepository.delete(chapter);
     }
 }

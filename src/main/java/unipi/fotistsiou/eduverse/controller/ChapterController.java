@@ -16,7 +16,6 @@ import unipi.fotistsiou.eduverse.entity.User;
 import unipi.fotistsiou.eduverse.service.ChapterService;
 import unipi.fotistsiou.eduverse.service.CourseService;
 import unipi.fotistsiou.eduverse.service.UserService;
-
 import java.security.Principal;
 import java.util.Optional;
 
@@ -95,10 +94,11 @@ public class ChapterController {
                     if (course.getProfessor().getId().equals(userId)) {
                         if (result.hasErrors()) {
                             model.addAttribute("chapter", chapter);
+                            model.addAttribute("userId", userId);
                             return "chapter/chapter_new";
                         }
                         chapterService.saveChapter(chapter);
-                        return String.format("redirect:/course/view/%d?success_create_chapter", courseId);
+                        return String.format("redirect:/course/view/%d/%d?success_create_chapter", courseId, userId);
                     }
                 }
             }
@@ -107,19 +107,64 @@ public class ChapterController {
         return "redirect:/exception_404";
     }
 
-    @GetMapping("/chapter/view/{chapterId}")
+    @GetMapping("/chapter/view/{chapterId}/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String getChapter(
             @PathVariable Long chapterId,
-            Model model
+            @PathVariable Long userId,
+            Model model,
+            Principal principal
     ){
-        Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
-        if (optionalChapter.isPresent()) {
-            Chapter chapter = optionalChapter.get();
-            Long courseId = chapter.getCourse().getId();
-            model.addAttribute("chapter", chapter);
-            model.addAttribute("courseId", courseId);
-            return "chapter/chapter_view";
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
+                if (optionalChapter.isPresent()) {
+                    Chapter chapter = optionalChapter.get();
+                    if (chapter.getCourse().getStudents().contains(user) || chapter.getCourse().getProfessor().getId().equals(userId)) {
+                        Long courseId = chapter.getCourse().getId();
+                        model.addAttribute("chapter", chapter);
+                        model.addAttribute("courseId", courseId);
+                        model.addAttribute("userId", userId);
+                        return "chapter/chapter_view";
+                    }
+                }
+            }
+            return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
+    }
+
+    @GetMapping("/chapter/delete/{chapterId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String deleteChapter(
+            @PathVariable Long chapterId,
+            @PathVariable Long userId,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
+                if (optionalChapter.isPresent()) {
+                    Chapter chapter = optionalChapter.get();
+                    if (chapter.getCourse().getProfessor().getId().equals(userId)) {
+                        chapterService.deleteChapter(chapter);
+                        return String.format("redirect:/course/view/%d/%d?success_delete_chapter", chapter.getCourse().getId(), userId);
+                    }
+                }
+            }
+            return "redirect:/exception_403";
         }
         return "redirect:/exception_404";
     }

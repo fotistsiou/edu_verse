@@ -228,19 +228,37 @@ public class CourseController {
         return "redirect:/exception_404";
     }
 
-    @GetMapping("/course/view/{courseId}")
+    @GetMapping("/course/view/{courseId}/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String getCourse(
             @PathVariable Long courseId,
-            Model model
+            @PathVariable Long userId,
+            Model model,
+            Principal principal
     ){
-        Optional<Course> optionalCourse = courseService.findCourseById(courseId);
-        if (optionalCourse.isPresent()) {
-            Course course = optionalCourse.get();
-            List<Chapter> chapters = chapterService.findAllCourseChapters(courseId);
-            model.addAttribute("course", course);
-            model.addAttribute("chapters", chapters);
-            return "course/course_view";
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+                if (optionalCourse.isPresent()) {
+                    Course course = optionalCourse.get();
+                    if (course.getStudents().contains(user) || course.getProfessor().getId().equals(userId)) {
+                        List<Chapter> chapters = chapterService.findAllCourseChapters(courseId);
+                        String role = user.getRoles().toString();
+                        model.addAttribute("course", course);
+                        model.addAttribute("chapters", chapters);
+                        model.addAttribute("userId", userId);
+                        model.addAttribute("role", role);
+                        return "course/course_view";
+                    }
+                }
+            }
+            return "redirect:/exception_403";
         }
         return "redirect:/exception_404";
     }
