@@ -55,7 +55,7 @@ public class UserService {
         String am = null;
         if (user.getId() != null) {
             am = generateAm(user.getId(), user.getRoles().toString());
-            if (am != null) {
+            if (!am.isEmpty()) {
                 user.setAm(am);
             }
         }

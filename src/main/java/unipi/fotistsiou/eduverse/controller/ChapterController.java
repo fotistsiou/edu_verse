@@ -39,10 +39,10 @@ public class ChapterController {
     @GetMapping("/chapter/new/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String createNewChapterForm(
-            @PathVariable Long courseId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long courseId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -73,12 +73,12 @@ public class ChapterController {
     @PostMapping("/chapter/new/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String createNewChapter(
-            @PathVariable Long courseId,
-            @PathVariable Long userId,
-            @Valid @ModelAttribute("chapter") Chapter chapter,
-            BindingResult result,
-            Model model,
-            Principal principal
+        @PathVariable Long courseId,
+        @PathVariable Long userId,
+        @Valid @ModelAttribute("chapter") Chapter chapter,
+        BindingResult result,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -110,10 +110,10 @@ public class ChapterController {
     @GetMapping("/chapter/view/{chapterId}/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String getChapter(
-            @PathVariable Long chapterId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long chapterId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -143,9 +143,9 @@ public class ChapterController {
     @GetMapping("/chapter/delete/{chapterId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String deleteChapter(
-            @PathVariable Long chapterId,
-            @PathVariable Long userId,
-            Principal principal
+        @PathVariable Long chapterId,
+        @PathVariable Long userId,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {

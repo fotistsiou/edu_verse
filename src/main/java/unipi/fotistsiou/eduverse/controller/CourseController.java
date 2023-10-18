@@ -231,10 +231,10 @@ public class CourseController {
     @GetMapping("/course/view/{courseId}/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String getCourse(
-            @PathVariable Long courseId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long courseId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -266,10 +266,10 @@ public class CourseController {
     @GetMapping("/course/edit/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String editCourseForm(
-            @PathVariable Long courseId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long courseId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -296,12 +296,12 @@ public class CourseController {
     @PostMapping("/course/edit/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String editCourse(
-            @PathVariable Long courseId,
-            @PathVariable Long userId,
-            @Valid @ModelAttribute("course") Course course,
-            BindingResult result,
-            Model model,
-            Principal principal
+        @PathVariable Long courseId,
+        @PathVariable Long userId,
+        @Valid @ModelAttribute("course") Course course,
+        BindingResult result,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
