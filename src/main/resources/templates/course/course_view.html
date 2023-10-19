@@ -27,7 +27,10 @@
                     <div class="alert alert-success" th:text="'Δημιούργησες με επιτυχία ένα νέο κεφάλαιο!'"></div>
                 </div>
                 <div th:if="${param.success_delete_chapter}">
-                    <div class="alert alert-success" th:text="'Διέγραψες με επιτυχία ένα το κεφάλαιο!'"></div>
+                    <div class="alert alert-success" th:text="'Διέγραψες με επιτυχία το κεφάλαιο!'"></div>
+                </div>
+                <div th:if="${param.success_edit_chapter}">
+                    <div class="alert alert-success" th:text="'Επεξεργάστηκες με επιτυχία το κεφάλαιο!'"></div>
                 </div>
                 <div class="custom_img_card_col">
                     <div class="card">

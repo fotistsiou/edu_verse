@@ -168,4 +168,72 @@ public class ChapterController {
         }
         return "redirect:/exception_404";
     }
+
+    @GetMapping("/chapter/edit/{chapterId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String editChapterForm(
+            @PathVariable Long chapterId,
+            @PathVariable Long userId,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
+                if (optionalChapter.isPresent()) {
+                    Chapter chapter = optionalChapter.get();
+                    if (chapter.getCourse().getProfessor().getId().equals(userId)) {
+                        model.addAttribute("chapter", chapter);
+                        return "chapter/chapter_edit";
+                    }
+                }
+            }
+            return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
+    }
+
+    @PostMapping("/chapter/edit/{chapterId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String editChapter(
+            @PathVariable Long chapterId,
+            @PathVariable Long userId,
+            @Valid @ModelAttribute("chapter") Chapter chapter,
+            BindingResult result,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
+                if (optionalChapter.isPresent()) {
+                    Chapter existingChapter = optionalChapter.get();
+                    if (existingChapter.getCourse().getProfessor().getId().equals(userId)) {
+                        if (result.hasErrors()) {
+                            model.addAttribute("chapter", chapter);
+                            return "chapter/chapter_edit";
+                        }
+                        existingChapter.setTitle(chapter.getTitle());
+                        existingChapter.setContent(chapter.getContent());
+                        chapterService.saveChapter(existingChapter);
+                        return String.format("redirect:/course/view/%d/%d?success_edit_chapter", chapter.getCourse().getId(), userId);
+                    }
+                }
+            }
+            return "redirect:/exception_403";
+        }
+        return "redirect:/exception_404";
+    }
 }
