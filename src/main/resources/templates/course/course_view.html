@@ -42,14 +42,14 @@
                         </div>
                         <div class="card-body">
                             <p class="big_text">
-                                <span class="text_u_strong" th:text="'Περιγραφή:'"></span>
+                                <span class="text_u_strong" th:text="'Περιγραφή Μαθήματος:'"></span>
                                 <span th:text="${course.description}"></span>
                             </p>
                             <table class="table table-bordered" th:if="${!chapters.isEmpty()}">
                                 <thead>
                                     <tr>
                                         <th scope="col" th:text="'#'"></th>
-                                        <th scope="col" th:text="'Τίτλος'"></th>
+                                        <th scope="col" th:text="'Τίτλος Κεφαλαίου'"></th>
                                         <th scope="col" th:text="'Ενέργεια'"></th>
                                     </tr>
                                 </thead>
@@ -67,7 +67,7 @@
                                             <span th:text="' | '"></span>
                                             <a th:href="@{'/chapter/delete/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
                                             <span th:text="' | '"></span>
-                                            <a th:href="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Δημιουργία Νέας Ερώτησης'"></a>
+                                            <a th:href="@{'/question/all/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Προβολή Ερωτήσεων Κεφαλαίου'"></a>
                                         </td>
                                     </tr>
                                 </tbody>

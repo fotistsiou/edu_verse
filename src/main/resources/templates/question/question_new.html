@@ -24,24 +24,23 @@
         <div class="row">
             <div class="col col-md-8">
                 <div class="custom_img_card">
-                    <img th:src="@{/images/img8.png}"/>
+                    <img th:src="@{/images/img21.png}"/>
                     <div class="card">
                         <div class="card-header">
                             <h2 th:text="'Δημιουργία Νέας Ερώτησης'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" method="POST" role="form" th:action="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:object="${question}">
+                            <form action="#" th:action="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:object="${question}" method="post">
                                 <input type="hidden" th:field="*{choice}"/>
                                 <input type="hidden" th:field="*{chapter}"/>
                                 <div class="form-group mb-3">
-                                    <label for="title" class="form-label" th:text="'Ερώτηση'"></label>
-                                    <textarea
-                                            class="form-control"
-                                            id="title"
-                                            name="title"
-                                            rows="2"
-                                            cols="70"
-                                            th:field="*{title}">
+                                    <label class="form-label" for="title" th:text="'Ερώτηση'"></label>
+                                    <textarea class="form-control"
+                                              id="title"
+                                              name="title"
+                                              rows="2"
+                                              cols="70"
+                                              th:field="*{title}">
                                     </textarea>
                                     <p class="text-danger"
                                        th:errors="*{title}"
@@ -53,9 +52,8 @@
                                     <input class="form-control"
                                            id="option_a"
                                            name="option_a"
-                                           th:field="*{option_a}"
                                            type="text"
-                                    />
+                                           th:field="*{option_a}"/>
                                     <p class="text-danger"
                                        th:errors="*{option_a}"
                                        th:if="${#fields.hasErrors('option_a')}">
@@ -66,9 +64,8 @@
                                     <input class="form-control"
                                            id="option_b"
                                            name="option_b"
-                                           th:field="*{option_b}"
                                            type="text"
-                                    />
+                                           th:field="*{option_b}"/>
                                     <p class="text-danger"
                                        th:errors="*{option_b}"
                                        th:if="${#fields.hasErrors('option_b')}">
@@ -79,9 +76,8 @@
                                     <input class="form-control"
                                            id="option_c"
                                            name="option_c"
-                                           th:field="*{option_c}"
                                            type="text"
-                                    />
+                                           th:field="*{option_c}"/>
                                     <p class="text-danger"
                                        th:errors="*{option_c}"
                                        th:if="${#fields.hasErrors('option_c')}">
