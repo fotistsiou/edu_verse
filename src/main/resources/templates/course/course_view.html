@@ -32,6 +32,9 @@
                 <div th:if="${param.success_edit_chapter}">
                     <div class="alert alert-success" th:text="'Επεξεργάστηκες με επιτυχία το κεφάλαιο!'"></div>
                 </div>
+                <div th:if="${param.success_create_question}">
+                    <div class="alert alert-success" th:text="'Δημιούργησες με επιτυχία μία νέα ερώτηση!'"></div>
+                </div>
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
@@ -63,6 +66,8 @@
                                             <a th:href="@{'/chapter/edit/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
                                             <span th:text="' | '"></span>
                                             <a th:href="@{'/chapter/delete/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
+                                            <span th:text="' | '"></span>
+                                            <a th:href="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Δημιουργία Νέας Ερώτησης'"></a>
                                         </td>
                                     </tr>
                                 </tbody>
