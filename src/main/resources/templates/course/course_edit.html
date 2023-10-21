@@ -29,43 +29,40 @@
                             <h2 th:text="'Επεξεργασία Μαθήματος'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{'/course/edit/{courseId}/{userId}'(courseId=${courseId}, userId=${userId})} " th:object="${course}" method="POST">
+                            <form action="#" th:action="@{'/course/edit/{courseId}/{userId}'(courseId=${courseId}, userId=${userId})} " th:object="${course}" method="post">
                                 <div class="form-group mb-3">
-                                    <label for="code" class="form-label" th:text="'Κωδικός'"></label>
+                                    <label class="form-label" for="code" th:text="'Κωδικός'"></label>
                                     <input class="form-control"
                                            id="code"
                                            name="code"
-                                           th:field="*{code}"
                                            type="text"
-                                    />
+                                           th:field="*{code}"/>
                                     <p class="text-danger"
                                        th:errors="*{code}"
                                        th:if="${#fields.hasErrors('code')}">
                                     </p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="title" class="form-label" th:text="'Τίτλος'"></label>
+                                    <label class="form-label" for="title" th:text="'Τίτλος'"></label>
                                     <input class="form-control"
                                            id="title"
                                            name="title"
-                                           th:field="*{title}"
                                            type="text"
-                                    />
+                                           th:field="*{title}"/>
                                     <p class="text-danger"
                                        th:errors="*{title}"
                                        th:if="${#fields.hasErrors('title')}">
                                     </p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="description" class="form-label" th:text="'Σύντομη Περιγραφή'"></label>
-                                    <textarea
-                                            class="form-control"
-                                            id="description"
-                                            name="description"
-                                            rows="10"
-                                            cols="70"
-                                            th:field="*{description}">
-                                        </textarea>
+                                    <label class="form-label" for="description" th:text="'Σύντομη Περιγραφή'"></label>
+                                    <textarea class="form-control"
+                                              id="description"
+                                              name="description"
+                                              rows="10"
+                                              cols="70"
+                                              th:field="*{description}">
+                                    </textarea>
                                     <p class="text-danger"
                                        th:errors="*{description}"
                                        th:if="${#fields.hasErrors('description')}">

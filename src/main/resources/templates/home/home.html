@@ -52,7 +52,7 @@
                                 <button class="btn btn-dark" type="button">
                                     <a class="a_button" th:href="@{'/account/info/{userId}' (userId=${userId})}" th:text="'Ο Λογαριασμός Μου'"></a>
                                 </button>
-                                <form action="#" role="form" th:action="@{/logout}" method="POST">
+                                <form action="#" th:action="@{/logout}" method="post">
                                     <button class="btn btn-dark" type="submit" sec:authorize="isAuthenticated()">
                                         <a class="a_button" th:text="'Αποσύνδεση'"></a>
                                     </button>

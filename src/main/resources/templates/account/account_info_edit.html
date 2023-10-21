@@ -30,26 +30,23 @@
                             <h2 th:text="'Επεξεργασία Πληροφοριών Λογαριασμού'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{'/account/info/edit/{userId}' (userId=${user.id})}" th:object="${user}" method="POST">
+                            <form action="#" th:action="@{'/account/info/edit/{userId}' (userId=${user.id})}" th:object="${user}" method="post">
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="am" th:text="'Αριθμός Μητρώου'"></label>
                                     <input class="form-control"
                                            id="am"
                                            name="am"
-                                           th:field="*{am}"
                                            type="email"
                                            readonly
-                                    />
-
+                                           th:field="*{am}"/>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="email" th:text="'Email'"></label>
                                     <input class="form-control"
                                            id="email"
                                            name="email"
-                                           th:field="*{email}"
                                            type="email"
-                                    />
+                                           th:field="*{email}"/>
                                     <p class="text-danger"
                                        th:errors="*{email}"
                                        th:if="${#fields.hasErrors('email')}">
@@ -60,9 +57,8 @@
                                     <input class="form-control"
                                            id="firstName"
                                            name="firstName"
-                                           th:field="*{firstName}"
                                            type="text"
-                                    />
+                                           th:field="*{firstName}"/>
                                     <p class="text-danger"
                                        th:errors="*{firstName}"
                                        th:if="${#fields.hasErrors('firstName')}">
@@ -73,9 +69,8 @@
                                     <input class="form-control"
                                            id="lastName"
                                            name="lastName"
-                                           th:field="*{lastName}"
                                            type="text"
-                                    />
+                                           th:field="*{lastName}"/>
                                     <p class="text-danger"
                                        th:errors="*{lastName}"
                                        th:if="${#fields.hasErrors('lastName')}">
@@ -86,9 +81,8 @@
                                     <input class="form-control"
                                            id="telephone"
                                            name="telephone"
-                                           th:field="*{telephone}"
                                            type="tel"
-                                    />
+                                           th:field="*{telephone}"/>
                                     <p class="text-danger"
                                        th:errors="*{telephone}"
                                        th:if="${#fields.hasErrors('telephone')}">

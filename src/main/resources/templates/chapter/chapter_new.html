@@ -29,31 +29,29 @@
                             <h2 th:text="'Δημιουργία Νέου Κεφαλαίου'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{'/chapter/new/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:object="${chapter}" method="POST">
-                                <input type="hidden" th:field="*{course}" />
+                            <form action="#" th:action="@{'/chapter/new/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:object="${chapter}" method="post">
+                                <input type="hidden" th:field="*{course}"/>
                                 <div class="form-group mb-3">
-                                    <label for="title" class="form-label" th:text="'Τίτλος'"></label>
+                                    <label class="form-label" for="title" th:text="'Τίτλος'"></label>
                                     <input class="form-control"
                                            id="title"
                                            name="title"
-                                           th:field="*{title}"
                                            type="text"
-                                    />
+                                           th:field="*{title}"/>
                                     <p class="text-danger"
                                        th:errors="*{title}"
                                        th:if="${#fields.hasErrors('title')}">
                                     </p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="content" class="form-label" th:text="'Περιεχόμενο'"></label>
-                                    <textarea
-                                            class="form-control"
-                                            id="content"
-                                            name="content"
-                                            rows="15"
-                                            cols="170"
-                                            th:field="*{content}">
-                                        </textarea>
+                                    <label class="form-label" for="content" th:text="'Περιεχόμενο'"></label>
+                                    <textarea class="form-control"
+                                              id="content"
+                                              name="content"
+                                              rows="15"
+                                              cols="170"
+                                              th:field="*{content}">
+                                    </textarea>
                                     <p class="text-danger"
                                        th:errors="*{content}"
                                        th:if="${#fields.hasErrors('content')}">

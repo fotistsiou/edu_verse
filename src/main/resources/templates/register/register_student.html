@@ -30,55 +30,51 @@
                             <h2 th:text="'Εγγραφή ως Μαθητής'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{/register/ROLE_STUDENT}" th:object="${user}" method="POST">
+                            <form action="#" th:action="@{/register/ROLE_STUDENT}" th:object="${user}" method="post">
                                 <input type="hidden" th:field="*{am}"/>
                                 <div class="form-group mb-3">
-                                    <label for="emailUser" class="form-label" th:text="'Email'"></label>
+                                    <label class="form-label" for="emailUser" th:text="'Email'"></label>
                                     <input class="form-control"
                                            id="emailUser"
                                            name="emailUser"
-                                           th:field="*{email}"
                                            type="email"
-                                    />
+                                           th:field="*{email}"/>
                                     <p class="text-danger"
                                        th:errors="*{email}"
                                        th:if="${#fields.hasErrors('email')}">
                                     </p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="firstNameUser" class="form-label" th:text="'Όνομα'"></label>
+                                    <label class="form-label" for="firstNameUser" th:text="'Όνομα'"></label>
                                     <input class="form-control"
                                            id="firstNameUser"
                                            name="firstNameUser"
-                                           th:field="*{firstName}"
                                            type="text"
-                                    />
+                                           th:field="*{firstName}"/>
                                     <p class="text-danger"
                                        th:errors="*{firstName}"
                                        th:if="${#fields.hasErrors('firstName')}">
                                     </p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="lastNameUser" class="form-label" th:text="'Επώνυμο'"></label>
+                                    <label class="form-label" for="lastNameUser" th:text="'Επώνυμο'"></label>
                                     <input class="form-control"
                                            id="lastNameUser"
                                            name="lastNameUser"
-                                           th:field="*{lastName}"
                                            type="text"
-                                    />
+                                           th:field="*{lastName}"/>
                                     <p class="text-danger"
                                        th:errors="*{lastName}"
                                        th:if="${#fields.hasErrors('lastName')}">
                                     </p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="passwordUser" class="form-label" th:text="'Κωδικός'"></label>
+                                    <label class="form-label" for="passwordUser" th:text="'Κωδικός'"></label>
                                     <input class="form-control"
                                            id="passwordUser"
                                            name="passwordUser"
-                                           th:field="*{password}"
                                            type="password"
-                                    />
+                                           th:field="*{password}"/>
                                     <p class="text-danger"
                                        th:errors="*{password}"
                                        th:if="${#fields.hasErrors('password')}">

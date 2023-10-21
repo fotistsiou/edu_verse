@@ -38,19 +38,25 @@
                             <h2 th:text="'Φόρμα Σύνδεσης'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" role="form" th:action="@{/login}" method="POST">
-                                <div class="mb-3">
-                                    <label for="username" class="control-label" th:text="'Email'"></label>
-                                    <input type="text" id="username" name="username" class="form-control"/>
+                            <form action="#" th:action="@{/login}" method="post">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="username" th:text="'Email'"></label>
+                                    <input class="form-control"
+                                           id="username"
+                                           name="username"
+                                           type="text"/>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="password" class="control-label" th:text="'Κωδικός'"></label>
-                                    <input type="password" id="password" name="password" class="form-control"/>
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="password" th:text="'Κωδικός'"></label>
+                                    <input class="form-control"
+                                           id="password"
+                                           name="password"
+                                           type="password"/>
                                 </div>
-                                <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary" th:text="'Σύνδεση'"></button>
+                                <div class="form-group mb-3">
+                                    <button class="btn btn-primary" type="submit"  th:text="'Σύνδεση'"></button>
                                 </div>
-                                <div class="mb-3">
+                                <div class="form-group mb-3">
                                     <p th:text="'Δεν έχεις λογαριασμό;'"></p>
                                     <a th:href="@{/register/professor}" th:text="'Εγγραφή ως Καθηγητής'"></a>
                                     <span th:text="' | '"></span>
