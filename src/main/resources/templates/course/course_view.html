@@ -67,7 +67,7 @@
                                             <span th:text="' | '"></span>
                                             <a th:href="@{'/chapter/delete/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
                                             <span th:text="' | '"></span>
-                                            <a th:href="@{'/question/all/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Προβολή Ερωτήσεων Κεφαλαίου'"></a>
+                                            <a th:href="@{'/question/view/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Προβολή Ερωτήσεων Κεφαλαίου'"></a>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -86,9 +86,9 @@
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="answer" th:text="'Όρισε Σωστή Απάντηση'"></label>
                                     <select class="form-select" id="answer" name="answer" th:field="*{answer}">
-                                        <option th:value="1" th:text="'Α'" th:selected="1"></option>
-                                        <option th:value="2" th:text="'Β'"></option>
-                                        <option th:value="3" th:text="'Γ'"></option>
+                                        <option th:value="1" th:text="'Επιλογή Α'" th:selected="1"></option>
+                                        <option th:value="2" th:text="'Επιλογή Β'"></option>
+                                        <option th:value="3" th:text="'Επιλογή Γ'"></option>
                                     </select>
                                     <p class="text-danger"
                                        th:errors="*{answer}"

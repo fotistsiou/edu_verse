@@ -98,7 +98,7 @@ public class QuestionController {
                             return "question/question_new";
                         }
                         questionService.saveQuestion(question);
-                        return String.format("redirect:/question/all/%d/%d?success_create_question", chapterId, userId);
+                        return String.format("redirect:/question/view/%d/%d?success_create_question", chapterId, userId);
                     }
                 }
             }
@@ -107,7 +107,7 @@ public class QuestionController {
         return "redirect:/exception_404";
     }
 
-    @GetMapping("/question/all/{chapterId}/{userId}")
+    @GetMapping("/question/view/{chapterId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String getChapterQuestions(
         @PathVariable Long chapterId,
@@ -131,7 +131,7 @@ public class QuestionController {
                         model.addAttribute("chapter", chapter);
                         model.addAttribute("questions", questions);
                         model.addAttribute("userId", userId);
-                        return "question/question_all";
+                        return "question/question_view";
                     }
                 }
             }

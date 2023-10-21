@@ -58,7 +58,9 @@
                                     <td th:text="${question.option_a}"></td>
                                     <td th:text="${question.option_b}"></td>
                                     <td th:text="${question.option_c}"></td>
-                                    <td th:text="${question.answer}"></td>
+                                    <td th:if="${question.answer == 1}" th:text="'Επιλογή Α'"></td>
+                                    <td th:if="${question.answer == 2}" th:text="'Επιλογή Β'"></td>
+                                    <td th:if="${question.answer == 3}" th:text="'Επιλογή Γ'"></td>
                                     <td>
                                     </td>
                                 </tr>
