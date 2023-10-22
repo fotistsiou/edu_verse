@@ -168,4 +168,75 @@ public class QuestionController {
         }
         return "redirect:/error_404";
     }
+
+    @GetMapping("/question/edit/{questionId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String editQuestionForm(
+            @PathVariable Long questionId,
+            @PathVariable Long userId,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Question> optionalQuestion = questionService.findQuestionById(questionId);
+                if (optionalQuestion.isPresent()) {
+                    Question question = optionalQuestion.get();
+                    if (question.getChapter().getCourse().getProfessor().getId().equals(userId)) {
+                        model.addAttribute("question", question);
+                        return "question/question_edit";
+                    }
+                }
+            }
+            return "redirect:/error_403";
+        }
+        return "redirect:/error_404";
+    }
+
+    @PostMapping("/question/edit/{questionId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String editQuestion(
+            @PathVariable Long questionId,
+            @PathVariable Long userId,
+            @Valid @ModelAttribute("question") Question question,
+            BindingResult result,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Question> optionalQuestion = questionService.findQuestionById(questionId);
+                if (optionalQuestion.isPresent()) {
+                    Question existingQuestion = optionalQuestion.get();
+                    if (existingQuestion.getChapter().getCourse().getProfessor().getId().equals(userId)) {
+                        if (result.hasErrors()) {
+                            model.addAttribute("question", question);
+                            return "question/question_edit";
+                        }
+                        existingQuestion.setTitle(question.getTitle());
+                        existingQuestion.setOption_a(question.getOption_a());
+                        existingQuestion.setOption_b(question.getOption_b());
+                        existingQuestion.setOption_c(question.getOption_c());
+                        existingQuestion.setAnswer(question.getAnswer());
+                        questionService.saveQuestion(existingQuestion);
+                        return String.format("redirect:/question/view/%d/%d?success_edit_question", question.getChapter().getId(), userId);
+                    }
+                }
+            }
+            return "redirect:/error_403";
+        }
+        return "redirect:/error_404";
+    }
 }

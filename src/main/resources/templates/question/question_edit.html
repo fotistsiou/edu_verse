@@ -2,7 +2,7 @@
 <html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'EduVerse | Δημιουργία Νέας Ερώτησης'"></title>
+    <title th:text="'EduVerse | Επεξεργασία Ερώτησης'"></title>
     <link rel="stylesheet"
           th:href="@{/css/main.css}">
     <link crossorigin="anonymous"
@@ -27,10 +27,10 @@
                     <img th:src="@{/images/img21.png}"/>
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Δημιουργία Νέας Ερώτησης'"></h2>
+                            <h2 th:text="'Επεξεργασία Ερώτησης'"></h2>
                         </div>
                         <div class="card-body">
-                            <form action="#" th:action="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:object="${question}" method="post">
+                            <form action="#" th:action="@{'/question/edit/{questionId}/{userId}' (questionId=${questionId}, userId=${userId})}" th:object="${question}" method="post" >
                                 <input type="hidden" th:field="*{choice}"/>
                                 <input type="hidden" th:field="*{chapter}"/>
                                 <div class="form-group mb-3">
@@ -86,13 +86,13 @@
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="answer" th:text="'Όρισε Σωστή Απάντηση'"></label>
                                     <select class="form-select" id="answer" name="answer" th:field="*{answer}">
-                                        <option th:value="1" th:text="'Επιλογή Α'" th:selected="1"></option>
+                                        <option th:value="1" th:text="'Επιλογή Α'"></option>
                                         <option th:value="2" th:text="'Επιλογή Β'"></option>
                                         <option th:value="3" th:text="'Επιλογή Γ'"></option>
                                     </select>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <button class="btn btn-primary" type="submit" th:text="'Δημιουργία'"></button>
+                                    <button class="btn btn-primary" type="submit" th:text="'Αποθήκευση'"></button>
                                 </div>
                             </form>
                         </div>
