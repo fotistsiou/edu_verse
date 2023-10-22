@@ -30,11 +30,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h2>
-                                <span th:text="'Προβολή Ερωτήσεων Κεφαλαίου: '"></span>
-                                <a th:href="@{'/chapter/view/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:text="${chapter.title}"></a>
+                                <span th:text="'Ερωτήσεις Κεφαλαίου'"></span>
                             </h2>
                             <h4>
-                                <span th:text="'Μαθήματος: '"></span>
+                                <span th:text="'Κεφάλαιο:'"></span>
+                                <a th:href="@{'/chapter/view/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:text="${chapter.title}"></a>
+                                <span th:text="'Μαθήμα:'"></span>
                                 <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${chapter.course.id}, userId=${userId})}" th:text="${chapter.course.title}"></a>
                             </h4>
                         </div>

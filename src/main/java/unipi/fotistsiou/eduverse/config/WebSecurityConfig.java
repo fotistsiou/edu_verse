@@ -30,7 +30,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/account/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
-                .requestMatchers("/exception/**").permitAll()
+                .requestMatchers("/error/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

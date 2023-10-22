@@ -65,9 +65,9 @@ public class ChapterController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @PostMapping("/chapter/new/{courseId}/{userId}")
@@ -102,9 +102,9 @@ public class ChapterController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/chapter/view/{chapterId}/{userId}")
@@ -135,9 +135,9 @@ public class ChapterController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/chapter/delete/{chapterId}/{userId}")
@@ -164,9 +164,9 @@ public class ChapterController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/chapter/edit/{chapterId}/{userId}")
@@ -194,9 +194,9 @@ public class ChapterController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @PostMapping("/chapter/edit/{chapterId}/{userId}")
@@ -232,8 +232,8 @@ public class ChapterController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 }

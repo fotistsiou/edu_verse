@@ -28,9 +28,9 @@ public class QuestionController {
 
     @Autowired
     public QuestionController(
-            QuestionService questionService,
-            UserService userService,
-            ChapterService chapterService
+        QuestionService questionService,
+        UserService userService,
+        ChapterService chapterService
     ){
         this.questionService = questionService;
         this.userService = userService;
@@ -66,9 +66,9 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @PostMapping("/question/new/{chapterId}/{userId}")
@@ -102,9 +102,9 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/question/view/{chapterId}/{userId}")
@@ -135,8 +135,8 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 }

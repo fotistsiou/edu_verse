@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CustomErrorController implements ErrorController {
-    @GetMapping("/exception")
+    @GetMapping("/error")
     public String getException() {
-        return "exception/exception";
+        return "error/error";
     }
 
-    @GetMapping("/exception_403")
+    @GetMapping("/error_403")
     public String getException403() {
-        return "exception/exception_403";
+        return "error/error_403";
     }
 
-    @GetMapping("/exception_404")
+    @GetMapping("/error_404")
     public String getException404() {
-        return "exception/exception_404";
+        return "error/error_404";
     }
 
-    @GetMapping("/exception_500")
+    @GetMapping("/error_500")
     public String getException500() {
-        return "exception/exception_500";
+        return "error/error_500";
     }
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
@@ -35,13 +35,13 @@ public class CustomErrorController implements ErrorController {
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
             if (statusCode == HttpStatus.FORBIDDEN.value()) {
-                return "redirect:/exception_403";
+                return "redirect:/error_403";
             } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "redirect:/exception_404";
+                return "redirect:/error_404";
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "redirect:/exception_500";
+                return "redirect:/error_500";
             }
         }
-        return "redirect:/exception";
+        return "redirect:/error";
     }
 }

@@ -46,9 +46,9 @@ public class AccountController {
                 model.addAttribute("user", user);
                 return "account/account_info";
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/account/info/edit/{userId}")
@@ -69,9 +69,9 @@ public class AccountController {
                 model.addAttribute("user", user);
                 return "account/account_info_edit";
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @PostMapping("/account/info/edit/{userId}")
@@ -118,9 +118,9 @@ public class AccountController {
                 }
                 return String.format("redirect:/account/info/%d?success", userId);
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/account/password/edit/{userId}")
@@ -141,9 +141,9 @@ public class AccountController {
                 model.addAttribute("user", user);
                 return "account/account_password_edit";
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @PostMapping("/account/password/edit/{userId}")
@@ -175,8 +175,8 @@ public class AccountController {
                 userService.updatePassword(existingUser);
                 return String.format("redirect:/account/info/%d?success_update_pass", userId);
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 }

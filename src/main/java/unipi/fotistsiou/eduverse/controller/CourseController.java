@@ -57,9 +57,9 @@ public class CourseController {
                 model.addAttribute("course", course);
                 return "course/course_new";
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @PostMapping("/course/new/{userId}")
@@ -90,9 +90,9 @@ public class CourseController {
                 courseService.saveCourse(course);
                 return String.format("redirect:/course/my/%d?success", course.getProfessor().getId());
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/course/my/{userId}")
@@ -116,9 +116,9 @@ public class CourseController {
                 model.addAttribute("courses", courses);
                 return "course/course_my";
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/course/delete/{courseId}/{userId}")
@@ -143,9 +143,9 @@ public class CourseController {
                     return String.format("redirect:/course/my/%d?success_delete", userId);
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/course/register/{userId}")
@@ -167,9 +167,9 @@ public class CourseController {
                 model.addAttribute("courses", courses);
                 return "course/course_register";
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/course/register/{courseId}/{userId}")
@@ -195,9 +195,9 @@ public class CourseController {
                     return String.format("redirect:/course/my/%d?success_register", userId);
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/course/remove/{courseId}/{userId}")
@@ -223,9 +223,9 @@ public class CourseController {
                     return String.format("redirect:/course/my/%d?success_remove", userId);
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/course/view/{courseId}/{userId}")
@@ -258,9 +258,9 @@ public class CourseController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @GetMapping("/course/edit/{courseId}/{userId}")
@@ -288,9 +288,9 @@ public class CourseController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 
     @PostMapping("/course/edit/{courseId}/{userId}")
@@ -333,8 +333,8 @@ public class CourseController {
                     }
                 }
             }
-            return "redirect:/exception_403";
+            return "redirect:/error_403";
         }
-        return "redirect:/exception_404";
+        return "redirect:/error_404";
     }
 }
