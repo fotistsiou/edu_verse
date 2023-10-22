@@ -95,6 +95,11 @@
                                 <div class="form-group mb-3">
                                     <button class="btn btn-primary" type="submit" th:text="'Αποθήκευση'"></button>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <button class="btn btn-danger" type="button">
+                                        <a class="a_button" th:href="@{'/question/view/{chapterId}/{userId}' (chapterId=${question.getChapter().getId()}, userId=${userId})}" th:text="'Ακύρωση'"></a>
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
