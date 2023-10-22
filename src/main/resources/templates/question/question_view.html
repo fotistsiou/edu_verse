@@ -26,6 +26,9 @@
                 <div th:if="${param.success_create_question}">
                     <div class="alert alert-success" th:text="'Δημιούργησες με επιτυχία μία νέα ερώτηση!'"></div>
                 </div>
+                <div th:if="${param.success_delete_question}">
+                    <div class="alert alert-success" th:text="'Διαγράψατε με επιτυχία μία ερώτηση!'"></div>
+                </div>
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
@@ -63,6 +66,9 @@
                                     <td th:if="${question.answer == 2}" th:text="'Επιλογή Β'"></td>
                                     <td th:if="${question.answer == 3}" th:text="'Επιλογή Γ'"></td>
                                     <td>
+                                        <a th:href="@{'/question/edit/{questionId}/{userId}' (questionId=${question.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
+                                        <span th:text="' | '"></span>
+                                        <a th:href="@{'/question/delete/{questionId}/{userId}' (questionId=${question.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
                                     </td>
                                 </tr>
                                 </tbody>

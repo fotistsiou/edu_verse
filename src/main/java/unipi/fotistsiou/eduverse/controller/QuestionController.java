@@ -139,4 +139,33 @@ public class QuestionController {
         }
         return "redirect:/error_404";
     }
+
+    @GetMapping("/question/delete/{questionId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String deleteQuestion(
+        @PathVariable Long questionId,
+        @PathVariable Long userId,
+        Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Question> optionalQuestion = questionService.findQuestionById(questionId);
+                if (optionalQuestion.isPresent()) {
+                    Question question = optionalQuestion.get();
+                    if (question.getChapter().getCourse().getProfessor().getId().equals(userId)) {
+                        questionService.deleteQuestion(question);
+                        return String.format("redirect:/question/view/%d/%d?success_delete_question", question.getChapter().getId(), userId);
+                    }
+                }
+            }
+            return "redirect:/error_403";
+        }
+        return "redirect:/error_404";
+    }
 }
