@@ -66,9 +66,9 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/error_403";
+            return "error/error_403";
         }
-        return "redirect:/error_404";
+        return "error/error_404";
     }
 
     @PostMapping("/question/new/{chapterId}/{userId}")
@@ -102,9 +102,9 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/error_403";
+            return "error/error_403";
         }
-        return "redirect:/error_404";
+        return "error/error_404";
     }
 
     @GetMapping("/question/view/{chapterId}/{userId}")
@@ -135,9 +135,9 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/error_403";
+            return "error/error_403";
         }
-        return "redirect:/error_404";
+        return "error/error_404";
     }
 
     @GetMapping("/question/delete/{questionId}/{userId}")
@@ -164,9 +164,9 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/error_403";
+            return "error/error_403";
         }
-        return "redirect:/error_404";
+        return "error/error_404";
     }
 
     @GetMapping("/question/edit/{questionId}/{userId}")
@@ -194,9 +194,9 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/error_403";
+            return "error/error_403";
         }
-        return "redirect:/error_404";
+        return "error/error_404";
     }
 
     @PostMapping("/question/edit/{questionId}/{userId}")
@@ -235,8 +235,8 @@ public class QuestionController {
                     }
                 }
             }
-            return "redirect:/error_403";
+            return "error/error_403";
         }
-        return "redirect:/error_404";
+        return "error/error_404";
     }
 }
