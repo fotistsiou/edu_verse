@@ -26,9 +26,6 @@ public class QuestionService {
     }
 
     public void saveQuestion(Question question) {
-        if (question.getId() == null) {
-            question.setChoice(0);
-        }
         questionRepository.save(question);
     }
 
