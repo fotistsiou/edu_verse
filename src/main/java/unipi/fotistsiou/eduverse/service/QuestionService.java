@@ -3,6 +3,7 @@ package unipi.fotistsiou.eduverse.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unipi.fotistsiou.eduverse.entity.Question;
+import unipi.fotistsiou.eduverse.entity.Quiz;
 import unipi.fotistsiou.eduverse.repository.QuestionRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,15 @@ import java.util.Optional;
 @Service
 public class QuestionService {
     private final QuestionRepository questionRepository;
+    private final Quiz quiz;
 
     @Autowired
-    public QuestionService(QuestionRepository questionRepository){
+    public QuestionService(
+        QuestionRepository questionRepository,
+        Quiz quiz
+    ){
         this.questionRepository = questionRepository;
+        this.quiz = quiz;
     }
 
     public Optional<Question> findQuestionById(Long id) {
@@ -26,6 +32,9 @@ public class QuestionService {
     }
 
     public void saveQuestion(Question question) {
+        if (question.getId() == null) {
+            question.setChoice(0);
+        }
         questionRepository.save(question);
     }
 
@@ -38,5 +47,17 @@ public class QuestionService {
             }
         }
         return chapterQuestions;
+    }
+
+    public Quiz getQuestionsByChapter(Long chapterId) {
+        List<Question> allQuestions = questionRepository.findAll();
+        List<Question> quizList = new ArrayList<>();
+        for (Question question:allQuestions) {
+            if (question.getChapter().getId().equals(chapterId)) {
+                quizList.add(question);
+            }
+        }
+        quiz.setQuestions(quizList);
+        return quiz;
     }
 }

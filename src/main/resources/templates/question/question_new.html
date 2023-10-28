@@ -32,6 +32,7 @@
                         </div>
                         <div class="card-body">
                             <form action="#" th:action="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:object="${question}" method="post">
+                                <input type="hidden" th:field="*{choice}"/>
                                 <input type="hidden" th:field="*{chapter}"/>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="title" th:text="'Ερώτηση'"></label>

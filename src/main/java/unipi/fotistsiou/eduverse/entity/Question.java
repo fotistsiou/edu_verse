@@ -35,6 +35,9 @@ public class Question {
     @Column(name="answer", nullable=false)
     private int answer;
 
+    @Column(name="choice", nullable=false)
+    private int choice;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "chapter", referencedColumnName = "id", nullable = false)
     private Chapter chapter;

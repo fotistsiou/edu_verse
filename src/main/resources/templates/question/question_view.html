@@ -77,8 +77,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <p class="text-center" th:if="${questions.isEmpty()}"
-                               th:text="'Δεν υπάρχουν ακόμα ερωτήσεις...'"></p>
+                            <p class="text-center" th:text="'Δεν υπάρχουν ακόμα ερωτήσεις...'" th:if="${questions.isEmpty()}"></p>
                             <button class="btn btn-primary" type="button">
                                 <a class="a_button" th:href="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:text="'Δημιουργία Νέας Ερώτησης'"></a>
                             </button>

@@ -52,7 +52,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <p th:if="${courses.isEmpty()}" class="text-center" th:text="'Δεν υπάρχει διαθέσιμο μάθημα...'"></p>
+                            <p class="text-center" th:text="'Δεν υπάρχει διαθέσιμο μάθημα...'" th:if="${courses.isEmpty()}"></p>
                         </div>
                     </div>
                     <img th:src="@{/images/img12.png}"/>

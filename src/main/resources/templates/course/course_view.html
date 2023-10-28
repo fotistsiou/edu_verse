@@ -60,6 +60,8 @@
                                         <td th:text="${chapter.title}"></td>
                                         <td th:if="${role == '[ROLE_STUDENT]'}">
                                             <a th:href="@{'/chapter/view/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Προβολή'"></a>
+                                            <span th:text="' | '"></span>
+                                            <a th:href="@{'/quiz/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Ερωτηματολόγιο'"></a>
                                         </td>
                                         <td th:if="${role == '[ROLE_PROFESSOR]'}">
                                             <a th:href="@{'/chapter/view/{chapterId}/{userId}' (chapterId=${chapter.id}, userId=${userId})}" th:text="'Προβολή'"></a>
@@ -73,7 +75,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <p th:if="${chapters.isEmpty()}" class="text-center" th:text="'Δεν υπάρχουν ακόμα κεφάλαια...'"></p>
+                            <p class="text-center" th:text="'Δεν υπάρχουν ακόμα κεφάλαια...'" th:if="${chapters.isEmpty()}"></p>
                             <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
                                 <a class="a_button" th:href="@{'/chapter/new/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:text="'Δημιουργία Νέου Κεφαλαίου'"></a>
                             </button>
