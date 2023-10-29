@@ -36,9 +36,9 @@ public class Course {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "course_students",
-            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "student", referencedColumnName = "id")
+        name = "course_students",
+        joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "student", referencedColumnName = "id")
     )
     private Set<User> students = new HashSet<>();
 }
