@@ -39,7 +39,7 @@ public class QuestionController {
 
     @GetMapping("/question/new/{chapterId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewQuestionForm(
+    public String createQuestionForm(
         @PathVariable Long chapterId,
         @PathVariable Long userId,
         Model model,
@@ -64,7 +64,9 @@ public class QuestionController {
                         model.addAttribute("question", question);
                         return "question/question_new";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -73,7 +75,7 @@ public class QuestionController {
 
     @PostMapping("/question/new/{chapterId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewQuestion(
+    public String createQuestion(
         @PathVariable Long chapterId,
         @PathVariable Long userId,
         @Valid @ModelAttribute("question") Question question,
@@ -100,7 +102,9 @@ public class QuestionController {
                         questionService.saveQuestion(question);
                         return String.format("redirect:/question/view/%d/%d?success_create_question", chapterId, userId);
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -133,7 +137,9 @@ public class QuestionController {
                         model.addAttribute("userId", userId);
                         return "question/question_view";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -162,7 +168,9 @@ public class QuestionController {
                         questionService.deleteQuestion(question);
                         return String.format("redirect:/question/view/%d/%d?success_delete_question", question.getChapter().getId(), userId);
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -172,10 +180,10 @@ public class QuestionController {
     @GetMapping("/question/edit/{questionId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String editQuestionForm(
-            @PathVariable Long questionId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long questionId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -192,7 +200,9 @@ public class QuestionController {
                         model.addAttribute("question", question);
                         return "question/question_edit";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -202,12 +212,12 @@ public class QuestionController {
     @PostMapping("/question/edit/{questionId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String editQuestion(
-            @PathVariable Long questionId,
-            @PathVariable Long userId,
-            @Valid @ModelAttribute("question") Question question,
-            BindingResult result,
-            Model model,
-            Principal principal
+        @PathVariable Long questionId,
+        @PathVariable Long userId,
+        @Valid @ModelAttribute("question") Question question,
+        BindingResult result,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -233,7 +243,9 @@ public class QuestionController {
                         questionService.saveQuestion(existingQuestion);
                         return String.format("redirect:/question/view/%d/%d?success_edit_question", question.getChapter().getId(), userId);
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }

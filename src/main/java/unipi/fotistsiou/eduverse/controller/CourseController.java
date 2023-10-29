@@ -39,7 +39,7 @@ public class CourseController {
 
     @GetMapping("/course/new/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewCourseForm(
+    public String createCourseForm(
         @PathVariable Long userId,
         Model model,
         Principal principal
@@ -64,7 +64,7 @@ public class CourseController {
 
     @PostMapping("/course/new/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewCourse(
+    public String createCourse(
         @PathVariable Long userId,
         @Valid @ModelAttribute("course") Course course,
         BindingResult result,
@@ -139,9 +139,13 @@ public class CourseController {
                 Optional<Course> optionalCourse = courseService.findCourseById(courseId);
                 if (optionalCourse.isPresent()) {
                     Course course = optionalCourse.get();
-                    courseService.deleteCourse(course);
-                    return String.format("redirect:/course/my/%d?success_delete", userId);
+                    if (course.getProfessor().getId().equals(userId)) {
+                        courseService.deleteCourse(course);
+                        return String.format("redirect:/course/my/%d?success_delete", userId);
+                    }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -194,6 +198,7 @@ public class CourseController {
                     courseService.saveCourse(course);
                     return String.format("redirect:/course/my/%d?success_register", userId);
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -218,10 +223,14 @@ public class CourseController {
                 Optional<Course> optionalCourse = courseService.findCourseById(courseId);
                 if (optionalCourse.isPresent()) {
                     Course course = optionalCourse.get();
-                    course.getStudents().remove(user);
-                    courseService.saveCourse(course);
-                    return String.format("redirect:/course/my/%d?success_remove", userId);
+                    if (course.getStudents().contains(user)) {
+                        course.getStudents().remove(user);
+                        courseService.saveCourse(course);
+                        return String.format("redirect:/course/my/%d?success_remove", userId);
+                    }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -256,7 +265,9 @@ public class CourseController {
                         model.addAttribute("role", role);
                         return "course/course_view";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -286,7 +297,9 @@ public class CourseController {
                         model.addAttribute("course", course);
                         return "course/course_edit";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -331,7 +344,9 @@ public class CourseController {
                         courseService.saveCourse(existingCourse);
                         return String.format("redirect:/course/my/%d?success_edit", userId);
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }

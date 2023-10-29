@@ -38,7 +38,7 @@ public class ChapterController {
 
     @GetMapping("/chapter/new/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewChapterForm(
+    public String createChapterForm(
         @PathVariable Long courseId,
         @PathVariable Long userId,
         Model model,
@@ -63,7 +63,9 @@ public class ChapterController {
                         model.addAttribute("chapter", chapter);
                         return "chapter/chapter_new";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -72,7 +74,7 @@ public class ChapterController {
 
     @PostMapping("/chapter/new/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String createNewChapter(
+    public String createChapter(
         @PathVariable Long courseId,
         @PathVariable Long userId,
         @Valid @ModelAttribute("chapter") Chapter chapter,
@@ -100,7 +102,9 @@ public class ChapterController {
                         chapterService.saveChapter(chapter);
                         return String.format("redirect:/course/view/%d/%d?success_create_chapter", courseId, userId);
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -133,7 +137,9 @@ public class ChapterController {
                         model.addAttribute("userId", userId);
                         return "chapter/chapter_view";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -162,7 +168,9 @@ public class ChapterController {
                         chapterService.deleteChapter(chapter);
                         return String.format("redirect:/course/view/%d/%d?success_delete_chapter", chapter.getCourse().getId(), userId);
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -172,10 +180,10 @@ public class ChapterController {
     @GetMapping("/chapter/edit/{chapterId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String editChapterForm(
-            @PathVariable Long chapterId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long chapterId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -192,7 +200,9 @@ public class ChapterController {
                         model.addAttribute("chapter", chapter);
                         return "chapter/chapter_edit";
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }
@@ -230,7 +240,9 @@ public class ChapterController {
                         chapterService.saveChapter(existingChapter);
                         return String.format("redirect:/course/view/%d/%d?success_edit_chapter", chapter.getCourse().getId(), userId);
                     }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
             return "error/error_403";
         }

@@ -53,7 +53,7 @@ public class AccountController {
 
     @GetMapping("/account/info/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
-    public String editAccountInfo(
+    public String editAccountInfoForm(
         @PathVariable Long userId,
         Model model,
         Principal principal
@@ -76,7 +76,7 @@ public class AccountController {
 
     @PostMapping("/account/info/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
-    public String updateAccountInfo (
+    public String editAccountInfo (
         @PathVariable Long userId,
         @Valid @ModelAttribute("user") User user,
         BindingResult result,
@@ -90,8 +90,8 @@ public class AccountController {
         Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
-            boolean email_changed = false;
             if (existingUser.getEmail().equals(authUsername)) {
+                boolean email_changed = false;
                 if (!user.getEmail().equals(existingUser.getEmail())) {
                     email_changed = true;
                     Optional<User> optUser = userService.findUserByEmail(user.getEmail());
@@ -125,7 +125,7 @@ public class AccountController {
 
     @GetMapping("/account/password/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
-    public String editPassword(
+    public String editPasswordForm(
         @PathVariable Long userId,
         Model model,
         Principal principal
@@ -148,7 +148,7 @@ public class AccountController {
 
     @PostMapping("/account/password/edit/{userId}")
     @PreAuthorize("isAuthenticated()")
-    public String updatePassword (
+    public String editPassword (
         @PathVariable Long userId,
         @RequestParam String oldPassword,
         @RequestParam String newPassword,
