@@ -37,6 +37,16 @@ public class ResultService {
         return corrects;
     }
 
+    public int getWrongs(Quiz quiz) {
+        int wrongs = 0;
+        for(Question answer:quiz.getQuestions()) {
+            if (answer.getAnswer() != answer.getChoice()) {
+                wrongs++;
+            }
+        }
+        return wrongs;
+    }
+
     public List<Result> getStudentResults(Long userId) {
         List<Result> userResults = new ArrayList<>();
         List<Result> results = resultRepository.findAll();

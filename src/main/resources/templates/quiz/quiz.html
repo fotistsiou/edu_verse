@@ -51,7 +51,8 @@
                                                type="radio"
                                                th:id="|questions[${i.index}].choice|"
                                                th:name="|questions[${i.index}].choice|"
-                                               th:value="1"/>
+                                               th:value="1"
+                                               th:checked="1"/>
                                         <label class="form-check-label"
                                                th:for="|questions[${i.index}].choice|"
                                                th:text="${question.option_a}">

@@ -8,15 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import unipi.fotistsiou.eduverse.entity.Chapter;
-import unipi.fotistsiou.eduverse.entity.Quiz;
-import unipi.fotistsiou.eduverse.entity.Result;
-import unipi.fotistsiou.eduverse.entity.User;
+import unipi.fotistsiou.eduverse.entity.*;
 import unipi.fotistsiou.eduverse.service.ChapterService;
 import unipi.fotistsiou.eduverse.service.QuestionService;
 import unipi.fotistsiou.eduverse.service.ResultService;
 import unipi.fotistsiou.eduverse.service.UserService;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +23,6 @@ public class QuizController {
     private final UserService userService;
     private final ChapterService chapterService;
     private final ResultService resultService;
-
-    Boolean submitted = false;
 
     @Autowired
     public QuizController(
@@ -48,17 +42,32 @@ public class QuizController {
     public String getQuiz (
         @PathVariable Long chapterId,
         @PathVariable Long userId,
-        Model model
+        Model model,
+        Principal principal
     ){
-        submitted = false;
-        Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
-        if (optionalChapter.isPresent()) {
-            Quiz quiz = questionService.getQuestionsByChapter(chapterId);
-            Chapter chapter = optionalChapter.get();
-            model.addAttribute("quiz", quiz);
-            model.addAttribute("chapter", chapter);
-            model.addAttribute("userId", userId);
-            return "quiz/quiz";
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
+                if (optionalChapter.isPresent()) {
+                    Chapter chapter = optionalChapter.get();
+                    if (chapter.getCourse().getStudents().contains(user)) {
+                        Quiz quiz = questionService.getQuestionsByChapter(chapterId);
+                        model.addAttribute("quiz", quiz);
+                        model.addAttribute("chapter", chapter);
+                        model.addAttribute("userId", userId);
+                        return "quiz/quiz";
+                    }
+                    return "error/error_403";
+                }
+                return "error/error_404";
+            }
+            return "error/error_403";
         }
         return "error/error_404";
     }
@@ -68,30 +77,41 @@ public class QuizController {
     public String submitQuiz (
         @PathVariable Long chapterId,
         @PathVariable Long userId,
-        @ModelAttribute Quiz quiz
+        @ModelAttribute Quiz quiz,
+        Principal principal
     ){
-        if(!submitted) {
-            Optional<User> optionalUser = userService.findUserById(userId);
-            if (optionalUser.isPresent()) {
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
                 Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
-                User user = optionalUser.get();
                 if (optionalChapter.isPresent()) {
                     Chapter chapter = optionalChapter.get();
-                    int correct = resultService.getCorrects(quiz);
-                    int wrong = quiz.getQuestions().size() - correct;
-                    String feedback = (wrong == 0) ? "Πέρασες" : "Δεν Πέρασες";
-                    Result result = new Result();
-                    result.setStudent(user);
-                    result.setChapter(chapter);
-                    result.setCorrect(correct);
-                    result.setWrong(wrong);
-                    result.setFeedback(feedback);
-                    result.setQuiz(quiz.toString());
-                    resultService.saveResult(result);
-                    submitted = true;
-                    return String.format("redirect:/quiz/result/%d/%d?success_submit_quiz", result.getId(), userId);
+                    if (chapter.getCourse().getStudents().contains(user)) {
+                        int corrects = resultService.getCorrects(quiz);
+                        int wrongs = resultService.getWrongs(quiz);
+                        // TODO: Create resultService method for create feedback according to percentage of corrects
+                        String feedback = (wrongs == 0) ? "Πέρασες" : "Δεν Πέρασες";
+                        Result result = new Result();
+                        result.setCorrect(corrects);
+                        result.setWrong(wrongs);
+                        result.setFeedback(feedback);
+                        // TODO: Create new entity QuizQuestions
+                        result.setQuiz(quiz.toString());
+                        result.setChapter(chapter);
+                        result.setStudent(user);
+                        resultService.saveResult(result);
+                        return String.format("redirect:/quiz/result/%d/%d?success_submit_quiz", result.getId(), userId);
+                    }
+                    return "error/error_403";
                 }
+                return "error/error_404";
             }
+            return "error/error_403";
         }
         return "error/error_404";
     }
@@ -99,23 +119,31 @@ public class QuizController {
     @GetMapping("/quiz/result/{quizId}/{userId}")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     public String getQuizResult(
-            @PathVariable Long quizId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long quizId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ) {
         String authUsername = "anonymousUser";
         if (principal != null) {
             authUsername = principal.getName();
         }
-        Optional<Result> optionalResult = resultService.getResultById(quizId);
-        if (optionalResult.isPresent()) {
-            Result result = optionalResult.get();
-            if (result.getStudent().getEmail().equals(authUsername)) {
-                model.addAttribute("result", result);
-                model.addAttribute("userId", userId);
-                model.addAttribute("courseId", result.getChapter().getCourse().getId());
-                return "quiz/quiz_result";
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Result> optionalResult = resultService.getResultById(quizId);
+                if (optionalResult.isPresent()) {
+                    Result result = optionalResult.get();
+                    if (result.getStudent().getEmail().equals(authUsername)) {
+                        model.addAttribute("result", result);
+                        model.addAttribute("userId", userId);
+                        model.addAttribute("courseId", result.getChapter().getCourse().getId());
+                        return "quiz/quiz_result";
+                    }
+                    return "error/error_403";
+                }
+                return "error/error_404";
             }
             return "error/error_403";
         }
