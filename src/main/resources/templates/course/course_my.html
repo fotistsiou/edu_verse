@@ -76,6 +76,9 @@
                                 </tbody>
                             </table>
                             <p class="text-center" th:text="'Δεν έχεις ακόμα κάποιο μάθημα...'" th:if="${courses.isEmpty()}"></p>
+                            <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
+                                <a class="a_button" th:href="@{'/course/new/{userId}' (userId=${userId})}" th:text="'Δημιουργία Νεόυ Μαθήματος'"></a>
+                            </button>
                         </div>
                     </div>
                     <div class="custom_img_card">

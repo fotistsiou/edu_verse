@@ -52,13 +52,11 @@
                                 </tr>
                                 <tr>
                                     <th th:text="'Σχόλιο:'"></th>
-                                    <td
-                                        class="bg-success text-white"
+                                    <td class="bg-success text-white"
                                         th:if="${result.wrong == 0}"
                                         th:text="${result.feedback}">
                                     </td>
-                                    <td
-                                        class="bg-danger text-white"
+                                    <td class="bg-danger text-white"
                                         th:if="${result.wrong != 0}"
                                         th:text="${result.feedback}">
                                     </td>
