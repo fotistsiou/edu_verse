@@ -172,4 +172,39 @@ public class QuizController {
         }
         return "error/error_404";
     }
+
+    @GetMapping("/quiz/question/{resultId}/{userId}")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public String getQuizQuestions(
+            @PathVariable Long resultId,
+            @PathVariable Long userId,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                Optional<Result> optionalResult = resultService.findResultById(resultId);
+                if (optionalResult.isPresent()) {
+                    Result result = optionalResult.get();
+                    if (result.getStudent().getId().equals(userId)) {
+                        List<QuizQuestion> quizQuestions = quizQuestionService.findQuizQuestionByResultId(resultId);
+                        model.addAttribute("result", result);
+                        model.addAttribute("quizQuestions", quizQuestions);
+                        model.addAttribute("userId", userId);
+                        return "quiz/quiz_question";
+                    }
+                    return "error/error_403";
+                }
+                return "error/error_404";
+            }
+            return "error/error_403";
+        }
+        return "error/error_404";
+    }
 }
