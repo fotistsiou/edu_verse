@@ -49,32 +49,32 @@
                         <div class="card-body">
                             <table class="table table-bordered" th:if="${!questions.isEmpty()}">
                                 <thead>
-                                <tr>
-                                    <th scope="col" th:text="'#'"></th>
-                                    <th scope="col" th:text="'Ερώτηση'"></th>
-                                    <th scope="col" th:text="'Επιλογή Α'"></th>
-                                    <th scope="col" th:text="'Επιλογή Β'"></th>
-                                    <th scope="col" th:text="'Επιλογή Γ'"></th>
-                                    <th scope="col" th:text="'Απάντηση'"></th>
-                                    <th scope="col" th:text="'Ενέργεια'"></th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col" th:text="'#'"></th>
+                                        <th scope="col" th:text="'Ερώτηση'"></th>
+                                        <th scope="col" th:text="'Επιλογή Α'"></th>
+                                        <th scope="col" th:text="'Επιλογή Β'"></th>
+                                        <th scope="col" th:text="'Επιλογή Γ'"></th>
+                                        <th scope="col" th:text="'Απάντηση'"></th>
+                                        <th scope="col" th:text="'Ενέργεια'"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="question, loopStat : ${questions}">
-                                    <th th:text="${loopStat.index + 1}"></th>
-                                    <td th:text="${question.title}"></td>
-                                    <td th:text="${question.option_a}"></td>
-                                    <td th:text="${question.option_b}"></td>
-                                    <td th:text="${question.option_c}"></td>
-                                    <td th:if="${question.answer == 1}" th:text="'Επιλογή Α'"></td>
-                                    <td th:if="${question.answer == 2}" th:text="'Επιλογή Β'"></td>
-                                    <td th:if="${question.answer == 3}" th:text="'Επιλογή Γ'"></td>
-                                    <td>
-                                        <a th:href="@{'/question/edit/{questionId}/{userId}' (questionId=${question.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
-                                        <span th:text="' | '"></span>
-                                        <a th:href="@{'/question/delete/{questionId}/{userId}' (questionId=${question.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
-                                    </td>
-                                </tr>
+                                    <tr th:each="question, loopStat : ${questions}">
+                                        <th th:text="${loopStat.index + 1}"></th>
+                                        <td th:text="${question.title}"></td>
+                                        <td th:text="${question.option_a}"></td>
+                                        <td th:text="${question.option_b}"></td>
+                                        <td th:text="${question.option_c}"></td>
+                                        <td th:if="${question.answer == 1}" th:text="'Επιλογή Α'"></td>
+                                        <td th:if="${question.answer == 2}" th:text="'Επιλογή Β'"></td>
+                                        <td th:if="${question.answer == 3}" th:text="'Επιλογή Γ'"></td>
+                                        <td>
+                                            <a th:href="@{'/question/edit/{questionId}/{userId}' (questionId=${question.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
+                                            <span th:text="' | '"></span>
+                                            <a th:href="@{'/question/delete/{questionId}/{userId}' (questionId=${question.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <p class="text-center" th:text="'Δεν υπάρχουν ακόμα ερωτήσεις...'" th:if="${questions.isEmpty()}"></p>
