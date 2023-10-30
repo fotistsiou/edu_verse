@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import unipi.fotistsiou.eduverse.entity.*;
-import unipi.fotistsiou.eduverse.service.ChapterService;
-import unipi.fotistsiou.eduverse.service.QuestionService;
-import unipi.fotistsiou.eduverse.service.ResultService;
-import unipi.fotistsiou.eduverse.service.UserService;
+import unipi.fotistsiou.eduverse.service.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -23,18 +20,21 @@ public class QuizController {
     private final UserService userService;
     private final ChapterService chapterService;
     private final ResultService resultService;
+    private final QuizQuestionService quizQuestionService;
 
     @Autowired
     public QuizController(
         QuestionService questionService,
         UserService userService,
         ChapterService chapterService,
-        ResultService resultService
+        ResultService resultService,
+        QuizQuestionService quizQuestionService
     ){
         this.questionService = questionService;
         this.userService = userService;
         this.chapterService = chapterService;
         this.resultService = resultService;
+        this.quizQuestionService = quizQuestionService;
     }
 
     @GetMapping("/quiz/{chapterId}/{userId}")
@@ -100,11 +100,10 @@ public class QuizController {
                         result.setCorrect(corrects);
                         result.setWrong(wrongs);
                         result.setFeedback(feedback);
-                        // TODO: Create new entity QuizQuestions
-                        result.setQuiz(quiz.toString());
                         result.setChapter(chapter);
                         result.setStudent(user);
                         resultService.saveResult(result);
+                        quizQuestionService.saveQuizQuestion(quiz.getQuestions(), result, user);
                         return String.format("redirect:/quiz/result/%d/%d?success_submit_quiz", result.getId(), userId);
                     }
                     return "error/error_403";
@@ -132,7 +131,7 @@ public class QuizController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
-                Optional<Result> optionalResult = resultService.getResultById(quizId);
+                Optional<Result> optionalResult = resultService.findResultById(quizId);
                 if (optionalResult.isPresent()) {
                     Result result = optionalResult.get();
                     if (result.getStudent().getEmail().equals(authUsername)) {

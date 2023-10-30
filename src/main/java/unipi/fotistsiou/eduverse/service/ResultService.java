@@ -19,7 +19,7 @@ public class ResultService {
         this.resultRepository = resultRepository;
     }
 
-    public Optional<Result> getResultById(Long id) {
+    public Optional<Result> findResultById(Long id) {
         return resultRepository.findById(id);
     }
 
