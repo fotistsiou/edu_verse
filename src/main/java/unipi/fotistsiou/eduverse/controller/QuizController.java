@@ -103,7 +103,7 @@ public class QuizController {
                         result.setChapter(chapter);
                         result.setStudent(user);
                         resultService.saveResult(result);
-                        quizQuestionService.saveQuizQuestion(quiz.getQuestions(), result, user);
+                        quizQuestionService.saveQuizQuestions(quiz.getQuestions(), result, user);
                         return String.format("redirect:/quiz/result/%d/%d?success_submit_quiz", result.getId(), userId);
                     }
                     return "error/error_403";
@@ -193,7 +193,7 @@ public class QuizController {
                 if (optionalResult.isPresent()) {
                     Result result = optionalResult.get();
                     if (result.getStudent().getId().equals(userId)) {
-                        List<QuizQuestion> quizQuestions = quizQuestionService.findQuizQuestionByResultId(resultId);
+                        List<QuizQuestion> quizQuestions = quizQuestionService.findQuizQuestionsByResultId(resultId);
                         model.addAttribute("result", result);
                         model.addAttribute("quizQuestions", quizQuestions);
                         model.addAttribute("userId", userId);

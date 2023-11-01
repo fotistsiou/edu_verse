@@ -22,7 +22,7 @@ public class QuizQuestionService {
         return quizQuestionRepository.findById(id);
     }
 
-    public void saveQuizQuestion(List<Question> questions, Result result, User student) {
+    public void saveQuizQuestions(List<Question> questions, Result result, User student) {
         for (Question question:questions) {
             QuizQuestion quizQuestion = new QuizQuestion();
             quizQuestion.setTitle(question.getTitle());
@@ -35,7 +35,7 @@ public class QuizQuestionService {
         }
     }
 
-    public List<QuizQuestion> findQuizQuestionByResultId(Long resultId) {
+    public List<QuizQuestion> findQuizQuestionsByResultId(Long resultId) {
         List<QuizQuestion> resultQuizQuestions = new ArrayList<>();
         List<QuizQuestion> quizQuestions = quizQuestionRepository.findAll();
         for (QuizQuestion quizQuestion:quizQuestions) {
