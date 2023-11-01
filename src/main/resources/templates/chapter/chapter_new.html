@@ -27,7 +27,7 @@
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Δημιουργία Νέου Κεφαλαίου'"></h2>
+                            <h2 class="text-center" th:text="'Δημιουργία Νέου Κεφαλαίου'"></h2>
                         </div>
                         <div class="card-body">
                             <form action="#" th:action="@{'/chapter/new/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:object="${chapter}" method="post">

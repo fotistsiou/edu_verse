@@ -28,7 +28,7 @@
                     <img th:src="@{/images/img21.png}"/>
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Δημιουργία Νέας Ερώτησης'"></h2>
+                            <h2 class="text-center" th:text="'Δημιουργία Νέας Ερώτησης'"></h2>
                         </div>
                         <div class="card-body">
                             <form action="#" th:action="@{'/question/new/{chapterId}/{userId}' (chapterId=${chapterId}, userId=${userId})}" th:object="${question}" method="post">

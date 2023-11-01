@@ -27,12 +27,12 @@
                 <div class="custom_img_card">
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Προβολή Ερωτηματολογίου'"></h2>
-                            <h4>
+                            <h2 class="text-center" th:text="'Προβολή Ερωτηματολογίου'"></h2>
+                            <h4 class="text-center">
                                 <span th:text="'Κεφάλαιο:'"></span>
                                 <a th:href="@{'/chapter/view/{chapterId}/{userId}' (chapterId=${result.chapter.id}, userId=${userId})}" th:text="${result.chapter.title}"></a>
                             </h4>
-                            <h4>
+                            <h4 class="text-center">
                                 <span th:text="'Μαθήμα:'"></span>
                                 <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${result.chapter.course.id}, userId=${userId})}" th:text="${result.chapter.course.title}"></a>
                             </h4>

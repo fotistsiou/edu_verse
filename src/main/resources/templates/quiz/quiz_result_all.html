@@ -26,7 +26,7 @@
                     <img class="m-3" th:src="@{/images/img24.png}"/>
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Τα Αποτελέσματά Μου'"></h2>
+                            <h2 class="text-center" th:text="'Τα Αποτελέσματά Μου'"></h2>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered" th:if="${!results.isEmpty()}">
@@ -67,7 +67,7 @@
                             <p class="text-center" th:text="'Δεν έχεις ολοκληρώσει ακόμα κάποιο ερωτηματολόγιο...'" th:if="${results.isEmpty()}"></p>
                             <div class="mb-3" th:if="${results.isEmpty()}">
                                 <button class="btn btn-primary" type="button">
-                                    <a class="a_button" th:href="@{'/course/my/{userId}' (userId=${userId})}" th:text="'Επιστροφή στα Μαθήματά Μου'"></a>
+                                    <a class="a_button" th:href="@{'/course/my/{userId}' (userId=${userId})}" th:text="'Τα Μαθήματά Μου'"></a>
                                 </button>
                             </div>
                         </div>

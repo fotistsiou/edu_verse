@@ -42,7 +42,7 @@
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Τα Μαθήματά Μου'"></h2>
+                            <h2 class="text-center" th:text="'Τα Μαθήματά Μου'"></h2>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered" th:if="${!courses.isEmpty()}">
@@ -64,13 +64,13 @@
                                         <td th:text="${course.description}"></td>
                                         <td th:if="${role == '[ROLE_STUDENT]'}" th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
                                         <td th:if="${role == '[ROLE_STUDENT]'}">
-                                            <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
-                                            <a th:href="@{'/course/remove/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Απεγγραφή'"></a>
+                                            <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
+                                            <a class="d-block" th:href="@{'/course/remove/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Απεγγραφή'"></a>
                                         </td>
                                         <td th:if="${role == '[ROLE_PROFESSOR]'}">
-                                            <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
-                                            <a th:href="@{'/course/edit/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
-                                            <a th:href="@{'/course/delete/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
+                                            <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
+                                            <a class="d-block" th:href="@{'/course/edit/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
+                                            <a class="d-block" th:href="@{'/course/delete/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -84,7 +84,7 @@
                     <div class="custom_img_card">
                         <div class="card mt-3" th:if="${!courses.isEmpty() && role == '[ROLE_PROFESSOR]'}">
                             <div class="card-header">
-                                <h2 th:text="'Οι Μαθητές Μου'"></h2>
+                                <h2 class="text-center" th:text="'Οι Μαθητές Μου'"></h2>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered">

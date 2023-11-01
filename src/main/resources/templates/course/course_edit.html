@@ -27,7 +27,7 @@
                 <div class="custom_img_card">
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="'Επεξεργασία Μαθήματος'"></h2>
+                            <h2 class="text-center" th:text="'Επεξεργασία Μαθήματος'"></h2>
                         </div>
                         <div class="card-body">
                             <form action="#" th:action="@{'/course/edit/{courseId}/{userId}'(courseId=${courseId}, userId=${userId})} " th:object="${course}" method="post">

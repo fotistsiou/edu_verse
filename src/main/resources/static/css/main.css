@@ -33,23 +33,6 @@
     width: 25rem;
 }
 
-.card-header {
-    text-align: center;
-}
-.card-body {
-    text-align: justify;
-}
-.card-body p {
-    text-align: center;
-}
-.card-body p.big_text {
-    text-align: justify;
-}
-
-h2 {
-    text-align: center;
-}
-
 .btn-danger a,
 .btn-danger a:hover {
     color: #fff;
@@ -65,13 +48,11 @@ h2 {
 button {
     width: 100%;
 }
-
 .two-buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
-
 .two-buttons button {
     width: 35%;
 }
@@ -92,4 +73,8 @@ button {
 }
 .quiz_form p {
     margin-bottom: 0.5rem;
+}
+
+.text-justify {
+    text-align: justify;
 }
