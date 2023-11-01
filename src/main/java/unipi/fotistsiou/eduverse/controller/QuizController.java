@@ -94,8 +94,7 @@ public class QuizController {
                     if (chapter.getCourse().getStudents().contains(user)) {
                         int corrects = resultService.getCorrects(quiz);
                         int wrongs = resultService.getWrongs(quiz);
-                        // TODO: Create resultService method for create feedback according to percentage of corrects
-                        String feedback = (wrongs == 0) ? "Πέρασες" : "Δεν Πέρασες";
+                        String feedback = resultService.getFeedback(corrects, wrongs);
                         Result result = new Result();
                         result.setCorrect(corrects);
                         result.setWrong(wrongs);

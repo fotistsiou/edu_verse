@@ -47,6 +47,23 @@ public class ResultService {
         return wrongs;
     }
 
+    public String getFeedback(
+        int corrects,
+        int wrongs
+    ){
+        String feedback;
+        float percent = (float) corrects / (corrects + wrongs);
+        if (percent > 0.85) {
+            feedback = "Μπορείς να προχωρήσεις στο επόμενο κεφάλαιο.";
+        }
+        else if (percent > 0.65) {
+            feedback = "Θα ήταν καλό να διαβάσεις ξανά το κεφάλαιο και να επαναλάβεις το ερωτηματολόγιο.";
+        } else {
+            feedback = "Θα πρέπει να διαβάσεις ξανά το κεφάλαιο και να επαναλάβεις το ερωτηματολόγιο.";
+        }
+        return feedback;
+    }
+
     public List<Result> getStudentResults(Long userId) {
         List<Result> userResults = new ArrayList<>();
         List<Result> results = resultRepository.findAll();
