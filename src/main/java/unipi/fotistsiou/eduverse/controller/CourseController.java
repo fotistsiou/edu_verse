@@ -121,6 +121,30 @@ public class CourseController {
         return "error/error_404";
     }
 
+    @GetMapping("/course/students/{userId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String myCourseStudents(
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getEmail().equals(authUsername)) {
+                List<Course> courses = courseService.getMyCourses(userId, "ROLE_PROFESSOR");
+                model.addAttribute("courses", courses);
+                return "course/course_students";
+            }
+            return "error/error_403";
+        }
+        return "error/error_404";
+    }
+
     @GetMapping("/course/delete/{courseId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String deleteCourse(
