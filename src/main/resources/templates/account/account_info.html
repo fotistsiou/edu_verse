@@ -11,14 +11,7 @@
           crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/}" th:text="'EduVerse |'"></a>
-            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
+    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
     <div class="container">
         <div class="row">
@@ -74,5 +67,7 @@
             </div>
         </div>
     </div>
+
+    <nav th:replace="~{fragments/footer :: footer}"></nav>
 </body>
 </html>
