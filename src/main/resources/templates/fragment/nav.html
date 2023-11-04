@@ -1,8 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="nav">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="nav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}" th:text="'EduVerse |'"></a>
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="text-start">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="navbar-brand" th:href="@{'/'}" th:text="'EduVerse |'"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="text-center">
+            <ul class="navbar-nav m-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                <li class="nav-item pe-3" sec:authorize="hasRole('ROLE_PROFESSOR')">
+                    <a class="a_button" th:href="@{'/course/new/{userId}' (userId=${userId})}" th:text="'Δημιουργία Νεόυ Μαθήματος'"></a>
+                </li>
+                <li class="nav-item pe-3" sec:authorize="hasRole('ROLE_STUDENT')">
+                    <a class="a_button" th:href="@{'/course/register/{userId}' (userId=${userId})}" th:text="'Διαθέσιμα Μαθήματα'"></a>
+                </li>
+                <li class="nav-item pe-3">
+                    <a class="a_button" th:href="@{'/course/my/{userId}' (userId=${userId})}" th:text="'Τα Μαθήματά Μου'"></a>
+                </li>
+                <li class="nav-item pe-3" sec:authorize="hasRole('ROLE_PROFESSOR')">
+                    <a class="a_button" th:href="@{'/course/students/{userId}' (userId=${userId})}" th:text="'Οι Μαθητές Μου'"></a>
+                </li>
+                <li class="nav-item pe-3" sec:authorize="hasRole('ROLE_STUDENT')">
+                    <a class="a_button" th:href="@{'/quiz/result/all/{userId}' (userId=${userId})}" th:text="'Τα Αποτελέσματά Μου'"></a>
+                </li>
+                <li class="nav-item pe-3">
+                    <a class="a_button" th:href="@{'/account/info/{userId}' (userId=${userId})}" th:text="'Ο Λογαριασμός Μου'"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="text-end">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="navbar-brand" th:href="@{'/logout'}" th:text="'Αποσύνδεση'"></a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
