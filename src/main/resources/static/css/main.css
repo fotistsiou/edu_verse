@@ -1,14 +1,11 @@
-html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
 body {
-    height: 100%;
-    width: 100%;
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
+
+/* ---------------------   Start Navbar CSS   --------------------- */
 
 .nav-item button {
     background-color: #212529;
@@ -18,15 +15,17 @@ body {
     margin: 0;
 }
 
+/* ---------------------   End Navbar CSS   --------------------- */
+
+/* ---------------------   Start Container CSS   --------------------- */
+
 .container {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
-
 .row {
     justify-content: center;
 }
-
 .custom_img_card,
 .custom_img_card_col {
     display: flex;
@@ -40,40 +39,12 @@ body {
 .custom_img_card_col {
     flex-direction: column;
 }
-
 .custom_img_card img,
 .custom_img_card_col img {
     width: 25rem;
 }
 
-.btn-danger a,
-.btn-danger a:hover {
-    color: #fff;
-    text-decoration: none;
-}
-
-.a_button,
-.a_button:hover {
-    color: #fff;
-    text-decoration: none;
-}
-
-button {
-    width: 100%;
-}
-.two-buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-.two-buttons button {
-    width: 35%;
-}
-
-.text_u_strong {
-    font-weight: bold;
-    text-decoration: underline;
-}
+/* Quiz Pages */
 
 .quiz_form {
     border: 1px solid rgba(0,0,0,.125);
@@ -88,82 +59,43 @@ button {
     margin-bottom: 0.5rem;
 }
 
-.text-justify {
-    text-align: justify;
-}
+/* ---------------------   End Container CSS   --------------------- */
 
 /* ---------------------   Start Footer CSS   --------------------- */
 
 .site-footer {
-    background-color:#26272b;
+    background-color: #212529;
+    color: #fff;
+    border: 0;
     padding:1px 0;
-    font-size:15px;
-    line-height:24px;
-    color:#737373;
+    margin: 0;
 }
 .site-footer .row {
     align-items: center;
 }
-.site-footer a {
-    color:#737373;
-}
 .site-footer .social-icons {
     text-align:right
-}
-.site-footer .social-icons a {
-    width:40px;
-    height:40px;
-    margin-left:6px;
-    margin-right:0;
-    border-radius:100%;
-    background-color:#33353d
 }
 .copyright-text {
     margin:0
 }
-@media (max-width:991px) {
-    .site-footer [class^=col-] {
-        margin-bottom:30px
-    }
-}
-@media (max-width:767px) {
-    .site-footer {
-        padding-bottom:0
-    }
-    .site-footer .copyright-text,.site-footer .social-icons {
-        text-align:center
-    }
-}
 .social-icons {
-    padding-left:0;
     margin-bottom:0;
-    list-style:none
 }
 .social-icons li {
     display:inline-block;
-    margin-bottom:4px
-}
-.social-icons li.title {
-    margin-right:15px;
-    text-transform:uppercase;
-    color:#96a2b2;
-    font-weight:700;
-    font-size:13px
 }
 .social-icons a {
-    background-color:#eceeef;
-    color:#818a91;
-    display:inline-block;
     width:40px;
     height:40px;
-    text-align:center;
-    margin-right:8px;
+    margin-left:10px;
     border-radius:100%;
-    -webkit-transition:all .2s linear;
-    -o-transition:all .2s linear;
-    transition:all .2s linear
+    color:#818a91;
+    display:inline-block;
 }
-.social-icons a:active,.social-icons a:focus,.social-icons a:hover {
+.social-icons a:active,
+.social-icons a:focus,
+.social-icons a:hover {
     color:#fff;
 }
 .social-icons.size-sm a {
@@ -176,12 +108,32 @@ button {
 .social-icons a.github:hover {
     background-color:#000
 }
-@media (max-width:767px) {
-    .social-icons li.title {
-        display:block;
-        margin-right:0;
-        font-weight:600
-    }
+
+/* ---------------------   End Footer CSS   --------------------- */
+
+/* ---------------------   Start General CSS   --------------------- */
+
+/* Buttons */
+.a_button,
+.a_button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+button {
+    width: 100%;
+}
+.two-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.two-buttons button {
+    width: 35%;
 }
 
-/* ---------------------   Start Footer CSS   --------------------- */
+/* Not support from bootstrap 5 by default for accessibility reasons */
+.text-justify {
+    text-align: justify;
+}
+
+/* ---------------------   Start General CSS   --------------------- */
