@@ -24,27 +24,29 @@
                             <div class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th scope="col" th:text="'#'"></th>
-                                        <th scope="col" th:text="'Κωδικός'"></th>
-                                        <th scope="col" th:text="'Τίτλος'"></th>
-                                        <th scope="col" th:text="'Μαθητές'"></th>
-                                    </tr>
+                                        <tr>
+                                            <th scope="col" th:text="'#'"></th>
+                                            <th scope="col" th:text="'Κωδικός'"></th>
+                                            <th scope="col" th:text="'Τίτλος'"></th>
+                                            <th scope="col" th:text="'Μαθητές'"></th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="course, loopStat : ${courses}">
-                                        <th th:text="${loopStat.index + 1}"></th>
-                                        <td th:text="${course.code}"></td>
-                                        <td th:text="${course.title}"></td>
-                                        <td>
-                                            <ul class="list-group">
-                                                <li class="list-group-item" th:each="student : ${course.students}">
-                                                    <span th:text="${student.firstName} + ' ' + ${student.lastName}"></span>
-                                                    <span th:text=" '(' + ${student.am} + ')'"></span>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                        <tr th:each="course, loopStat : ${courses}">
+                                            <th th:text="${loopStat.index + 1}"></th>
+                                            <td th:text="${course.code}"></td>
+                                            <td th:text="${course.title}"></td>
+                                            <td>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item" th:each="student : ${course.students}">
+                                                        <a class="d-block" th:href="@{'/course/student/view/{courseId}/{professorId}/{studentId}' (courseId=${course.id}, professorId=${userId}, studentId=${student.id})}">
+                                                            <span th:text="${student.firstName} + ' ' + ${student.lastName}"></span>
+                                                            <span th:text=" '(' + ${student.am} + ')'"></span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

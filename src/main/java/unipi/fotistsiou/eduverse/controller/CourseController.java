@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import unipi.fotistsiou.eduverse.entity.Chapter;
-import unipi.fotistsiou.eduverse.entity.Course;
-import unipi.fotistsiou.eduverse.entity.User;
-import unipi.fotistsiou.eduverse.service.ChapterService;
-import unipi.fotistsiou.eduverse.service.CourseService;
-import unipi.fotistsiou.eduverse.service.UserService;
+import unipi.fotistsiou.eduverse.entity.*;
+import unipi.fotistsiou.eduverse.service.*;
+
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -25,16 +22,19 @@ public class CourseController {
     private final CourseService courseService;
     private final UserService userService;
     private final ChapterService chapterService;
+    private final ResultService resultService;
 
     @Autowired
     public CourseController(
         CourseService courseService,
         UserService userService,
-        ChapterService chapterService
+        ChapterService chapterService,
+        ResultService resultService
     ){
         this.courseService = courseService;
         this.userService = userService;
         this.chapterService = chapterService;
+        this.resultService = resultService;
     }
 
     @GetMapping("/course/new/{userId}")
@@ -139,6 +139,47 @@ public class CourseController {
                 List<Course> courses = courseService.getMyCourses(userId, "ROLE_PROFESSOR");
                 model.addAttribute("courses", courses);
                 return "course/course_students";
+            }
+            return "error/error_403";
+        }
+        return "error/error_404";
+    }
+
+    @GetMapping("/course/student/view/{courseId}/{professorId}/{studentId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String myCourseStudents(
+            @PathVariable Long courseId,
+            @PathVariable Long professorId,
+            @PathVariable Long studentId,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalProfessor = userService.findUserById(professorId);
+        if (optionalProfessor.isPresent()) {
+            User professor = optionalProfessor.get();
+            if (professor.getEmail().equals(authUsername)) {
+                Optional<User> optionalStudent = userService.findUserById(studentId);
+                if (optionalStudent.isPresent()) {
+                    User student = optionalStudent.get();
+                    Optional<Course> optionalCourse = courseService.findCourseById(courseId);
+                    if (optionalCourse.isPresent()) {
+                        Course course = optionalCourse.get();
+                        if (course.getProfessor().getId().equals(professorId) && course.getStudents().contains(student)) {
+                            List<Result> results = resultService.getStudentResults(student.getId());
+                            model.addAttribute("course", course);
+                            model.addAttribute("results", results);
+                            model.addAttribute("student", student);
+                            return "course/course_student_view";
+                        }
+                        return "error/error_403";
+                    }
+                    return "error/error_404";
+                }
+                return "error/error_404";
             }
             return "error/error_403";
         }
