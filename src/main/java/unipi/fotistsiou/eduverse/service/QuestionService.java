@@ -49,7 +49,7 @@ public class QuestionService {
         return chapterQuestions;
     }
 
-    public Quiz getQuestionsByChapter(Long chapterId) {
+    public Quiz findQuestionsByChapter(Long chapterId) {
         List<Question> allQuestions = questionRepository.findAll();
         List<Question> quizList = new ArrayList<>();
         for (Question question:allQuestions) {

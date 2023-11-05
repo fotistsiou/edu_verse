@@ -110,7 +110,7 @@ public class CourseController {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
                 String role = user.getRoles().toString();
-                List<Course> courses = courseService.getMyCourses(userId, role);
+                List<Course> courses = courseService.findMyCourses(userId, role);
                 model.addAttribute("role", role);
                 model.addAttribute("courses", courses);
                 return "course/course_my";
@@ -135,7 +135,7 @@ public class CourseController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
-                List<Course> courses = courseService.getMyCourses(userId, "ROLE_PROFESSOR");
+                List<Course> courses = courseService.findMyCourses(userId, "ROLE_PROFESSOR");
                 model.addAttribute("courses", courses);
                 return "course/course_student_all";
             }
@@ -168,7 +168,7 @@ public class CourseController {
                         User student = optionalStudent.get();
                         Course course = optionalCourse.get();
                         if (course.getProfessor().getId().equals(professorId) && course.getStudents().contains(student)) {
-                            List<Result> results = resultService.getStudentCourseResults(courseId, studentId);
+                            List<Result> results = resultService.findStudentCourseResults(courseId, studentId);
                             model.addAttribute("course", course);
                             model.addAttribute("results", results);
                             model.addAttribute("student", student);

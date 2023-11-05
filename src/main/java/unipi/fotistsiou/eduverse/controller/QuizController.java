@@ -57,7 +57,7 @@ public class QuizController {
                 if (optionalChapter.isPresent()) {
                     Chapter chapter = optionalChapter.get();
                     if (chapter.getCourse().getStudents().contains(user)) {
-                        Quiz quiz = questionService.getQuestionsByChapter(chapterId);
+                        Quiz quiz = questionService.findQuestionsByChapter(chapterId);
                         model.addAttribute("quiz", quiz);
                         model.addAttribute("chapter", chapter);
                         model.addAttribute("userId", userId);
@@ -92,9 +92,9 @@ public class QuizController {
                 if (optionalChapter.isPresent()) {
                     Chapter chapter = optionalChapter.get();
                     if (chapter.getCourse().getStudents().contains(user)) {
-                        int corrects = resultService.getCorrects(quiz);
-                        int wrongs = resultService.getWrongs(quiz);
-                        String feedback = resultService.getFeedback(corrects, wrongs);
+                        int corrects = resultService.generateCorrects(quiz);
+                        int wrongs = resultService.generateWrongs(quiz);
+                        String feedback = resultService.generateFeedback(corrects, wrongs);
                         Result result = new Result();
                         result.setCorrect(corrects);
                         result.setWrong(wrongs);
@@ -151,9 +151,9 @@ public class QuizController {
     @GetMapping("/quiz/result/all/{userId}")
     @PreAuthorize("isAuthenticated()")
     public String getQuizResultAll(
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ) {
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -163,7 +163,7 @@ public class QuizController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getEmail().equals(authUsername)) {
-                List<Result> results = resultService.getStudentResults(userId);
+                List<Result> results = resultService.findStudentResults(userId);
                 model.addAttribute("results", results);
                 return "quiz/quiz_result_all";
             }
@@ -212,11 +212,11 @@ public class QuizController {
     @GetMapping("/quiz/question/{resultId}/{studentId}/{professorId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String getQuizQuestionsMyStudent(
-            @PathVariable Long resultId,
-            @PathVariable Long studentId,
-            @PathVariable Long professorId,
-            Model model,
-            Principal principal
+        @PathVariable Long resultId,
+        @PathVariable Long studentId,
+        @PathVariable Long professorId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {

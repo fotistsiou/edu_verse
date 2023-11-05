@@ -34,7 +34,7 @@ public class CourseService {
         courseRepository.delete(course);
     }
 
-    public List<Course> getMyCourses(Long userId, String role) {
+    public List<Course> findMyCourses(Long userId, String role) {
         List<Course> myCourses = new ArrayList<>();
         List<Course> courses = courseRepository.findAll();
         for (Course course:courses) {

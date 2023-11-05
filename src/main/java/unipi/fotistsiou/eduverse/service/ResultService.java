@@ -27,7 +27,7 @@ public class ResultService {
         resultRepository.save(result);
     }
 
-    public int getCorrects(Quiz quiz) {
+    public int generateCorrects(Quiz quiz) {
         int corrects = 0;
         for(Question answer:quiz.getQuestions()) {
             if (answer.getAnswer() == answer.getChoice()) {
@@ -37,7 +37,7 @@ public class ResultService {
         return corrects;
     }
 
-    public int getWrongs(Quiz quiz) {
+    public int generateWrongs(Quiz quiz) {
         int wrongs = 0;
         for(Question answer:quiz.getQuestions()) {
             if (answer.getAnswer() != answer.getChoice()) {
@@ -47,7 +47,7 @@ public class ResultService {
         return wrongs;
     }
 
-    public String getFeedback(
+    public String generateFeedback(
         int corrects,
         int wrongs
     ){
@@ -64,7 +64,7 @@ public class ResultService {
         return feedback;
     }
 
-    public List<Result> getStudentResults(Long userId) {
+    public List<Result> findStudentResults(Long userId) {
         List<Result> userResults = new ArrayList<>();
         List<Result> results = resultRepository.findAll();
         for (Result result:results) {
@@ -75,7 +75,7 @@ public class ResultService {
         return userResults;
     }
 
-    public List<Result> getStudentCourseResults(Long courseId, Long userId) {
+    public List<Result> findStudentCourseResults(Long courseId, Long userId) {
         List<Result> userResults = new ArrayList<>();
         List<Result> results = resultRepository.findAll();
         for (Result result:results) {

@@ -212,12 +212,12 @@ public class ChapterController {
     @PostMapping("/chapter/edit/{chapterId}/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     public String editChapter(
-            @PathVariable Long chapterId,
-            @PathVariable Long userId,
-            @Valid @ModelAttribute("chapter") Chapter chapter,
-            BindingResult result,
-            Model model,
-            Principal principal
+        @PathVariable Long chapterId,
+        @PathVariable Long userId,
+        @Valid @ModelAttribute("chapter") Chapter chapter,
+        BindingResult result,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
