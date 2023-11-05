@@ -77,6 +77,8 @@
         </div>
     </div>
 
+    <nav th:replace="~{fragment/footer :: footer}"></nav>
+
     <script>
         $(document).ready(function() {
             $('#content').summernote({
@@ -84,7 +86,5 @@
             });
         });
     </script>
-
-    <nav th:replace="~{fragment/footer :: footer}"></nav>
 </body>
 </html>

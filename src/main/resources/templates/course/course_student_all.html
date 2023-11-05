@@ -17,42 +17,42 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="custom_img_card">
-                        <div class="card mt-3" th:if="${!courses.isEmpty()}">
-                            <div class="card-header">
-                                <h2 class="text-center" th:text="'Οι Μαθητές Μου'"></h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" th:text="'#'"></th>
-                                            <th scope="col" th:text="'Κωδικός'"></th>
-                                            <th scope="col" th:text="'Τίτλος'"></th>
-                                            <th scope="col" th:text="'Μαθητές'"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="course, loopStat : ${courses}">
-                                            <th th:text="${loopStat.index + 1}"></th>
-                                            <td th:text="${course.code}"></td>
-                                            <td th:text="${course.title}"></td>
-                                            <td>
-                                                <ul class="list-group">
-                                                    <li class="list-group-item" th:each="student : ${course.students}">
-                                                        <a class="d-block" th:href="@{'/course/student/view/{courseId}/{studentId}/{professorId}' (courseId=${course.id}, studentId=${student.id}, professorId=${userId})}">
-                                                            <span th:text="${student.firstName} + ' ' + ${student.lastName}"></span>
-                                                            <span th:text=" '(' + ${student.am} + ')'"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="card mt-3" th:if="${!courses.isEmpty()}">
+                        <div class="card-header">
+                            <h2 class="text-center" th:text="'Οι Μαθητές Μου'"></h2>
                         </div>
-                        <img th:src="@{/images/img29.png}" th:alt="'course students image'"/>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" th:text="'#'"></th>
+                                        <th scope="col" th:text="'Κωδικός'"></th>
+                                        <th scope="col" th:text="'Τίτλος'"></th>
+                                        <th scope="col" th:text="'Μαθητές'"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="course, loopStat : ${courses}">
+                                        <th th:text="${loopStat.index + 1}"></th>
+                                        <td th:text="${course.code}"></td>
+                                        <td th:text="${course.title}"></td>
+                                        <td>
+                                            <ul class="list-group">
+                                                <li class="list-group-item" th:each="student : ${course.students}">
+                                                    <a class="d-block" th:href="@{'/course/student/view/{courseId}/{studentId}/{professorId}' (courseId=${course.id}, studentId=${student.id}, professorId=${userId})}">
+                                                        <span th:text="${student.firstName} + ' ' + ${student.lastName}"></span>
+                                                        <span th:text=" '(' + ${student.am} + ')'"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    <img th:src="@{/images/img29.png}" th:alt="'course students image'"/>
+                </div>
             </div>
         </div>
     </div>

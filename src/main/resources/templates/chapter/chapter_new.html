@@ -2,7 +2,7 @@
 <html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'EduVerse | Δημιουργία Κεφαλαίου'"></title>
+    <title th:text="'EduVerse | Δημιουργία Νέου Κεφαλαίου'"></title>
     <link rel="icon" type="image/png" th:href="@{/images/img23.png}"/>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet"
@@ -78,6 +78,8 @@
         </div>
     </div>
 
+    <nav th:replace="~{fragment/footer :: footer}"></nav>
+
     <script>
         $(document).ready(function() {
             $('#content').summernote({
@@ -85,7 +87,5 @@
             });
         });
     </script>
-
-    <nav th:replace="~{fragment/footer :: footer}"></nav>
 </body>
 </html>

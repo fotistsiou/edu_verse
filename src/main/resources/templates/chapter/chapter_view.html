@@ -19,7 +19,8 @@
                 <div class="custom_img_card_col">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-center" th:text="${'Κεφάλαιο: ' + chapter.title}"></h2>
+                            <h2 class="text-center" th:text="'Προβολή Κεφαλαίου'"></h2>
+                            <h4 class="text-center" th:text="${'Κεφάλαιο: ' + chapter.title}"></h4>
                             <h4 class="text-center">
                                 <span th:text="'Μαθήμα:'"></span>
                                 <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${courseId}, userId=${userId})}" th:text="${chapter.course.title}"></a>
