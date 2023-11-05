@@ -232,7 +232,13 @@ public class QuizController {
                     if (optionalResult.isPresent()) {
                         User student = optionalStudent.get();
                         Result result = optionalResult.get();
-                        if (result.getChapter().getCourse().getProfessor().getId().equals(professorId) && result.getChapter().getCourse().getStudents().contains(student)) {
+                        if (
+                            result.getChapter().getCourse().getProfessor().getId().equals(professorId)
+                            &&
+                            result.getChapter().getCourse().getStudents().contains(student)
+                            &&
+                            result.getStudent().getId().equals(studentId)
+                        ){
                             List<QuizQuestion> quizQuestions = quizQuestionService.findQuizQuestionsByResultId(resultId);
                             String role = professor.getRoles().toString();
                             Long courseId = result.getChapter().getCourse().getId();

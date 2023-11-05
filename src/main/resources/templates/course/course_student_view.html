@@ -58,7 +58,7 @@
                                             th:text="${result.feedback}">
                                         </td>
                                         <td>
-                                            <a th:href="@{'/quiz/question/{resultId}/{studentId}/{professorId}' (resultId=${courseId}, studentId=${studentId}, professorId=${professorId})}" th:text="'Προβολή'"></a>
+                                            <a th:href="@{'/quiz/question/{resultId}/{studentId}/{professorId}' (resultId=${result.id}, studentId=${studentId}, professorId=${professorId})}" th:text="'Προβολή'"></a>
                                         </td>
                                     </tr>
                                 </tbody>

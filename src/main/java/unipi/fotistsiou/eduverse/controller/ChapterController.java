@@ -130,7 +130,11 @@ public class ChapterController {
                 Optional<Chapter> optionalChapter = chapterService.findChapterById(chapterId);
                 if (optionalChapter.isPresent()) {
                     Chapter chapter = optionalChapter.get();
-                    if (chapter.getCourse().getStudents().contains(user) || chapter.getCourse().getProfessor().getId().equals(userId)) {
+                    if (
+                        chapter.getCourse().getStudents().contains(user)
+                        ||
+                        chapter.getCourse().getProfessor().getId().equals(userId)
+                    ){
                         Long courseId = chapter.getCourse().getId();
                         model.addAttribute("chapter", chapter);
                         model.addAttribute("courseId", courseId);
