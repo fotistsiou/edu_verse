@@ -167,7 +167,11 @@ public class CourseController {
                     if (optionalCourse.isPresent()) {
                         User student = optionalStudent.get();
                         Course course = optionalCourse.get();
-                        if (course.getProfessor().getId().equals(professorId) && course.getStudents().contains(student)) {
+                        if (
+                            course.getProfessor().getId().equals(professorId)
+                            &&
+                            course.getStudents().contains(student)
+                        ){
                             List<Result> results = resultService.findStudentCourseResults(courseId, studentId);
                             model.addAttribute("course", course);
                             model.addAttribute("results", results);
