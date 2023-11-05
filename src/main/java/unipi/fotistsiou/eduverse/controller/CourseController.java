@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import unipi.fotistsiou.eduverse.entity.*;
 import unipi.fotistsiou.eduverse.service.*;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -97,7 +96,7 @@ public class CourseController {
 
     @GetMapping("/course/my/{userId}")
     @PreAuthorize("isAuthenticated()")
-    public String myCourses(
+    public String getMyCourses(
         @PathVariable Long userId,
         Model model,
         Principal principal
@@ -121,9 +120,9 @@ public class CourseController {
         return "error/error_404";
     }
 
-    @GetMapping("/course/students/{userId}")
+    @GetMapping("/course/student/all/{userId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String myCourseStudents(
+    public String getMyCourseStudentAll(
         @PathVariable Long userId,
         Model model,
         Principal principal
@@ -138,21 +137,21 @@ public class CourseController {
             if (user.getEmail().equals(authUsername)) {
                 List<Course> courses = courseService.getMyCourses(userId, "ROLE_PROFESSOR");
                 model.addAttribute("courses", courses);
-                return "course/course_students";
+                return "course/course_student_all";
             }
             return "error/error_403";
         }
         return "error/error_404";
     }
 
-    @GetMapping("/course/student/view/{courseId}/{professorId}/{studentId}")
+    @GetMapping("/course/student/view/{courseId}/{studentId}/{professorId}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public String myCourseStudents(
-            @PathVariable Long courseId,
-            @PathVariable Long professorId,
-            @PathVariable Long studentId,
-            Model model,
-            Principal principal
+    public String getMyCourseStudentView(
+        @PathVariable Long courseId,
+        @PathVariable Long studentId,
+        @PathVariable Long professorId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -164,12 +163,12 @@ public class CourseController {
             if (professor.getEmail().equals(authUsername)) {
                 Optional<User> optionalStudent = userService.findUserById(studentId);
                 if (optionalStudent.isPresent()) {
-                    User student = optionalStudent.get();
                     Optional<Course> optionalCourse = courseService.findCourseById(courseId);
                     if (optionalCourse.isPresent()) {
+                        User student = optionalStudent.get();
                         Course course = optionalCourse.get();
                         if (course.getProfessor().getId().equals(professorId) && course.getStudents().contains(student)) {
-                            List<Result> results = resultService.getStudentResults(student.getId());
+                            List<Result> results = resultService.getStudentCourseResults(courseId, studentId);
                             model.addAttribute("course", course);
                             model.addAttribute("results", results);
                             model.addAttribute("student", student);

@@ -39,7 +39,7 @@
                                             <td>
                                                 <ul class="list-group">
                                                     <li class="list-group-item" th:each="student : ${course.students}">
-                                                        <a class="d-block" th:href="@{'/course/student/view/{courseId}/{professorId}/{studentId}' (courseId=${course.id}, professorId=${userId}, studentId=${student.id})}">
+                                                        <a class="d-block" th:href="@{'/course/student/view/{courseId}/{studentId}/{professorId}' (courseId=${course.id}, studentId=${student.id}, professorId=${userId})}">
                                                             <span th:text="${student.firstName} + ' ' + ${student.lastName}"></span>
                                                             <span th:text=" '(' + ${student.am} + ')'"></span>
                                                         </a>

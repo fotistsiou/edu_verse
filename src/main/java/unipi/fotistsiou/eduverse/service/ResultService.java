@@ -74,4 +74,15 @@ public class ResultService {
         }
         return userResults;
     }
+
+    public List<Result> getStudentCourseResults(Long courseId, Long userId) {
+        List<Result> userResults = new ArrayList<>();
+        List<Result> results = resultRepository.findAll();
+        for (Result result:results) {
+            if (result.getStudent().getId().equals(userId) && result.getChapter().getCourse().getId().equals(courseId)) {
+                userResults.add(result);
+            }
+        }
+        return userResults;
+    }
 }

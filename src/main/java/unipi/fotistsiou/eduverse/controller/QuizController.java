@@ -175,10 +175,10 @@ public class QuizController {
     @GetMapping("/quiz/question/{resultId}/{userId}")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     public String getQuizQuestions(
-            @PathVariable Long resultId,
-            @PathVariable Long userId,
-            Model model,
-            Principal principal
+        @PathVariable Long resultId,
+        @PathVariable Long userId,
+        Model model,
+        Principal principal
     ){
         String authUsername = "anonymousUser";
         if (principal != null) {
@@ -193,12 +193,60 @@ public class QuizController {
                     Result result = optionalResult.get();
                     if (result.getStudent().getId().equals(userId)) {
                         List<QuizQuestion> quizQuestions = quizQuestionService.findQuizQuestionsByResultId(resultId);
+                        String role = user.getRoles().toString();
                         model.addAttribute("result", result);
                         model.addAttribute("quizQuestions", quizQuestions);
                         model.addAttribute("userId", userId);
+                        model.addAttribute("role", role);
                         return "quiz/quiz_question";
                     }
                     return "error/error_403";
+                }
+                return "error/error_404";
+            }
+            return "error/error_403";
+        }
+        return "error/error_404";
+    }
+
+    @GetMapping("/quiz/question/{resultId}/{studentId}/{professorId}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public String getQuizQuestionsMyStudent(
+            @PathVariable Long resultId,
+            @PathVariable Long studentId,
+            @PathVariable Long professorId,
+            Model model,
+            Principal principal
+    ){
+        String authUsername = "anonymousUser";
+        if (principal != null) {
+            authUsername = principal.getName();
+        }
+        Optional<User> optionalProfessor = userService.findUserById(professorId);
+        if (optionalProfessor.isPresent()) {
+            User professor = optionalProfessor.get();
+            if (professor.getEmail().equals(authUsername)) {
+                Optional<User> optionalStudent = userService.findUserById(studentId);
+                if (optionalStudent.isPresent()) {
+                    Optional<Result> optionalResult = resultService.findResultById(resultId);
+                    if (optionalResult.isPresent()) {
+                        User student = optionalStudent.get();
+                        Result result = optionalResult.get();
+                        if (result.getChapter().getCourse().getProfessor().getId().equals(professorId) && result.getChapter().getCourse().getStudents().contains(student)) {
+                            List<QuizQuestion> quizQuestions = quizQuestionService.findQuizQuestionsByResultId(resultId);
+                            String role = professor.getRoles().toString();
+                            Long courseId = result.getChapter().getCourse().getId();
+                            model.addAttribute("result", result);
+                            model.addAttribute("quizQuestions", quizQuestions);
+                            model.addAttribute("userId", studentId);
+                            model.addAttribute("student", student);
+                            model.addAttribute("role", role);
+                            model.addAttribute("courseId", courseId);
+                            return "quiz/quiz_question";
+                        }
+                        return "error/error_403";
+                    }
+                    return "error/error_404";
                 }
                 return "error/error_404";
             }

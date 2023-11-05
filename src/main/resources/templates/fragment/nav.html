@@ -19,7 +19,7 @@
                     <a class="a_button" th:href="@{'/course/my/{userId}' (userId=${userId})}" th:text="'Τα Μαθήματά Μου'"></a>
                 </li>
                 <li class="nav-item pe-3" sec:authorize="hasRole('ROLE_PROFESSOR')">
-                    <a class="a_button" th:href="@{'/course/students/{userId}' (userId=${userId})}" th:text="'Οι Μαθητές Μου'"></a>
+                    <a class="a_button" th:href="@{'/course/student/all/{userId}' (userId=${userId})}" th:text="'Οι Μαθητές Μου'"></a>
                 </li>
                 <li class="nav-item pe-3" sec:authorize="hasRole('ROLE_STUDENT')">
                     <a class="a_button" th:href="@{'/quiz/result/all/{userId}' (userId=${userId})}" th:text="'Τα Αποτελέσματά Μου'"></a>

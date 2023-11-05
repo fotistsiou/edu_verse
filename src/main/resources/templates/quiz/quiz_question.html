@@ -28,6 +28,10 @@
                                 <span th:text="'Μαθήμα:'"></span>
                                 <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${result.chapter.course.id}, userId=${userId})}" th:text="${result.chapter.course.title}"></a>
                             </h4>
+                            <h4 class="text-center" th:if="${role == '[ROLE_PROFESSOR]'}">
+                                <span th:text="'Μαθητής:'"></span>
+                                <span th:text="${student.firstName + ' ' + student.lastName + ' (' + student.am + ')'}"></span>
+                            </h4>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered" th:if="${!quizQuestions.isEmpty()}">
@@ -51,8 +55,11 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <button class="btn btn-primary" type="button">
+                            <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_STUDENT]'}">
                                 <a class="a_button" th:href="@{'/quiz/result/all/{userId}' (userId=${userId})}" th:text="'Επιστροφή στα Συνολικά Αποτελέσματα'"></a>
+                            </button>
+                            <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
+                                <a class="a_button" th:href="@{'/course/student/view/{courseId}/{studentId}/{professorId}' (courseId=${courseId}, studentId=${userId}, professorId=${professorId})}" th:text="'Επιστροφή στα Αποτελέσματα Μαθητή'"></a>
                             </button>
                         </div>
                     </div>
