@@ -16,6 +16,10 @@ body {
     flex-direction: row;
 }
 
+.navbar-brand img {
+    width: 50px;
+}
+
 /* ---------------------   End Navbar CSS   --------------------- */
 
 /* ---------------------   Start Container CSS   --------------------- */

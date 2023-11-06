@@ -4,7 +4,9 @@
             <div class="row">
                 <div class="col-md-8 col-sm-6 col-xs-12">
                     <p class="copyright-text">
-                        Copyright &copy; 2023 All Rights Reserved by Fotis Tsioumas.
+                        <span th:text="'Copyright &copy;'"></span>
+                        <span th:text="${#dates.year(#dates.createNow())}"></span>
+                        <span th:text="'All Rights Reserved by Fotis Tsioumas.'"></span>
                     </p>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
