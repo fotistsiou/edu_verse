@@ -19,10 +19,10 @@ public class QuizQuestion {
     private String title;
 
     @Column(name="answer", nullable=false)
-    private int answer;
+    private String answer;
 
     @Column(name="choice", nullable=false)
-    private int choice;
+    private String choice;
 
     @ManyToOne
     @JoinColumn(name = "chapter", referencedColumnName = "id", nullable = false)

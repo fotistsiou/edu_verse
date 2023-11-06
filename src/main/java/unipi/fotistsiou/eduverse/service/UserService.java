@@ -62,12 +62,6 @@ public class UserService {
         userRepository.updateUserDetailsAm(user.getId(), am);
     }
 
-    private String generateAm(Long userId, String role) {
-        String prefix = role.contains("ROLE_PROFESSOR") ? "eduprof" : "edustud";
-        String userIdStr = String.format("%05d", userId);
-        return prefix + userIdStr;
-    }
-
     public void updateUserDetails(User user) {
         userRepository.updateUserDetails(
                 user.getId(),
@@ -76,5 +70,13 @@ public class UserService {
                 user.getLastName(),
                 user.getTelephone()
         );
+    }
+
+    /* --------------- Helper Function --------------- */
+
+    private String generateAm(Long userId, String role) {
+        String prefix = role.contains("ROLE_PROFESSOR") ? "eduprof" : "edustud";
+        String userIdStr = String.format("%05d", userId);
+        return prefix + userIdStr;
     }
 }
