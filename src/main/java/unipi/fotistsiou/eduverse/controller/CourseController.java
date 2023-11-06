@@ -176,6 +176,7 @@ public class CourseController {
                             model.addAttribute("course", course);
                             model.addAttribute("results", results);
                             model.addAttribute("student", student);
+                            model.addAttribute("userId", professorId);
                             return "course/course_student_view";
                         }
                         return "error/error_403";

@@ -197,6 +197,7 @@ public class QuizController {
                         model.addAttribute("result", result);
                         model.addAttribute("quizQuestions", quizQuestions);
                         model.addAttribute("userId", userId);
+                        model.addAttribute("studentId", userId);
                         model.addAttribute("role", role);
                         return "quiz/quiz_question";
                     }
@@ -244,7 +245,8 @@ public class QuizController {
                             Long courseId = result.getChapter().getCourse().getId();
                             model.addAttribute("result", result);
                             model.addAttribute("quizQuestions", quizQuestions);
-                            model.addAttribute("userId", studentId);
+                            model.addAttribute("studentId", studentId);
+                            model.addAttribute("userId", professorId);
                             model.addAttribute("student", student);
                             model.addAttribute("role", role);
                             model.addAttribute("courseId", courseId);

@@ -56,10 +56,10 @@
                                 </tbody>
                             </table>
                             <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_STUDENT]'}">
-                                <a class="a_button" th:href="@{'/quiz/result/all/{userId}' (userId=${userId})}" th:text="'Επιστροφή στα Συνολικά Αποτελέσματα'"></a>
+                                <a class="a_button" th:href="@{'/quiz/result/all/{studentId}' (studentId=${studentId})}" th:text="'Επιστροφή στα Συνολικά Αποτελέσματα'"></a>
                             </button>
                             <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
-                                <a class="a_button" th:href="@{'/course/student/view/{courseId}/{studentId}/{professorId}' (courseId=${courseId}, studentId=${userId}, professorId=${professorId})}" th:text="'Επιστροφή στα Αποτελέσματα Μαθητή'"></a>
+                                <a class="a_button" th:href="@{'/course/student/view/{courseId}/{studentId}/{professorId}' (courseId=${courseId}, studentId=${studentId}, professorId=${professorId})}" th:text="'Επιστροφή στα Αποτελέσματα Μαθητή'"></a>
                             </button>
                         </div>
                     </div>
