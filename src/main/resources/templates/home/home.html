@@ -71,6 +71,39 @@
                     </div>
                 </div>
             </div>
+            <div class="col col-md-12" sec:authorize="!isAuthenticated()" th:if="${!courses.isEmpty()}">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">
+                            <span class="fw-bold" th:text="'EduVerse:'"></span>
+                            <span class="fst-italic" th:text="'Ξεκλειδώστε έναν κόσμο γνώσης!'"></span>
+                        </h3>
+                        <h5 class="text-center">
+                            <span th:text="'Κάνε εγγραφή και απέκτησε πρόσβαση στα παρακάτω μαθήματα!'"></span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col" th:text="'#'"></th>
+                                <th scope="col" th:text="'Τίτλος'"></th>
+                                <th scope="col" th:text="'Περιγραφή'"></th>
+                                <th scope="col" th:text="'Καθηγητής'"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="course, loopStat : ${courses}">
+                                <th th:text="${loopStat.index + 1}"></th>
+                                <td th:text="${course.title}"></td>
+                                <td th:text="${course.description}"></td>
+                                <td th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -4,18 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import unipi.fotistsiou.eduverse.entity.Course;
 import unipi.fotistsiou.eduverse.entity.User;
+import unipi.fotistsiou.eduverse.service.CourseService;
 import unipi.fotistsiou.eduverse.service.UserService;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class HomeController {
     private final UserService userService;
+    private final CourseService courseService;
 
     @Autowired
-    public HomeController(UserService userService) {
+    public HomeController(
+        UserService userService,
+        CourseService courseService
+    ){
         this.userService = userService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/")
@@ -33,6 +41,9 @@ public class HomeController {
             Long userId = optionalUser.get().getId();
             model.addAttribute("username", username);
             model.addAttribute("userId", userId);
+        } else {
+            List<Course> courses = courseService.findAllCourses();
+            model.addAttribute("courses", courses);
         }
         return "home/home";
     }
