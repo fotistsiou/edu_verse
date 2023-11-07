@@ -101,8 +101,8 @@
     <nav th:replace="~{fragment/footer :: footer}"></nav>
 
     <script th:inline="javascript">
-        let nameJs = [[${numberOfCourses}]];
-        window.addEventListener("load", () => animateValue(document.getElementById('course_number'), 0, nameJs, 1000));
+        let numberOfCourses = [[${numberOfCourses}]];
+        window.addEventListener("load", () => animateValue(document.getElementById('course_number'), 0, numberOfCourses, 1000));
     </script>
 </body>
 </html>
