@@ -102,7 +102,7 @@ public class QuizController {
                         result.setChapter(chapter);
                         result.setStudent(user);
                         resultService.saveResult(result);
-                        quizQuestionService.saveQuizQuestions(quiz.getQuestions(), result, user);
+                        quizQuestionService.saveQuizQuestions(quiz, result, user);
                         return String.format("redirect:/quiz/result/%d/%d?success_submit_quiz", result.getId(), userId);
                     }
                     return "error/error_403";

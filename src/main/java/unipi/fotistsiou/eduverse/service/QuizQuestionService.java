@@ -26,8 +26,8 @@ public class QuizQuestionService {
         return quizQuestionRepository.findById(id);
     }
 
-    public void saveQuizQuestions(List<Question> questions, Result result, User student) {
-        for (Question question:questions) {
+    public void saveQuizQuestions(Quiz quiz, Result result, User student) {
+        for (Question question:quiz.getQuestions()) {
             QuizQuestion quizQuestion = new QuizQuestion();
             quizQuestion.setTitle(question.getTitle());
             quizQuestion.setAnswer(getOptionByAnswer(question));
