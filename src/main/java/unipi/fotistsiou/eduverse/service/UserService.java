@@ -74,9 +74,9 @@ public class UserService {
     }
 
     public int numberOfUsersByRole(String role) {
-        List<User> allUsers = userRepository.findAll();
+        List<User> users = userRepository.findAll();
         int usersByRole = 0;
-        for (User user:allUsers) {
+        for (User user:users) {
             if (user.getRoles().toString().contains(role)) {
                 usersByRole++;
             }
