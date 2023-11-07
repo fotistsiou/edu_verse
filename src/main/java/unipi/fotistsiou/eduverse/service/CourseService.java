@@ -18,8 +18,8 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> findAllCourses() {
-        return courseRepository.findAll();
+    public int numberOfCourses() {
+        return courseRepository.findAll().size();
     }
 
     public Optional<Course> findCourseById(Long id) {

@@ -64,6 +64,31 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* Counter CSS */
+
+.counters {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.counter-wrapper {
+    text-align: center;
+}
+
+.counter {
+    background: antiquewhite;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+    border-radius: 100%;
+    color: #818a91;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
 /* ---------------------   End Container CSS   --------------------- */
 
 /* ---------------------   Start Footer CSS   --------------------- */

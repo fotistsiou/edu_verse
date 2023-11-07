@@ -41,10 +41,9 @@ public class HomeController {
             Long userId = optionalUser.get().getId();
             model.addAttribute("username", username);
             model.addAttribute("userId", userId);
-        } else {
-            List<Course> courses = courseService.findAllCourses();
-            model.addAttribute("courses", courses);
         }
+        int numberOfCourses = courseService.numberOfCourses();
+        model.addAttribute("numberOfCourses", numberOfCourses);
         return "home/home";
     }
 }
