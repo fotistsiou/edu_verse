@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import unipi.fotistsiou.eduverse.entity.Course;
 import unipi.fotistsiou.eduverse.entity.User;
 import unipi.fotistsiou.eduverse.service.CourseService;
 import unipi.fotistsiou.eduverse.service.UserService;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -43,7 +41,11 @@ public class HomeController {
             model.addAttribute("userId", userId);
         }
         int numberOfCourses = courseService.numberOfCourses();
+        int numberOfProfessors = userService.numberOfUsersByRole("ROLE_PROFESSOR");
+        int numberOfStudents = userService.numberOfUsersByRole("ROLE_STUDENT");
         model.addAttribute("numberOfCourses", numberOfCourses);
+        model.addAttribute("numberOfProfessors", numberOfProfessors);
+        model.addAttribute("numberOfStudents", numberOfStudents);
         return "home/home";
     }
 }

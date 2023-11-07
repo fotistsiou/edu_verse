@@ -7,6 +7,7 @@ import unipi.fotistsiou.eduverse.entity.Role;
 import unipi.fotistsiou.eduverse.entity.User;
 import unipi.fotistsiou.eduverse.repository.UserRepository;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -70,6 +71,17 @@ public class UserService {
                 user.getLastName(),
                 user.getTelephone()
         );
+    }
+
+    public int numberOfUsersByRole(String role) {
+        List<User> allUsers = userRepository.findAll();
+        int usersByRole = 0;
+        for (User user:allUsers) {
+            if (user.getRoles().toString().contains(role)) {
+                usersByRole++;
+            }
+        }
+        return usersByRole;
     }
 
     /* --------------- Helper Function --------------- */

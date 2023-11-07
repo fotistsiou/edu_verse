@@ -102,7 +102,11 @@
 
     <script th:inline="javascript">
         let numberOfCourses = [[${numberOfCourses}]];
+        let numberOfProfessors = [[${numberOfProfessors}]];
+        let numberOfStudents = [[${numberOfStudents}]];
         window.addEventListener("load", () => animateValue(document.getElementById('course_number'), 0, numberOfCourses, 1000));
+        window.addEventListener("load", () => animateValue(document.getElementById('professor_number'), 0, numberOfProfessors, 1000));
+        window.addEventListener("load", () => animateValue(document.getElementById('students_number'), 0, numberOfStudents, 1000));
     </script>
 </body>
 </html>
