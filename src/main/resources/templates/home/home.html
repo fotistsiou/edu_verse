@@ -76,21 +76,23 @@
                 </div>
             </div>
             <div class="col col-md-12">
-                <h3 class="text-center">
+                <h4 class="text-center">
                     <span class="fw-bold" th:text="'EduVerse:'"></span>
-                    <span class="fst-italic" th:text="'Ξεκλειδώστε έναν κόσμο γνώσης!'"></span>
-                </h3>
+                    <span th:text="'Ξεκλείδώσε έναν κόσμο γνώσης!'"></span>
+                </h4>
+                <p class="text-center" th:text="'Εκπαιδευτική πλατφόρμα, ασύγχρονης διδασκαλίας, για καθηγητές και φοιτητές.'">
+                </p>
                 <div class="counters">
                     <div class="counter-wrapper">
-                        <span id="course_number" class="counter">0</span>
+                        <span id="course_number" class="counter" th:text="'0'"></span>
                         <span class="text" th:text="'Μαθήματα'"></span>
                     </div>
                     <div class="counter-wrapper">
-                        <span id="professor_number" class="counter">0</span>
-                        <span class="text" th:text="'Καθηγητες'"></span>
+                        <span id="professor_number" class="counter" th:text="'0'"></span>
+                        <span class="text" th:text="'Καθηγητές'"></span>
                     </div>
                     <div class="counter-wrapper">
-                        <span id="students_number" class="counter">0</span>
+                        <span id="students_number" class="counter" th:text="'0'"></span>
                         <span class="text" th:text="'Μαθητές'"></span>
                     </div>
                 </div>
@@ -101,12 +103,17 @@
     <nav th:replace="~{fragment/footer :: footer}"></nav>
 
     <script th:inline="javascript">
+        let course_number = document.getElementById('course_number');
+        let professor_number = document.getElementById('professor_number');
+        let students_number = document.getElementById('students_number');
+        let start = 0;
         let numberOfCourses = [[${numberOfCourses}]];
         let numberOfProfessors = [[${numberOfProfessors}]];
         let numberOfStudents = [[${numberOfStudents}]];
-        window.addEventListener("load", () => animateValue(document.getElementById('course_number'), 0, numberOfCourses, 1000));
-        window.addEventListener("load", () => animateValue(document.getElementById('professor_number'), 0, numberOfProfessors, 1000));
-        window.addEventListener("load", () => animateValue(document.getElementById('students_number'), 0, numberOfStudents, 1000));
+        let duration = 1000;
+        window.addEventListener("load", () => animateValue(course_number, start, numberOfCourses, duration));
+        window.addEventListener("load", () => animateValue(professor_number, start, numberOfProfessors, duration));
+        window.addEventListener("load", () => animateValue(students_number, start, numberOfStudents, duration));
     </script>
 </body>
 </html>
