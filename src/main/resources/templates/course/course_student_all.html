@@ -2,7 +2,7 @@
 <html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'EduVerse | Οι Μαθητές Μου'"></title>
+    <title th:text="'EduVerse | Οι Φοιτητές Μου'"></title>
     <link rel="icon" type="image/png" th:href="@{/images/img23.png}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet"
@@ -19,7 +19,7 @@
                 <div class="custom_img_card">
                     <div class="card mt-3" th:if="${!courses.isEmpty()}">
                         <div class="card-header">
-                            <h2 class="text-center" th:text="'Οι Μαθητές Μου'"></h2>
+                            <h2 class="text-center" th:text="'Οι Φοιτητές Μου'"></h2>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
@@ -28,7 +28,7 @@
                                         <th scope="col" th:text="'#'"></th>
                                         <th scope="col" th:text="'Κωδικός'"></th>
                                         <th scope="col" th:text="'Τίτλος'"></th>
-                                        <th scope="col" th:text="'Μαθητές'"></th>
+                                        <th scope="col" th:text="'Φοιτητές'"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

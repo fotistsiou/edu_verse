@@ -2,7 +2,7 @@
 <html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'EduVerse | Προβολή Αποτελεσμάτων Μαθητή'"></title>
+    <title th:text="'EduVerse | Προβολή Αποτελεσμάτων Φοιτητή'"></title>
     <link rel="icon" type="image/png" th:href="@{/images/img23.png}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet"
@@ -19,13 +19,13 @@
                 <div class="custom_img_card">
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h2 class="text-center" th:text="'Προβολή Αποτελεσμάτων Μαθητή'"></h2>
+                            <h2 class="text-center" th:text="'Προβολή Αποτελεσμάτων Φοιτητή'"></h2>
                             <h4 class="text-center">
                                 <span th:text="'Μαθήμα:'"></span>
                                 <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${courseId}, userId=${professorId})}" th:text="${course.title}"></a>
                             </h4>
                             <h4 class="text-center">
-                                <span th:text="'Μαθητής:'"></span>
+                                <span th:text="'Φοιτητής:'"></span>
                                 <span th:text="${student.firstName + ' ' + student.lastName + ' (' + student.am + ')'}"></span>
                             </h4>
                         </div>
@@ -66,7 +66,7 @@
                             <p class="text-center" th:text="'Δεν έχει ολοκληρώσει ακόμα κάποιο ερωτηματολόγιο...'" th:if="${results.isEmpty()}"></p>
                             <div class="mb-3">
                                 <button class="btn btn-primary" type="button">
-                                    <a class="a_button" th:href="@{'/course/student/all/{userId}' (userId=${professorId})}" th:text="'Επιστροφή στους Μαθητές Μου'"></a>
+                                    <a class="a_button" th:href="@{'/course/student/all/{userId}' (userId=${professorId})}" th:text="'Επιστροφή στους Φοιτητές Μου'"></a>
                                 </button>
                             </div>
                         </div>
