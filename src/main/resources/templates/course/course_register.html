@@ -16,38 +16,35 @@
     <div class="container">
         <div class="row">
             <div class="col col-md-12">
-                <div class="custom_img_card_col">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="text-center" th:text="'Διαθέσιμα Μαθήματα'"></h2>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered" th:if="${!courses.isEmpty()}">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" th:text="'#'"></th>
-                                        <th scope="col" th:text="'Τίτλος'"></th>
-                                        <th scope="col" th:text="'Περιγραφή'"></th>
-                                        <th scope="col" th:text="'Κωδικός'"></th>
-                                        <th scope="col" th:text="'Καθηγητής'"></th>
-                                        <th scope="col" th:text="'Ενέργεια'"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="course, loopStat : ${courses}">
-                                        <th th:text="${loopStat.index + 1}"></th>
-                                        <td th:text="${course.title}"></td>
-                                        <td th:text="${course.description}"></td>
-                                        <td th:text="${course.code}"></td>
-                                        <td th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
-                                        <td><a th:href="@{'/course/register/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Εγγραφή'"></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <p class="text-center" th:text="'Δεν υπάρχει διαθέσιμο μάθημα...'" th:if="${courses.isEmpty()}"></p>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center" th:text="'Διαθέσιμα Μαθήματα'"></h2>
                     </div>
-                    <img th:src="@{/images/img12.png}" th:alt="'course register image'"/>
+                    <div class="card-body">
+                        <table class="table table-bordered" th:if="${!courses.isEmpty()}">
+                            <thead>
+                                <tr>
+                                    <th scope="col" th:text="'#'"></th>
+                                    <th scope="col" th:text="'Τίτλος'"></th>
+                                    <th scope="col" th:text="'Περιγραφή'"></th>
+                                    <th scope="col" th:text="'Κωδικός'"></th>
+                                    <th scope="col" th:text="'Καθηγητής'"></th>
+                                    <th scope="col" th:text="'Ενέργεια'"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="course, loopStat : ${courses}">
+                                    <th th:text="${loopStat.index + 1}"></th>
+                                    <td th:text="${course.title}"></td>
+                                    <td th:text="${course.description}"></td>
+                                    <td th:text="${course.code}"></td>
+                                    <td th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
+                                    <td><a th:href="@{'/course/register/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Εγγραφή'"></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-center" th:text="'Δεν υπάρχει διαθέσιμο μάθημα...'" th:if="${courses.isEmpty()}"></p>
+                    </div>
                 </div>
             </div>
         </div>

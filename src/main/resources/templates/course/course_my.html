@@ -31,49 +31,46 @@
                 <div th:if="${param.success_edit}">
                     <div class="alert alert-success" th:text="'Έκανες επεξεργασία του μαθήματος με επιτυχία!'"></div>
                 </div>
-                <div class="custom_img_card_col">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="text-center" th:text="'Τα Μαθήματά Μου'"></h2>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered" th:if="${!courses.isEmpty()}">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" th:text="'#'"></th>
-                                        <th scope="col" th:text="'Κωδικός'"></th>
-                                        <th scope="col" th:text="'Τίτλος'"></th>
-                                        <th scope="col" th:text="'Περιγραφή'"></th>
-                                        <th scope="col" th:text="'Καθηγητής'" th:if="${role == '[ROLE_STUDENT]'}"></th>
-                                        <th scope="col" th:text="'Ενέργεια'"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="course, loopStat : ${courses}">
-                                        <th th:text="${loopStat.index + 1}"></th>
-                                        <td th:text="${course.code}"></td>
-                                        <td th:text="${course.title}"></td>
-                                        <td th:text="${course.description}"></td>
-                                        <td th:if="${role == '[ROLE_STUDENT]'}" th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
-                                        <td th:if="${role == '[ROLE_STUDENT]'}">
-                                            <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
-                                            <a class="d-block" th:href="@{'/course/remove/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Απεγγραφή'"></a>
-                                        </td>
-                                        <td th:if="${role == '[ROLE_PROFESSOR]'}">
-                                            <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
-                                            <a class="d-block" th:href="@{'/course/edit/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
-                                            <a class="d-block" th:href="@{'/course/delete/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <p class="text-center" th:text="'Δεν έχεις ακόμα κάποιο μάθημα...'" th:if="${courses.isEmpty()}"></p>
-                            <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
-                                <a class="a_button" th:href="@{'/course/new/{userId}' (userId=${userId})}" th:text="'Δημιουργία Νεόυ Μαθήματος'"></a>
-                            </button>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center" th:text="'Τα Μαθήματά Μου'"></h2>
                     </div>
-                    <img th:src="@{/images/img13.png}" th:alt="'course my image'"/>
+                    <div class="card-body">
+                        <table class="table table-bordered" th:if="${!courses.isEmpty()}">
+                            <thead>
+                                <tr>
+                                    <th scope="col" th:text="'#'"></th>
+                                    <th scope="col" th:text="'Κωδικός'"></th>
+                                    <th scope="col" th:text="'Τίτλος'"></th>
+                                    <th scope="col" th:text="'Περιγραφή'"></th>
+                                    <th scope="col" th:text="'Καθηγητής'" th:if="${role == '[ROLE_STUDENT]'}"></th>
+                                    <th scope="col" th:text="'Ενέργεια'"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="course, loopStat : ${courses}">
+                                    <th th:text="${loopStat.index + 1}"></th>
+                                    <td th:text="${course.code}"></td>
+                                    <td th:text="${course.title}"></td>
+                                    <td th:text="${course.description}"></td>
+                                    <td th:if="${role == '[ROLE_STUDENT]'}" th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
+                                    <td th:if="${role == '[ROLE_STUDENT]'}">
+                                        <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
+                                        <a class="d-block" th:href="@{'/course/remove/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Απεγγραφή'"></a>
+                                    </td>
+                                    <td th:if="${role == '[ROLE_PROFESSOR]'}">
+                                        <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
+                                        <a class="d-block" th:href="@{'/course/edit/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
+                                        <a class="d-block" th:href="@{'/course/delete/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-center" th:text="'Δεν έχεις ακόμα κάποιο μάθημα...'" th:if="${courses.isEmpty()}"></p>
+                        <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
+                            <a class="a_button" th:href="@{'/course/new/{userId}' (userId=${userId})}" th:text="'Δημιουργία Νεόυ Μαθήματος'"></a>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

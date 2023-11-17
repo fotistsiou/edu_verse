@@ -31,21 +31,21 @@ body {
 .row {
     justify-content: center;
 }
-.custom_img_card,
-.custom_img_card_col {
+.card_wrapper,
+.card_wrapper_col {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 2rem;
 }
-.custom_img_card {
+.card_wrapper {
     flex-direction: row;
 }
-.custom_img_card_col {
+.card_wrapper_col {
     flex-direction: column;
 }
-.custom_img_card img,
-.custom_img_card_col img {
+.card_wrapper img,
+.card_wrapper_col img {
     width: 25rem;
 }
 
