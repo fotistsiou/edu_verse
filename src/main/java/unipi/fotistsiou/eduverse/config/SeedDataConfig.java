@@ -27,7 +27,7 @@ public class SeedDataConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Optional<User> optionalUser = userService.findUserByEmail("t.alepis@eduverse.gr");
+        Optional<User> optionalUser = userService.findUserById(1L);
         if (optionalUser.isEmpty()) {
             Role professor = new Role();
             professor.setName("ROLE_PROFESSOR");
