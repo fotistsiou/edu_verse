@@ -47,10 +47,7 @@ public class ResultService {
         return wrongs;
     }
 
-    public String generateFeedback(
-        int corrects,
-        int wrongs
-    ){
+    public String generateFeedback(int corrects, int wrongs) {
         String feedback;
         float percent = (float) corrects / (corrects + wrongs);
         if (percent > 0.85) {

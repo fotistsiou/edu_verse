@@ -15,8 +15,8 @@ public class QuizQuestionService {
 
     @Autowired
     public QuizQuestionService(
-            QuizQuestionRepository quizQuestionRepository,
-            QuestionService questionService
+        QuizQuestionRepository quizQuestionRepository,
+        QuestionService questionService
     ){
         this.quizQuestionRepository = quizQuestionRepository;
         this.questionService = questionService;
