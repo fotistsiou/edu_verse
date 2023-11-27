@@ -18,8 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf
+        http.csrf(csrf -> csrf
                 .disable()
             )
             .authorizeHttpRequests(auth -> auth
