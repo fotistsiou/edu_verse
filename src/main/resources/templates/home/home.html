@@ -66,7 +66,7 @@
                                 <button class="btn btn-dark" type="button" sec:authorize="hasRole('ROLE_STUDENT')">
                                     <a class="a_button" th:href="@{'/course/register/{userId}' (userId=${userId})}" th:text="'Διαθέσιμα Μαθήματα'"></a>
                                 </button>
-                                <button class="btn btn-dark" type="button" sec:authorize="isAuthenticated()">
+                                <button class="btn btn-dark" type="button">
                                     <a class="a_button" th:href="@{'/course/my/{userId}' (userId=${userId})}" th:text="'Τα Μαθήματά Μου'"></a>
                                 </button>
                                 <button class="btn btn-dark" type="button" sec:authorize="hasRole('ROLE_PROFESSOR')">
