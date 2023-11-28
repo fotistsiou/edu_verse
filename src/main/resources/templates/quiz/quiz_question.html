@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<html lang="el" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="'EduVerse | Προβολή Ερωτηματολογίου'"></title>
@@ -29,7 +29,7 @@
                                 <span th:text="'Μαθήμα:'"></span>
                                 <a th:href="@{'/course/view/{courseId}/{userId}' (courseId=${result.chapter.course.id}, userId=${userId})}" th:text="${result.chapter.course.title}"></a>
                             </h4>
-                            <h4 class="text-center" th:if="${role == '[ROLE_PROFESSOR]'}">
+                            <h4 class="text-center" sec:authorize="hasRole('ROLE_PROFESSOR')">
                                 <span th:text="'Φοιτητής:'"></span>
                                 <span th:text="${student.firstName + ' ' + student.lastName + ' (' + student.am + ')'}"></span>
                             </h4>
@@ -56,10 +56,10 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_STUDENT]'}">
+                            <button class="btn btn-primary" type="button" sec:authorize="hasRole('ROLE_STUDENT')">
                                 <a class="a_button" th:href="@{'/quiz/result/all/{studentId}' (studentId=${studentId})}" th:text="'Επιστροφή στα Συνολικά Αποτελέσματα'"></a>
                             </button>
-                            <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
+                            <button class="btn btn-primary" type="button" sec:authorize="hasRole('ROLE_PROFESSOR')">
                                 <a class="a_button" th:href="@{'/course/student/view/{courseId}/{studentId}/{professorId}' (courseId=${courseId}, studentId=${studentId}, professorId=${professorId})}" th:text="'Επιστροφή στα Αποτελέσματα Φοιτητή'"></a>
                             </button>
                         </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<html lang="el" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="'EduVerse | Πληροφορίες Λογαριασμού'"></title>
@@ -45,7 +45,7 @@
                                     <th th:text="'Επίθετο:'"></th>
                                     <td th:text="${user.lastName}"></td>
                                 </tr>
-                                <tr th:if="${user.telephone != null}">
+                                <tr sec:authorize="hasRole('ROLE_PROFESSOR')">
                                     <th th:text="'Τηλέφωνο:'"></th>
                                     <td th:text="${user.telephone}"></td>
                                 </tr>

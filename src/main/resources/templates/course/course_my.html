@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<html lang="el" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="'EduVerse | Τα Μαθήματά Μου'"></title>
@@ -43,7 +43,7 @@
                                     <th scope="col" th:text="'Κωδικός'"></th>
                                     <th scope="col" th:text="'Τίτλος'"></th>
                                     <th scope="col" th:text="'Περιγραφή'"></th>
-                                    <th scope="col" th:text="'Καθηγητής'" th:if="${role == '[ROLE_STUDENT]'}"></th>
+                                    <th scope="col" th:text="'Καθηγητής'" sec:authorize="hasRole('ROLE_STUDENT')"></th>
                                     <th scope="col" th:text="'Ενέργεια'"></th>
                                 </tr>
                             </thead>
@@ -53,12 +53,12 @@
                                     <td th:text="${course.code}"></td>
                                     <td th:text="${course.title}"></td>
                                     <td th:text="${course.description}"></td>
-                                    <td th:if="${role == '[ROLE_STUDENT]'}" th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
-                                    <td th:if="${role == '[ROLE_STUDENT]'}">
+                                    <td sec:authorize="hasRole('ROLE_STUDENT')" th:text="${course.professor.firstName + ' ' + course.professor.lastName}"></td>
+                                    <td sec:authorize="hasRole('ROLE_STUDENT')">
                                         <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
                                         <a class="d-block" th:href="@{'/course/remove/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Απεγγραφή'"></a>
                                     </td>
-                                    <td th:if="${role == '[ROLE_PROFESSOR]'}">
+                                    <td sec:authorize="hasRole('ROLE_PROFESSOR')">
                                         <a class="d-block" th:href="@{'/course/view/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Προβολή'"></a>
                                         <a class="d-block" th:href="@{'/course/edit/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Επεξεργασία'"></a>
                                         <a class="d-block" th:href="@{'/course/delete/{courseId}/{userId}' (courseId=${course.id}, userId=${userId})}" th:text="'Διαγραφή'"></a>
@@ -67,7 +67,7 @@
                             </tbody>
                         </table>
                         <p class="text-center" th:text="'Δεν έχεις ακόμα κάποιο μάθημα...'" th:if="${courses.isEmpty()}"></p>
-                        <button class="btn btn-primary" type="button" th:if="${role == '[ROLE_PROFESSOR]'}">
+                        <button class="btn btn-primary" type="button" sec:authorize="hasRole('ROLE_PROFESSOR')">
                             <a class="a_button" th:href="@{'/course/new/{userId}' (userId=${userId})}" th:text="'Δημιουργία Νεόυ Μαθήματος'"></a>
                         </button>
                     </div>

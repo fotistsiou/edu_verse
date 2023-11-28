@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<html lang="el" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="'EduVerse | Επεξεργασία Πληροφοριών Λογαριασμού'"></title>
@@ -69,7 +69,7 @@
                                        th:if="${#fields.hasErrors('lastName')}">
                                     </p>
                                 </div>
-                                <div class="form-group mb-3" th:if="${user.telephone != null}">
+                                <div class="form-group mb-3" sec:authorize="hasRole('ROLE_PROFESSOR')">
                                     <label class="form-label" for="telephone" th:text="'Τηλέφωνο Επικοινωνίας'"></label>
                                     <input class="form-control"
                                            id="telephone"
